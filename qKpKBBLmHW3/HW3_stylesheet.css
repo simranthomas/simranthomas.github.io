@@ -33,15 +33,15 @@ html, body {
   #restauraunt{
     position: relative;
     width: 700px;
-    height: 430px;
+    height: 400px;
     margin-left: 70px;
     margin-top: 29px
   }
   #restauraunt-img {
     position: absolute;
     background-image: url("Restaurant.jpg");
-    background-size: 737px 590px;
-    background-position: 55px 0px;
+    background-size: 750px 565px;
+    background-position: 43px 0px;
     background-attachment: fixed;
     background-repeat: no-repeat;
     height: 100%;
@@ -57,8 +57,8 @@ html, body {
     font-size: 42px;
     font-weight: 600;
     width: 500px;
-    margin-left: 80px;
-    margin-top: -46px;
+    margin-left: 71px;
+    margin-top: -44px;
   }
   .book-button{
     position: absolute;
