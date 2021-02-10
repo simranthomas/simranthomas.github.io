@@ -1,0 +1,111 @@
+html, body {
+    overflow-x: hidden;
+    resize: none;
+    margin-left: -1px;
+  }
+  #title-text{
+    color: #030282;
+    margin-left: 325px;
+    margin-top: 15px;
+    font-family: 'sans-serif';
+  }
+  #nav-bar{
+    list-style-type: none;
+    margin-left: -12px;
+    margin-top: -12px;
+    padding-left: 75px;
+    background-color: #FAEBD6;
+    overflow: hidden;
+  }
+  .main{
+    width: 860px;
+  }
+  li{
+    float: left;
+    font-family: 'Arial';
+    margin-left: -5px;
+  }
+  a {
+    display: block;
+    padding: 9px;
+    text-decoration: none;
+  }
+  #restauraunt{
+    position: relative;
+    width: 700px;
+    height: 430px;
+    margin-left: 70px;
+    margin-top: 29px
+  }
+  #restauraunt-img {
+    position: absolute;
+    background-image: url("Restaurant.jpg");
+    background-size: 737px 590px;
+    background-position: 55px 0px;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+  }
+  #scenic-view-text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FEFAD3;
+    font-family: 'sans-serif';
+    font-size: 42px;
+    font-weight: 600;
+    width: 500px;
+    margin-left: 80px;
+    margin-top: -46px;
+  }
+  .book-button{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(67%, 17%);
+    border-style: double;
+    border-width:3px;
+    border-color: black;
+    padding: 7px 5px;
+    font-size: 12px;
+    width: 154px;
+    text-align: center;
+    background-color: white;
+    cursor: pointer;
+  }
+  #explore-text{
+    margin-top: 25px;
+    margin-left: 302px;
+    color: #790D7C;
+    text-decoration-line: underline;
+    text-decoration-style: double;
+    text-decoration-thickness: 2.2px;
+    font-size: 20px;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-weight: 600;
+  }
+  .grid-container{
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-left: 73px;
+    margin-top: 20px;
+    margin-right: 70px;
+    grid-row-gap: 40px;
+  }
+  #cuisine-img{
+    width: 325px;
+    height: 248px;
+  }
+  #cuisine-description-left{
+    padding-top: 85px;
+    padding-right: 80px;
+  }
+  #cuisine-description-right{
+    padding-top: 85px;
+    padding-left: 60px;
+  }
+  b{
+    color: #174BA1;
+  }
