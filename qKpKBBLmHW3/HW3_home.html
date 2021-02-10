@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+    html, body {
+      overflow-x: hidden;
+      resize: none;
+    }
+    #title-text{
+      color: #030282;
+      text-align: center;
+      font-family: 'sans-serif';
+    }
+    #nav-bar{
+      list-style-type: none;
+      margin-left: -10px;
+      padding-left: 75px;
+      background-color: #FAEBD6;
+      overflow: hidden;
+    }
+    .main{
+      width: 860px;
+    }
+    li{
+      float: left;
+      font-family: 'Arial';
+      margin-left: -5px;
+    }
+    a {
+      display: block;
+      padding: 8px;
+      text-decoration: none;
+    }
+    #restauraunt{
+      position: relative;
+      width: 700px;
+      height: 400px;
+      margin-left: 73px;
+      margin-top: 35px
+    }
+    #restauraunt-img {
+      position: absolute;
+      background-image: url("Restaurant.jpg");
+      background-size: 750px 550px;
+      background-position: 55px 35px;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      height: 100%;
+      width: 100%;
+    }
+    #scenic-view-text{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #FEFAD3;
+      font-family: 'sans-serif';
+      font-size: 42px;
+      font-weight: 600;
+      width: 500px;
+      margin-left: 70px;
+      margin-top: -42px;
+    }
+    .book-button{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(65%, 10%);
+      border-style: double;
+      border-width:3px;
+      border-color: black;
+      padding: 7px 5px;
+      font-size: 12px;
+      width: 154px;
+      text-align: center;
+    }
+    #explore-text{
+      margin-top: 25px;
+      margin-left: 302px;
+      color: #790D7C;
+      text-decoration-line: underline;
+      text-decoration-style: double;
+      font-size: 20px;
+      font-family: "Comic Sans MS", "Comic Sans", cursive;
+      font-weight: 600;
+    }
+    .grid-container{
+      display: grid;
+      grid-template-columns: auto auto;
+      margin-left: 73px;
+      margin-top: 20px;
+      margin-right: 70px;
+      grid-row-gap: 40px;
+    }
+    #cuisine-img{
+      width: 325px;
+      height: 248px;
+    }
+    #cuisine-description-left{
+      padding-top: 85px;
+      padding-right: 80px;
+    }
+    #cuisine-description-right{
+      padding-top: 85px;
+      padding-left: 60px;
+    }
+    b{
+      color: #174BA1;
+    }
+    
+  </style>  
+  <title>
+    Home | Menu
+  </title>
+  </head>
+    <body>
+      <div class = "main">
+        <h1 id = "title-text"> Trojan Café</h1>
+        <ul id = "nav-bar">
+          <li><a href="HW3_home.html">Home</a></li>
+          <li><a href="#italian">Italian</a></li>
+          <li><a href="#indian">Indian</a></li>
+          <li><a href="#japenese">Japenese</a></li>
+          <li><a href="#desserts">Desserts</a></li>
+          <li><a href="index.html" rel="noopener noreferrer" target="_blank">About</a></li>
+          <li><a href="index.html" rel="noopener noreferrer" target="_blank">Contact</a></li>
+        </ul>
+        <div id = "restauraunt">
+          <div id = "restauraunt-img"></div>
+          <div id = "scenic-view-text">Enjoy the Scenic View!!</div>
+          <button class = "book-button">Book Your Reservation</button>
+        </div>
+
+        <div id = "explore-text">Explore Our Delicious Cuisines</div>
+
+        <div class = "grid-container">
+          <div id = "italian">
+            <img id = "cuisine-img" src = "Italian_Cuisine.jpg" style="border: 10px solid #FDE1DE">
+          </div>
+          <div id = "cuisine-description-right">
+            <b>Italy's finest:</b>
+            <br>From our Lasagna to our Protein Penne, we have delicious options for every taste!
+          </div id>
+          <div id = "cuisine-description-left"> 
+            <b>India's Flavors:</b>
+            <br>Our dishes are blended with masterful savory spices
+          </div>
+          <div id = "indian">
+            <img id = "cuisine-img" src = "Indian_Cuisine.jpg" style="border: 10px solid #B0D7E6">
+          </div>
+          <div id = "japenese">
+            <img id = "cuisine-img" src = "Japenese_Cuisine.jpg" style="border: 10px solid #FDE1DE">
+          </div>
+          <div id = "cuisine-description-right"> 
+            <b>Japenese Cuisine:</b>
+            <br>Delicious dining options from Sake to Sushi
+          </div>
+          <div id = "cuisine-description-left"> 
+            <b>Desserts:</b>
+            <br>From Italian Tiramisu to Indian Gulab Jamun
+          </div>
+          <div id = "desserts">
+            <img id = "cuisine-img" src = "Desserts.jpg" style="border: 10px solid #B0D7E6">
+          </div>
+        </div>
+
+      </div>
+    </body>
+</html>
