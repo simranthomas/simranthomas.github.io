@@ -4,7 +4,8 @@
         <title> </title>
 
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">  
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+
         <style>
             body{
                 background-color: black;
@@ -23,7 +24,6 @@
                 background-color: #f1f1f1;
                 margin-top: 10px;
             }
-            
             .flex-container > div {
                 background-color: DodgerBlue;
                 color: white;
@@ -32,10 +32,10 @@
                 line-height: 75px;
                 font-size: 30px;
             }
-            .movie-carousel {
-                position: relative;
-            }
             .trending-movie {display: none;}
+            .trending-tv-show {display: none;}
+            .movie-carousel { position: relative;}
+            .tv-show-carousel { position: relative;}
             .caption-text {
                 color: #f2f2f2;
                 font-size: 15px;
@@ -45,61 +45,144 @@
                 width: 100%;
                 text-align: center;
             }
-            /* Fading animation */
+            
+            /* Fading Animation */
             .fade {
-            -webkit-animation-name: fade;
-            -webkit-animation-duration: 1.5s;
-            animation-name: fade;
-            animation-duration: 1.5s;
+                -webkit-animation-name: fade;
+                -webkit-animation-duration: 1.5s;
+                animation-name: fade;
+                animation-duration: 1.5s;
             }
-
             @-webkit-keyframes fade {
-            from {opacity: .4} 
-            to {opacity: 1}
+                from {opacity: .4} 
+                to {opacity: 1}
             }
-
             @keyframes fade {
-            from {opacity: .4} 
-            to {opacity: 1}
+                from {opacity: .4} 
+                to {opacity: 1}
             }
 
         </style>
-        
-    </head>
-    
-    <body onload = "load_homepage()">
-        <div id = "heading">
-            <h1 id = "logo"> THE MOVIE DB </h1>
-        </div>
-        <div class = "flex-container">
-            <div style = "flex-grow: 2">Home</div>
-            <div style = "flex-grow: 8">
-                Trending Movies
-                <div class = "movie-carousel">
-                    <div class = "trending-movie fade">
-                        <img id = "trending-movie-1">
-                        <div class = "carousel-caption"> Caption One </div>
-                    </div>
-                    <div class = "trending-movie fade">
-                        <img id = "trending-movie-2">
-                        <div class = "carousel-caption"> Caption Two </div>
-                    </div>
-                    <div class = "trending-movie fade">
-                        <img id = "trending-movie-3">
-                        <div class = "carousel-caption"> Caption Three </div>
-                    </div>
-                    <div class = "trending-movie fade">
-                        <img id = "trending-movie-4">
-                        <div class = "carousel-caption"> Caption Four </div>
-                    </div>
-                    <div class = "trending-movie fade">
-                        <img id = "trending-movie-5">
-                        <div class = "carousel-caption"> Caption Five </div>
-                    </div>
+
+        <script>
+
+            function load_homepage()
+            {
+                base_url = "https://image.tmdb.org/t/p/w780/"
+
+                var request = new XMLHttpRequest();
+                request.open("GET", "/trending_movies", true);
+                request.onreadystatechange = function() {
+                    if (request.readyState == 4 && request.status == 200) 
+                    {
+                        movie_list = JSON.parse(this.responseText).top_movies;
+                        var i = 1;
+                        movie_list.forEach(movie => {
+                            document.getElementById("trending-movie-"+i).src = base_url + movie.backdrop_path;
+                            i++;
+                        });
+                        
+                    }
+                };
+                request.send(null);
+
+                var request = new XMLHttpRequest();
+                request.open("GET", "/tv_shows_airing_today", true);
+                request.onreadystatechange = function() {
+                    if (request.readyState == 4 && request.status == 200) 
+                    {
+                        movie_list = JSON.parse(this.responseText).top_tv_shows;
+                        var i = 1;
+                        movie_list.forEach(movie => {
+                            document.getElementById("trending-tv-show-"+i).src = base_url + movie.backdrop_path;
+                            i++;
+                        });
+                        showSlides();
+                    }
+                };
+                request.send(null);
+            }
+        </script>
+</head>
+<body onload = "load_homepage()">
+    <div id = "heading">
+        <h1 id = "logo"> THE MOVIE DB </h1>
+    </div>
+    <div class = "flex-container">
+        <div style = "flex-grow: 2">Home</div>
+        <div style = "flex-grow: 8">
+            Trending Movies
+            <div class="movie-carousel">
+                <div class = "trending-movie fade">
+                    <img id = "trending-movie-1">
+                    <div class = "caption-text">Caption One</div>
+                </div>
+                <div class = "trending-movie fade">
+                    <img id = "trending-movie-2">
+                    <div class = "caption-text">Caption Two</div>
+                </div>
+                <div class = "trending-movie fade">
+                    <img id = "trending-movie-3">
+                    <div class = "caption-text">Caption Three</div>
+                </div>
+                <div class = "trending-movie fade">
+                    <img id = "trending-movie-4">
+                    <div class = "caption-text">Caption Four</div>
+                </div>
+                <div class = "trending-movie fade">
+                    <img id = "trending-movie-5">
+                    <div class = "caption-text">Caption Five</div>
+                </div>
+            </div>
+            TV Shows On-Air Today
+            <div class="tv-show-carousel">
+                <div class = "trending-tv-show fade">
+                    <img id = "trending-tv-show-1" src ="https://image.tmdb.org/t/p/w780//8tNX8s3j1O0eqilOQkuroRLyOZA.jpg">
+                    <div class = "caption-text">Caption One</div>
+                </div>
+                <div class = "trending-tv-show fade" src ="https://image.tmdb.org/t/p/w780//8tNX8s3j1O0eqilOQkuroRLyOZA.jpg">
+                    <img id = "trending-tv-show-2">
+                    <div class = "caption-text">Caption Two</div>
+                </div>
+                <div class = "trending-tv-show fade" src ="https://image.tmdb.org/t/p/w780//8tNX8s3j1O0eqilOQkuroRLyOZA.jpg">
+                    <img id = "trending-tv-show-3">
+                    <div class = "caption-text">Caption Three</div>
+                </div>
+                <div class = "trending-tv-show fade" src ="https://image.tmdb.org/t/p/w780//8tNX8s3j1O0eqilOQkuroRLyOZA.jpg">
+                    <img id = "trending-tv-show-4">
+                    <div class = "caption-text">Caption Four</div>
+                </div>
+                <div class = "trending-tv-show fade" src ="https://image.tmdb.org/t/p/w780//8tNX8s3j1O0eqilOQkuroRLyOZA.jpg">
+                    <img id = "trending-tv-show-5">
+                    <div class = "caption-text">Caption Five</div>
                 </div>
             </div>
         </div>
+    </div>
 
+
+
+    <script>
+        var slideIndex = 0;
+    
+        function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("trending-movie");
+        var slides_1 = document.getElementsByClassName("trending-tv-show");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+            slides_1[i].style.display = "none";  
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}    
         
-    </body>
-</html>
+        slides[slideIndex-1].style.display = "block"; 
+        slides_1[slideIndex-1].style.display = "block";  
+        
+        setTimeout(showSlides, 5000);
+        }
+    </script>
+
+</body>
+</html> 
+
