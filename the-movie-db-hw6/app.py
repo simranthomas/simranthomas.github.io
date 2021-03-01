@@ -30,7 +30,7 @@ def get_trending_movies():
         top_trending_movies['top_movies'].append({
             'title': item['title'], 
             'backdrop_path': item['backdrop_path'], 
-            'release_date': item['release_date']
+            'release_air_date': item['release_date']
             })
 
     return make_response(top_trending_movies, 200)
@@ -47,9 +47,9 @@ def get_tv_shows_airing_today():
     top_tv_shows = {'top_tv_shows': []}
     for item in response['results'][:5]:
         top_tv_shows['top_tv_shows'].append({
-            'name': item['name'], 
+            'title': item['name'], 
             'backdrop_path': item['backdrop_path'], 
-            'first_air_date': item['first_air_date']
+            'release_air_date': item['first_air_date']
             })
 
     return make_response(top_tv_shows, 200)

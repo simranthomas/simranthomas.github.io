@@ -21,11 +21,9 @@
             .flex-container {
                 display: flex;
                 align-items: stretch;
-                background-color: #f1f1f1;
                 margin-top: 10px;
             }
             .flex-container > div {
-                background-color: DodgerBlue;
                 color: white;
                 margin: 10px;
                 text-align: center;
@@ -37,13 +35,15 @@
             .movie-carousel { position: relative;}
             .tv-show-carousel { position: relative;}
             .caption-text {
-                color: #f2f2f2;
-                font-size: 15px;
-                padding: 8px 12px;
+                color: white;
+                font-size: 20px;
                 position: absolute;
                 bottom: 8px;
                 width: 100%;
                 text-align: center;
+                background-color:rgba(0,0,0,0.5);
+                height: 100px;
+                font-family: 'Open Sans', sans-serif;
             }
             
             /* Fading Animation */
@@ -60,6 +60,17 @@
             @keyframes fade {
                 from {opacity: .4} 
                 to {opacity: 1}
+            }
+
+            .tab-button {
+                color: #A70012;
+                padding: 15px 32px;
+                text-decoration: none;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            #button-wrapper{
+                border-right: 1px solid white;
             }
 
         </style>
@@ -79,6 +90,7 @@
                         var i = 1;
                         movie_list.forEach(movie => {
                             document.getElementById("trending-movie-"+i).src = base_url + movie.backdrop_path;
+                            document.getElementById("trending-movie-caption-text-"+i).innerHTML = movie.title + " (" + new Date(Date.parse(movie.release_air_date)).getFullYear() +")";
                             i++;
                         });
                         
@@ -95,9 +107,11 @@
                         var i = 1;
                         movie_list.forEach(movie => {
                             document.getElementById("trending-tv-show-"+i).src = base_url + movie.backdrop_path;
+                            document.getElementById("trending-tv-show-caption-text-"+i).innerHTML = movie.title + " (" + new Date(Date.parse(movie.release_air_date)).getFullYear() +")";
+                            console.log(movie)
                             i++;
                         });
-                        showSlides();
+                        display_carousel();
                     }
                 };
                 request.send(null);
@@ -109,52 +123,55 @@
         <h1 id = "logo"> THE MOVIE DB </h1>
     </div>
     <div class = "flex-container">
-        <div style = "flex-grow: 2">Home</div>
+        <div id = "button-wrapper" style = "flex-grow: 3">
+            <div><a href="#" class = "tab-button">Home &#8594;</a></div>
+            <div><a href="#" class = "tab-button">Search &#8594;</a></div>
+        </div>
         <div style = "flex-grow: 8">
-            Trending Movies
-            <div class="movie-carousel">
+            <div class = "carousel-titles">Trending Movies</div>
+            <div class ="movie-carousel">
                 <div class = "trending-movie fade">
                     <img id = "trending-movie-1">
-                    <div class = "caption-text">Caption One</div>
+                    <div class = "caption-text" id = "trending-movie-caption-text-1"></div>
                 </div>
                 <div class = "trending-movie fade">
                     <img id = "trending-movie-2">
-                    <div class = "caption-text">Caption Two</div>
+                    <div class = "caption-text" id = "trending-movie-caption-text-2"></div>
                 </div>
                 <div class = "trending-movie fade">
                     <img id = "trending-movie-3">
-                    <div class = "caption-text">Caption Three</div>
+                    <div class = "caption-text" id = "trending-movie-caption-text-3"></div>
                 </div>
                 <div class = "trending-movie fade">
                     <img id = "trending-movie-4">
-                    <div class = "caption-text">Caption Four</div>
+                    <div class = "caption-text" id = "trending-movie-caption-text-4"></div>
                 </div>
                 <div class = "trending-movie fade">
                     <img id = "trending-movie-5">
-                    <div class = "caption-text">Caption Five</div>
+                    <div class = "caption-text" id = "trending-movie-caption-text-5"></div>
                 </div>
             </div>
-            TV Shows On-Air Today
+            <div class = "carousel-titles">TV Shows On-Air Today</div>
             <div class="tv-show-carousel">
                 <div class = "trending-tv-show fade">
-                    <img id = "trending-tv-show-1" src ="https://image.tmdb.org/t/p/w780//8tNX8s3j1O0eqilOQkuroRLyOZA.jpg">
-                    <div class = "caption-text">Caption One</div>
+                    <img id = "trending-tv-show-1">
+                    <div class = "caption-text" id = "trending-tv-show-caption-text-1"></div>
                 </div>
-                <div class = "trending-tv-show fade" src ="https://image.tmdb.org/t/p/w780//8tNX8s3j1O0eqilOQkuroRLyOZA.jpg">
+                <div class = "trending-tv-show fade">
                     <img id = "trending-tv-show-2">
-                    <div class = "caption-text">Caption Two</div>
+                    <div class = "caption-text" id = "trending-tv-show-caption-text-2"></div>
                 </div>
-                <div class = "trending-tv-show fade" src ="https://image.tmdb.org/t/p/w780//8tNX8s3j1O0eqilOQkuroRLyOZA.jpg">
+                <div class = "trending-tv-show fade">
                     <img id = "trending-tv-show-3">
-                    <div class = "caption-text">Caption Three</div>
+                    <div class = "caption-text" id = "trending-tv-show-caption-text-3"></div>
                 </div>
-                <div class = "trending-tv-show fade" src ="https://image.tmdb.org/t/p/w780//8tNX8s3j1O0eqilOQkuroRLyOZA.jpg">
+                <div class = "trending-tv-show fade">
                     <img id = "trending-tv-show-4">
-                    <div class = "caption-text">Caption Four</div>
+                    <div class = "caption-text" id = "trending-tv-show-caption-text-4"></div>
                 </div>
-                <div class = "trending-tv-show fade" src ="https://image.tmdb.org/t/p/w780//8tNX8s3j1O0eqilOQkuroRLyOZA.jpg">
+                <div class = "trending-tv-show fade">
                     <img id = "trending-tv-show-5">
-                    <div class = "caption-text">Caption Five</div>
+                    <div class = "caption-text" id = "trending-tv-show-caption-text-5"></div>
                 </div>
             </div>
         </div>
@@ -163,23 +180,23 @@
 
 
     <script>
-        var slideIndex = 0;
+        var slide_index = 0;
     
-        function showSlides() {
+        function display_carousel() {
         var i;
-        var slides = document.getElementsByClassName("trending-movie");
-        var slides_1 = document.getElementsByClassName("trending-tv-show");
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";  
-            slides_1[i].style.display = "none";  
+        var movie_slides = document.getElementsByClassName("trending-movie");
+        var tv_show_slides = document.getElementsByClassName("trending-tv-show");
+        for (i = 0; i < movie_slides.length; i++) {
+            movie_slides[i].style.display = "none";  
+            tv_show_slides[i].style.display = "none";  
         }
-        slideIndex++;
-        if (slideIndex > slides.length) {slideIndex = 1}    
+        slide_index++;
+        if (slide_index > movie_slides.length) {slide_index = 1}    
         
-        slides[slideIndex-1].style.display = "block"; 
-        slides_1[slideIndex-1].style.display = "block";  
+        movie_slides[slide_index-1].style.display = "block"; 
+        tv_show_slides[slide_index-1].style.display = "block";  
         
-        setTimeout(showSlides, 5000);
+        setTimeout(display_carousel, 5000);
         }
     </script>
 
