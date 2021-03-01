@@ -1,0 +1,26 @@
+body{
+    background-color: black;
+}
+#heading {
+    height: 40px;
+    background-image: linear-gradient(to right, rgba(167,0,18,0) 70%, rgba(167,0,18,1));
+}
+#logo {
+    color : #A70012;
+    font-family: 'Open Sans', sans-serif;
+}
+.flex-container {
+    display: flex;
+    align-items: stretch;
+    background-color: #f1f1f1;
+    margin-top: 10px;
+}
+
+.flex-container > div {
+    background-color: DodgerBlue;
+    color: white;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
+}
