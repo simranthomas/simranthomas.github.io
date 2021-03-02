@@ -68,10 +68,10 @@ def extract_search_fields(search_list, media_type):
 
             media = {}
             media['id'] = item['id']
-            media[title_key] = item[title_key]
+            media['title'] = item[title_key]
             media['overview'] = item['overview']
             media['poster_path'] = item['poster_path']
-            media[date_key] = item[date_key]
+            media['release_air_date'] = item[date_key]
             media['vote_average'] = item['vote_average']
             media['vote_count'] = item['vote_count']
             media['genre_ids'] = item['genre_ids']
