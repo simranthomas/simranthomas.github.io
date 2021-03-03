@@ -1,196 +1,34 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> </title>
 
-        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" type="text/css" href="static/index.css">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
 
-        <style>
-            body{
-                background-color: black;
-            }
-            #heading {
-                height: 40px;
-                background-image: linear-gradient(to right, rgba(167,0,18,0) 70%, rgba(167,0,18,1));
-            }
-            #logo {
-                color : #A70012;
-                font-family: 'Open Sans', sans-serif;
-            }
-            .flex-container {
-                display: flex;
-                align-items: stretch;
-                margin-top: 10px;
-            }
-            .flex-container > div {
-                color: white;
-                margin: 10px;
-                text-align: center;
-                line-height: 75px;
-                font-size: 30px;
-            }
-            #movie-carousel { position: relative;}
-            #tv-show-carousel { position: relative;}
-            .caption-text {
-                color: white;
-                font-size: 20px;
-                position: absolute;
-                bottom: 8px;
-                width: 100%;
-                text-align: center;
-                background-color:rgba(0,0,0,0.5);
-                height: 100px;
-                font-family: 'Raleway', sans-serif;
-            }
-            .carousel-titles {
-                font-family: 'Raleway', sans-serif;
-            }
-            
-            /* Fading Animation */
-            .fade {
-                -webkit-animation-name: fade;
-                -webkit-animation-duration: 1.5s;
-                animation-name: fade;
-                animation-duration: 1.5s;
-            }
-            @-webkit-keyframes fade {
-                from {opacity: .4} 
-                to {opacity: 1}
-            }
-            @keyframes fade {
-                from {opacity: .4} 
-                to {opacity: 1}
-            }
-
-            .tab-button {
-                color: #A70012;
-                padding: 15px 32px;
-                text-decoration: none;
-                font-size: 16px;
-                cursor: pointer;
-            }
-            #button-wrapper{
-                border-right: 1px solid white;
-            }
-
-        </style>
-
-        <script>
-
-            var base_url_backdrop_path = "https://image.tmdb.org/t/p/w780/"
-            var base_url_poster_profile_path = "https://image.tmdb.org/t/p/w185/"
-
-            function load_homepage()
-            {
-                //document.getElementById("seach-page").style.display = "none";
-                
-                get_carousel_data();
-            }
-
-            function get_carousel_data()
-            {
-                var request_movie = new XMLHttpRequest();
-                request_movie.open("GET", "/trending_movies", true);
-                request_movie.onreadystatechange = function() {
-                    if (request_movie.readyState == 4 && request_movie.status == 200) 
-                    {
-                        movie_list = JSON.parse(this.responseText).top_movies;
-                        generate_carousel(movie_list, "movie"); 
-                    }
-                };
-                request_movie.send(null);
-
-                var request_tv_show = new XMLHttpRequest();
-                request_tv_show.open("GET", "/tv_shows_airing_today", true);
-                request_tv_show.onreadystatechange = function() {
-                    if (request_tv_show.readyState == 4 && request_tv_show.status == 200) 
-                    {
-                        tv_show_list = JSON.parse(this.responseText).top_tv_shows;
-                        generate_carousel(tv_show_list, "tv-show")
-                    }
-                };
-                request_tv_show.send(null);
-            }
-
-            function generate_carousel(item_list, media_type)
-            {
-                carousel_div = document.getElementById(media_type + "-carousel");
-
-                item_list.forEach(item => 
-                {
-                    // create main div element for img and caption
-                    carousel_element = document.createElement("div");
-                    carousel_element.className = "trending-" + media_type + " fade";
-
-                    // create image tag
-                    carousel_image = new Image();
-                    carousel_image.src = base_url_backdrop_path + item.backdrop_path;
-                    carousel_element.appendChild(carousel_image);
-
-                    // create caption tag
-                    carousel_caption_div = document.createElement("div");
-                    carousel_caption_div.className = "caption-text";
-                    text = document.createTextNode(item.title + " (" + new Date(Date.parse(item.release_air_date)).getFullYear() +")");
-                    carousel_caption_div.appendChild(text);
-                    carousel_element.appendChild(carousel_caption_div)
-
-                    carousel_div.appendChild(carousel_element);
-                });
-                if(media_type == "movie")
-                    display_carousel_movie();
-                else 
-                    display_carousel_tv_show();
-            }
-
-        var slide_index_movie = 0;
-        var slide_index_tv_show = 0;
-    
-        function display_carousel_movie() {
-            var i;
-            var slides = document.getElementsByClassName("trending-movie");
-
-            for (i = 0; i < slides.length; i++) 
-                slides[i].style.display = "none";  
-            
-            slide_index_movie++;
-            if (slide_index_movie > slides.length) 
-                slide_index_movie = 1  
-            slides[slide_index_movie-1].style.display = "block";  
-            setTimeout(display_carousel_movie, 5000);
-        }
-         
-        function display_carousel_tv_show() {
-            var i;
-            var slides = document.getElementsByClassName("trending-tv-show");
-
-            for (i = 0; i < slides.length; i++) 
-                slides[i].style.display = "none";  
-        
-            slide_index_tv_show++;
-            if (slide_index_tv_show > slides.length)
-                slide_index_tv_show = 1
-            slides[slide_index_tv_show-1].style.display = "block";  
-            setTimeout(display_carousel_tv_show, 5000);
-        }
-            
-        </script>
+        <script src = "static/index.js"></script>
 </head>
-<body onload = "load_homepage()">
+<body onload = "initial_load()">
     <div id = "heading">
         <h1 id = "logo"> THE MOVIE DB </h1>
     </div>
     <div class = "flex-container">
-        <div id = "button-wrapper" style = "flex-grow: 3">
-            <div><a href="#" class = "tab-button">Home &#10230;</a></div>
-            <div><a href="#" class = "tab-button">Search &#10230;</a></div>
+        
+        <div id = "tab-wrapper" style = "flex-grow: 3">
+            <div id = "home-tab"><a id = "home-text" class = "side-tabs" onclick = "load_home_page()">Home &#10230;</a></div>
+            <div id = "search-tab" ><a id = "search-text" class = "side-tabs" onclick = "load_search_page()">Search &#10230;</a></div>
         </div>
+
         <div style = "flex-grow: 8" id = "home-page">
             <div class = "carousel-titles">Trending Movies</div>
             <div id ="movie-carousel"></div>
             <div class = "carousel-titles">TV Shows On-Air Today</div>
             <div id="tv-show-carousel"></div>
         </div>
+
+        <div style = "flex-grow: 8" id = "search-page">
+            <div class = "carousel-titles">Serach </div>
+        </div>
+    
     </div>
 
 </body>

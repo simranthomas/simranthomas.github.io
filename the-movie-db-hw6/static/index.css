@@ -12,15 +12,55 @@ body{
 .flex-container {
     display: flex;
     align-items: stretch;
-    background-color: #f1f1f1;
     margin-top: 10px;
 }
-
 .flex-container > div {
-    background-color: DodgerBlue;
     color: white;
     margin: 10px;
     text-align: center;
     line-height: 75px;
     font-size: 30px;
+}
+#movie-carousel { position: relative;}
+#tv-show-carousel { position: relative;}
+.caption-text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+    background-color:rgba(0,0,0,0.5);
+    height: 100px;
+    font-family: 'Raleway', sans-serif;
+}
+.carousel-titles {
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Fading Animation */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+@-webkit-keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+@keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+
+.side-tabs {
+    color: #A70012;
+    padding: 15px 32px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+#tab-wrapper{
+    border-right: 1px solid white;
 }
