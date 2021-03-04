@@ -56,11 +56,37 @@ body{
 
 .side-tabs {
     color: #A70012;
-    padding: 15px 32px;
     text-decoration: none;
     font-size: 16px;
     cursor: pointer;
+    
 }
 #tab-wrapper{
     border-right: 1px solid white;
 }
+#search-box{
+    height: 200px;
+    background-image:  linear-gradient(to top, rgba(167, 0, 18, 0.15), rgb(167, 0, 18));
+}
+.required{
+    color: red;
+}
+#search-box {
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.card {
+    display: grid;
+    grid-template-columns: 20% 80% auto;
+    border-left: 7px solid #A70012;
+}
+.card-item {
+    text-align: left;
+    font-size: 14px;
+    margin-left: 10px;
+}
+.card-content {
+    height: 30px;
+}
+

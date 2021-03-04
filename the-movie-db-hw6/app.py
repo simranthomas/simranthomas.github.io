@@ -1,4 +1,4 @@
-from flask import Flask, make_response
+from flask import Flask, make_response, request
 import requests
 app = Flask(__name__)
 
@@ -25,9 +25,9 @@ def get_trending_movies():
 
     response = requests.get(endpoint_url, headers = headers).json()
 
-    top_trending_movies = {'top_movies': []}
+    top_trending_movies = {'top': []}
     for item in response['results'][:5]:
-        top_trending_movies['top_movies'].append({
+        top_trending_movies['top'].append({
             'title': item['title'], 
             'backdrop_path': item['backdrop_path'], 
             'release_air_date': item['release_date']
@@ -44,9 +44,9 @@ def get_tv_shows_airing_today():
 
     response = requests.get(endpoint_url, headers = headers).json()
 
-    top_tv_shows = {'top_tv_shows': []}
+    top_tv_shows = {'top': []}
     for item in response['results'][:5]:
-        top_tv_shows['top_tv_shows'].append({
+        top_tv_shows['top'].append({
             'title': item['name'], 
             'backdrop_path': item['backdrop_path'], 
             'release_air_date': item['first_air_date']
@@ -75,6 +75,7 @@ def extract_search_fields(search_list, media_type):
             media['vote_average'] = item['vote_average']
             media['vote_count'] = item['vote_count']
             media['genre_ids'] = item['genre_ids']
+            media['media_type'] = media_type
 
             final_search_results.append(media)
     
@@ -85,12 +86,12 @@ def extract_search_fields(search_list, media_type):
 @app.route("/search_movie", methods = ['GET'])
 def search_movie():
     
-    ##### SEARCH QUERY TO BE CHANGED #####
-    search_query = "avengers"
+    search_query = request.args.get('keyword')
+    search_query.replace(" ","%20")
     endpoint_url = f'{tmdb_api_url}search/movie?api_key={tmdb_api_key}&query={search_query}&language=en-US&page=1&include_adult=false'
 
     response = requests.get(endpoint_url, headers = headers).json()
-    movies = {'movies': extract_search_fields(response['results'], "movie")}
+    movies = {'search_results': extract_search_fields(response['results'], "movie")}
     
     return make_response(movies, 200)
 
@@ -99,12 +100,12 @@ def search_movie():
 @app.route("/search_tv_shows", methods = ['GET'])
 def search_tv_shows():
     
-    ##### SEARCH QUERY TO BE CHANGED #####
-    search_query = "game%20of"
+    search_query = request.args.get('keyword')
+    search_query.replace(" ","%20")
     endpoint_url = f'{tmdb_api_url}search/tv?api_key={tmdb_api_key}&language=en-US&page=1&query={search_query}&include_adult=false'
 
     response = requests.get(endpoint_url, headers = headers).json()
-    tv_shows = {'tv_shows': extract_search_fields(response['results'], "tv")}
+    tv_shows = {'search_results': extract_search_fields(response['results'], "tv")}
 
     return make_response(tv_shows, 200)
 
@@ -113,12 +114,12 @@ def search_tv_shows():
 @app.route("/multi_search", methods = ['GET'])
 def mutisearch():
     
-    ##### SEARCH QUERY TO BE CHANGED #####
-    search_query = "game%20of"
+    search_query = request.args.get('keyword')
+    search_query.replace(" ","%20")
     endpoint_url = f'{tmdb_api_url}search/multi?api_key={tmdb_api_key}&language=en-US&query={search_query}&page=1&include_adult=false'
 
     response = requests.get(endpoint_url, headers = headers).json()
-    movies_tv_shows = {'movies_tv_shows': extract_search_fields(response['results'], "")}
+    movies_tv_shows = {'search_results': extract_search_fields(response['results'], "")}
     
     return make_response(movies_tv_shows, 200)
 
@@ -266,9 +267,9 @@ def get_movie_genres():
     endpoint_url = f'{tmdb_api_url}genre/movie/list?api_key={tmdb_api_key}&language=en-US'
     response = requests.get(endpoint_url, headers = headers).json()
     
-    movie_genres = {'movie_genres': []}
+    movie_genres = {'genres': []}
     for item in response['genres']:
-        movie_genres['movie_genres'].append({
+        movie_genres['genres'].append({
             'id': str(item['id']), 
             'name': item['name']
             })
@@ -282,9 +283,9 @@ def get_tv_genres():
     endpoint_url = f'{tmdb_api_url}genre/tv/list?api_key={tmdb_api_key}&language=en-US'
     response = requests.get(endpoint_url, headers = headers).json()
     
-    tv_genres = {'tv_genres': []}
+    tv_genres = {'genres': []}
     for item in response['genres']:
-        tv_genres['tv_genres'].append({
+        tv_genres['genres'].append({
             'id': str(item['id']), 
             'name': item['name']
             })

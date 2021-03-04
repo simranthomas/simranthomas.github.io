@@ -3,6 +3,7 @@
     <head>
 
         <link rel="stylesheet" type="text/css" href="static/index.css">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">  
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
 
         <script src = "static/index.js"></script>
@@ -26,9 +27,45 @@
         </div>
 
         <div style = "flex-grow: 8" id = "search-page">
-            <div class = "carousel-titles">Serach </div>
+            <div id = "search-box"> 
+                <div>Search</div>
+                <form id = "search-form">
+                    <label>Keyword</label><span class = "required">*</span>
+                    <input type = "text" id = "keyword">
+
+                    <label for="categories">Category</label><span class = "required">*</span>
+                    <select id="categories" >
+                        <option value = "" selected></option>
+                        <option value = "movies">Movies</option>
+                        <option value = "tv_shows">TV Shows</option>
+                        <option value = "movies_tv_shows">Movies and TV Shows</option>
+                    </select>
+
+                    <input class = "form-buttons" type = "button" value = "Search" onclick = "get_form_data()">
+                    <input class = "form-buttons" type = "reset" value = "Clear">
+                </form>
+            </div>
+
+            <div id = "search-results">
+                <!-- <div id = "showing-results">Showing Results...</div>
+                <div id = "cards-container">
+                    <div class="card">
+                        <div class = "card-item">
+                            <img src = "https://image.tmdb.org/t/p/w185/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg">
+                        </div>
+                        <div class = "card-item card-content">
+                            <div class = "card-title card-content">Wonder Woman</div>
+                            <div class = "card-date-genre card-content">2019 | Adevnture,sci-fi</div>
+                            <div class = "card-rating card-content">4.25/5 1623 votes</div>
+                            <div class = "card-overview card-content">after..djjfisfisai</div>
+
+                            <input type = "button" class = "show-more-button" value = "Show More">
+                        </div>    
+                    </div>
+                </div> -->
+            </div>
+
         </div>
-    
     </div>
 
 </body>
