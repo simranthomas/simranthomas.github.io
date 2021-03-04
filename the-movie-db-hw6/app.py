@@ -267,12 +267,9 @@ def get_movie_genres():
     endpoint_url = f'{tmdb_api_url}genre/movie/list?api_key={tmdb_api_key}&language=en-US'
     response = requests.get(endpoint_url, headers = headers).json()
     
-    movie_genres = {'genres': []}
+    movie_genres = {}
     for item in response['genres']:
-        movie_genres['genres'].append({
-            'id': str(item['id']), 
-            'name': item['name']
-            })
+        movie_genres[str(item['id'])] = item['name']
 
     return make_response(movie_genres, 200)
 
@@ -283,12 +280,9 @@ def get_tv_genres():
     endpoint_url = f'{tmdb_api_url}genre/tv/list?api_key={tmdb_api_key}&language=en-US'
     response = requests.get(endpoint_url, headers = headers).json()
     
-    tv_genres = {'genres': []}
+    tv_genres = {}
     for item in response['genres']:
-        tv_genres['genres'].append({
-            'id': str(item['id']), 
-            'name': item['name']
-            })
+        tv_genres[str(item['id'])] = item['name']
 
     return make_response(tv_genres, 200)
 

@@ -118,19 +118,9 @@ function get_genres(endpoint, media_type)
         if (request.readyState == 4 && request.status == 200) 
         {
             if (media_type == "movie")
-            {
-                genre_list = JSON.parse(this.responseText).genres;
-                genre_list.forEach(item =>{
-                    movie_genre_list[item.id] = item.name;
-                });
-            }
+                movie_genre_list = JSON.parse(this.responseText);
             else if (media_type == "tv-show") 
-            {
-                genre_list = JSON.parse(this.responseText).genres;
-                genre_list.forEach(item =>{
-                    tv_genre_list[item.id] = item.name;
-                });
-            }
+                tv_genre_list = JSON.parse(this.responseText);
         }
     };
     request.send(null);
@@ -227,7 +217,7 @@ function display_search_results(search_results)
             if(item.media_type == "movie")
                 genres += movie_genre_list[genre] + ",";
             else if(item.edia_type == "tv")
-            genres += tv_genre_list[genre] + ",";
+                genres += tv_genre_list[genre] + ",";
         });
         year_genre_text += " | " + genres.slice(0, -1);
 
@@ -253,6 +243,7 @@ function display_search_results(search_results)
         show_more_button.setAttribute("type", "button");
         show_more_button.setAttribute("class", "show-more-button");
         show_more_button.setAttribute("value", "Show More");
+        show_more_button.setAttribute("onclick", "show_details(" + item.id + ")")
         card_content.appendChild(show_more_button);
 
         card.appendChild(card_content);
@@ -272,4 +263,9 @@ function clear_search()
         cards.remove();
     if(no_result != null)
         no_result.remove();
+}
+
+function show_details(obj)
+{
+    console.log(obj)
 }
