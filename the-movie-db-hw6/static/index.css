@@ -9,16 +9,16 @@ body{
     color : #A70012;
     font-family: 'Open Sans', sans-serif;
 }
-.flex-container {
-    display: flex;
+.grid-container {
+    display: grid;
     align-items: stretch;
     margin-top: 10px;
+    grid-template-columns: 20% 80%;
 }
-.flex-container > div {
+.grid-container > div {
     color: white;
     margin: 10px;
     text-align: center;
-    line-height: 75px;
     font-size: 30px;
 }
 #movie-carousel { position: relative;}
@@ -30,9 +30,10 @@ body{
     bottom: 8px;
     width: 100%;
     text-align: center;
-    background-color:rgba(0,0,0,0.5);
-    height: 100px;
+    background-color: rgba(0,0,0,0.5);
+    height: 70px;
     font-family: 'Raleway', sans-serif;
+    padding-top: 35px;
 }
 .carousel-titles {
     font-family: 'Raleway', sans-serif;
@@ -78,7 +79,7 @@ body{
 
 .card {
     display: grid;
-    grid-template-columns: 20% 80% auto;
+    grid-template-columns: 30% 70% auto;
     border-left: 7px solid #A70012;
 }
 .card-item {

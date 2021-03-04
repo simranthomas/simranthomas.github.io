@@ -171,7 +171,19 @@ function get_search_data(endpoint, keyword)
 
 function display_search_results(search_results)
 {
+    clear_search();
+
     main_result_box = document.getElementById("search-results");
+
+    if(search_results.length == 0)
+    {
+        no_results_text = document.createTextNode("No results found.");
+        no_results_div = document.createElement("div");
+        no_results_div.setAttribute("id", "no-results");
+        no_results_div.appendChild(no_results_text);
+        main_result_box.appendChild(no_results_div);
+        return;
+    }
 
     showing_results_text = document.createTextNode("Showing Results");
     showing_results_div = document.createElement("div");
@@ -247,4 +259,17 @@ function display_search_results(search_results)
         cards_container.appendChild(card);
     });
     main_result_box.appendChild(cards_container);
+}
+
+function clear_search()
+{
+    result = document.getElementById("showing-results");
+    cards = document.getElementById("cards-container");
+    no_result = document.getElementById("no-results");
+    if (result != null)
+        result.remove();
+    if(cards != null)
+        cards.remove();
+    if(no_result != null)
+        no_result.remove();
 }
