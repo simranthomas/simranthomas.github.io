@@ -175,7 +175,7 @@ function display_search_results(search_results)
         return;
     }
 
-    showing_results_text = document.createTextNode("Showing Results");
+    showing_results_text = document.createTextNode("Showing Results...");
     showing_results_div = document.createElement("div");
     showing_results_div.setAttribute("id", "showing-results");
     showing_results_div.appendChild(showing_results_text);
@@ -211,12 +211,12 @@ function display_search_results(search_results)
         year_genre_text = new Date(Date.parse(item.release_air_date)).getFullYear()
 
         genres = "";
-        genre_list = 
+        
         item.genre_ids.forEach(genre => {
-
+            
             if(item.media_type == "movie")
                 genres += movie_genre_list[genre] + ",";
-            else if(item.edia_type == "tv")
+            else if(item.media_type == "tv-show")
                 genres += tv_genre_list[genre] + ",";
         });
         year_genre_text += " | " + genres.slice(0, -1);
@@ -243,7 +243,7 @@ function display_search_results(search_results)
         show_more_button.setAttribute("type", "button");
         show_more_button.setAttribute("class", "show-more-button");
         show_more_button.setAttribute("value", "Show More");
-        show_more_button.setAttribute("onclick", "show_details(" + item.id + ")")
+        show_more_button.setAttribute("onclick", "show_modal(" + item.id + "," + item.overview + "'" + item.media_type +"')")
         card_content.appendChild(show_more_button);
 
         card.appendChild(card_content);
@@ -265,7 +265,47 @@ function clear_search()
         no_result.remove();
 }
 
-function show_details(obj)
+function show_modal(media_id, media_type)
 {
-    console.log(obj)
+    console.log(media_id);
+    console.log(media_type);
+    document.getElementById("details-modal").style.display = "block";
+    
+    if(media_type == "movie")
+    {
+        get_media_details("movie_details", media_id);
+    }
+    else if(media_type == "tv-show")
+    {
+        get_media_details("tv_show_details", media_id);
+    }
+}
+
+function get_media_details(endpoint, media_id)
+{
+    var request = new XMLHttpRequest();
+    request.open("GET", "/" + endpoint + "?media_id=" + media_id, true);
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) 
+        {
+            media_details= JSON.parse(this.responseText);
+            show_media_details(media_details);
+        }
+    };
+    request.send(null);
+}
+
+function close_modal() 
+{
+    document.getElementById("details-modal").style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target ==  document.getElementById("details-modal"))
+        close_modal();
+}
+
+function show_media_details(media_details)
+{
+
 }

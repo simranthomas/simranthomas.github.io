@@ -75,7 +75,7 @@ def extract_search_fields(search_list, media_type):
             media['vote_average'] = item['vote_average']
             media['vote_count'] = item['vote_count']
             media['genre_ids'] = item['genre_ids']
-            media['media_type'] = media_type
+            media['media_type'] = "tv-show" if media_type == "tv" else "movie"
 
             final_search_results.append(media)
     
@@ -128,8 +128,7 @@ def mutisearch():
 @app.route("/movie_details", methods = ['GET'])
 def get_movie_details():
     
-    ##### SEARCH QUERY TO BE CHANGED #####
-    movie_id = 284052
+    movie_id = request.args.get('media_id')
     endpoint_url = f'{tmdb_api_url}movie/{movie_id}?api_key={tmdb_api_key}&language=en-US'
 
     response = requests.get(endpoint_url, headers = headers).json()
@@ -137,7 +136,7 @@ def get_movie_details():
         'id': response['id'],
         'title': response['title'],
         'runtime': response['runtime'],
-        'release_date': response['release_date'],
+        'release_air_date': response['release_date'],
         'spoken_languages': response['spoken_languages'],
         'vote_average': response['vote_average'],
         'vote_count': response['vote_count'],
@@ -195,24 +194,23 @@ def get_movie_reviews():
 @app.route("/tv_show_details", methods = ['GET'])
 def get_tv_show_details():
     
-    ##### SEARCH QUERY TO BE CHANGED #####
-    tv_show_id = 1399
+    tv_show_id = request.args.get('media_id')
     endpoint_url = f'{tmdb_api_url}tv/{tv_show_id}?api_key={tmdb_api_key}&language=en-US'
     response = requests.get(endpoint_url, headers = headers).json()
   
     tv_show_details = { 
-        'backdrop_path': response['backdrop_path'],
-        'episode_run_time': response['episode_run_time'],
-        'first_air_date': response['first_air_date'],
-        'genres': response['genres'],
         'id' : response['id'],
-        'name' : response['name'],
-        'number_of_seasons': response['number_of_seasons'],
-        'overview': response['overview'],
-        'poster_path': response['poster_path'],
+        'title' : response['name'],
+        'runtime': response['episode_run_time'],
+        'release_air_date': response['first_air_date'],
         'spoken_languages': response['spoken_languages'],
         'vote_average': response['vote_average'],
-        'vote_count': response['vote_count']
+        'vote_count': response['vote_count'],
+        'poster_path': response['poster_path'],
+        'backdrop_path': response['backdrop_path'],
+        'genres': response['genres'],
+        'number_of_seasons': response['number_of_seasons'],
+        'overview': response['overview']
         }
 
     return make_response(tv_show_details, 200)
