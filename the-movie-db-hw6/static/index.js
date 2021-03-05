@@ -243,7 +243,8 @@ function display_search_results(search_results)
         show_more_button.setAttribute("type", "button");
         show_more_button.setAttribute("class", "show-more-button");
         show_more_button.setAttribute("value", "Show More");
-        show_more_button.setAttribute("onclick", "show_modal(" + item.id + "," + item.overview + "'" + item.media_type +"')")
+        //show_more_button.setAttribute("onclick", "show_modal(" + item.id + ",'" + item.overview + "','" + item.media_type +"')")
+        show_more_button.setAttribute("onclick", "show_modal(" + item.id + ",'"+ item.media_type +"')");
         card_content.appendChild(show_more_button);
 
         card.appendChild(card_content);
@@ -265,19 +266,27 @@ function clear_search()
         no_result.remove();
 }
 
+function close_modal() 
+{
+    document.getElementById("details-modal").style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target ==  document.getElementById("details-modal"))
+        close_modal();
+}
+
 function show_modal(media_id, media_type)
 {
-    console.log(media_id);
-    console.log(media_type);
     document.getElementById("details-modal").style.display = "block";
     
     if(media_type == "movie")
     {
-        get_media_details("movie_details", media_id);
+       get_media_details("movie_details", media_id);
     }
     else if(media_type == "tv-show")
     {
-        get_media_details("tv_show_details", media_id);
+       get_media_details("tv_show_details", media_id);
     }
 }
 
@@ -295,17 +304,26 @@ function get_media_details(endpoint, media_id)
     request.send(null);
 }
 
-function close_modal() 
-{
-    document.getElementById("details-modal").style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target ==  document.getElementById("details-modal"))
-        close_modal();
-}
-
 function show_media_details(media_details)
 {
+    document.getElementById("media-details-img").src = base_url_backdrop_path + media_details.backdrop_path;
+    document.getElementById("media-details-title").innerHTML = media_details.title;
 
+    year_genre_text = new Date(Date.parse(media_details.release_air_date)).getFullYear()
+    
+    genres_text = "";
+    media_details.genres.forEach(genre => {            
+        genres_text += genre["name"] + ",";
+    });
+    document.getElementById("media-details-year-genre").innerHTML = year_genre_text += " | " + genres_text.slice(0, -1);;
+
+    rating_votes_text = (media_details.vote_average / 2).toFixed(2).toString() + "/5  " + media_details.vote_count.toString();
+    document.getElementById("media-details-rating-votes").innerHTML = rating_votes_text;
+
+    languages_text = "";
+    media_details.spoken_languages.forEach(language => {          
+        languages_text += language["english_name"] + ",";
+    });
+    document.getElementById("media-details-languages").innerHTML = languages_text.slice(0, -1);;
 }
+
