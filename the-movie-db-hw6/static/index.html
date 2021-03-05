@@ -3,6 +3,7 @@
     <head>
 
         <link rel="stylesheet" type="text/css" href="static/index.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">  
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
 
@@ -15,8 +16,12 @@
     <div class = "grid-container">
         
         <div id = "tab-wrapper">
-            <div id = "home-tab"><a id = "home-text" class = "side-tabs" onclick = "load_home_page()">Home &#10230;</a></div>
-            <div id = "search-tab" ><a id = "search-text" class = "side-tabs" onclick = "load_search_page()">Search &#10230;</a></div>
+            <div id = "home-tab">
+                <a id = "home-text" class = "side-tabs" onclick = "load_home_page()">Home <span class = "arrow"> &#10230; </span></a>
+            </div>
+            <div id = "search-tab" >
+                <a id = "search-text" class = "side-tabs" onclick = "load_search_page()">Search<span class = "arrow"> &#10230; </span></a>
+            </div>
         </div>
 
         <div id = "home-page">
@@ -79,10 +84,12 @@
             </div>
 
         </div>
-
+        
         <div id = "footer">
-
+            Designed and developed by Simran
+            <br>Powered by TMDB
         </div>
+
     </div>
 
 </body>
