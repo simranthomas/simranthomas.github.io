@@ -1,5 +1,5 @@
-var base_url_backdrop_path = "https://image.tmdb.org/t/p/w780/"
-var base_url_poster_profile_path = "https://image.tmdb.org/t/p/w185/"
+var base_url_backdrop_path = "https://image.tmdb.org/t/p/w780"
+var base_url_poster_profile_path = "https://image.tmdb.org/t/p/w185"
 
 
 function initial_load()
@@ -198,16 +198,16 @@ function display_search_results(search_results)
         card.appendChild(card_poster);
 
         card_content = document.createElement("div");
-        card_content.setAttribute("class", "card-item card-content");
+        card_content.setAttribute("class", "card-content");
 
         title = document.createElement("div");
-        title.setAttribute("class", "card-item card-content");
+        title.setAttribute("class", "card-item");
         title_text = document.createTextNode(item.title);
         title.appendChild(title_text);
         card_content.appendChild(title);
 
         year_genre = document.createElement("div");
-        year_genre.setAttribute("class", "card-item card-content");
+        year_genre.setAttribute("class", "card-item");
         year_genre_text = new Date(Date.parse(item.release_air_date)).getFullYear()
 
         genres = "";
@@ -226,14 +226,14 @@ function display_search_results(search_results)
         card_content.appendChild(year_genre);
 
         rating_votes = document.createElement("div");
-        rating_votes.setAttribute("class", "card-item card-content");
+        rating_votes.setAttribute("class", "card-item");
         rating_votes_text = (item.vote_average / 2).toFixed(2).toString() + "/5  " + item.vote_count.toString();
         text_rating = document.createTextNode(rating_votes_text);
         rating_votes.appendChild(text_rating);
         card_content.appendChild(rating_votes);
 
         overview = document.createElement("div");
-        overview.setAttribute("class", "card-item card-content");
+        overview.setAttribute("class", "card-item card-overview");
         overview_text = item.overview;
         text_overview = document.createTextNode(overview_text);
         overview.appendChild(text_overview);
@@ -258,6 +258,7 @@ function clear_search()
     result = document.getElementById("showing-results");
     cards = document.getElementById("cards-container");
     no_result = document.getElementById("no-results");
+
     if (result != null)
         result.remove();
     if(cards != null)
@@ -266,9 +267,17 @@ function clear_search()
         no_result.remove();
 }
 
+function clear_fields()
+{
+    document.getElementById("keyword").value = "";
+    document.getElementById("categories").value = "";
+}
+
 function close_modal() 
 {
     document.getElementById("details-modal").style.display = "none";
+    document.getElementById("actors-grid").remove();
+    document.getElementById("cards-reviews").remove();
 }
 
 window.onclick = function(event) {
@@ -283,10 +292,14 @@ function show_modal(media_id, media_type)
     if(media_type == "movie")
     {
        get_media_details("movie_details", media_id);
+       get_cast_details("movie_credits", media_id);
+       get_review_details("movie_reviews", media_id);
     }
     else if(media_type == "tv-show")
     {
        get_media_details("tv_show_details", media_id);
+       get_cast_details("tv_show_credits", media_id);
+       get_review_details("tv_show_reviews", media_id);
     }
 }
 
@@ -320,10 +333,124 @@ function show_media_details(media_details)
     rating_votes_text = (media_details.vote_average / 2).toFixed(2).toString() + "/5  " + media_details.vote_count.toString();
     document.getElementById("media-details-rating-votes").innerHTML = rating_votes_text;
 
+    document.getElementById("media-details-overview").innerHTML = media_details.overview;
+
     languages_text = "";
     media_details.spoken_languages.forEach(language => {          
         languages_text += language["english_name"] + ",";
     });
-    document.getElementById("media-details-languages").innerHTML = languages_text.slice(0, -1);;
+    document.getElementById("media-details-languages").innerHTML = languages_text.slice(0, -1);
+}
+
+function get_cast_details(endpoint, media_id)
+{
+    var request = new XMLHttpRequest();
+    request.open("GET", "/" + endpoint + "?media_id=" + media_id, true);
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) 
+        {
+            cast_details= JSON.parse(this.responseText).actors;
+            show_cast_details(cast_details);
+        }
+    };
+    request.send(null);
+}
+
+function show_cast_details(cast_details_data)
+{
+
+    cast_container = document.getElementById("cast-container");
+
+    cast_details_div= document.createElement("div");
+    cast_details_div.setAttribute("class", "cast-grid");
+    cast_details_div.setAttribute("id", "actors-grid");
+    cast_container.appendChild(cast_details_div);
+
+    cast_details_data.forEach(actor =>{
+
+        actor_card = document.createElement("div");
+        actor_card.setAttribute("class", "actor-card");
+        
+        actor_img_div = document.createElement("div");
+        actor_img_div.setAttribute("class", "actor-img");
+        actor_img = new Image();
+        actor_img.src = base_url_poster_profile_path + actor.profile_path;
+        actor_img_div.appendChild(actor_img);
+        actor_card.appendChild(actor_img_div);
+
+        actor_profile_div = document.createElement("div");
+        actor_profile_div.setAttribute("class", "actor-profile");
+        actor_card.appendChild(actor_profile_div);
+
+        actor_name_div = document.createElement("div");
+        actor_name_div.setAttribute("class", "actor-name");
+        actor_name_div.appendChild(document.createTextNode(actor.name));
+        actor_profile_div.appendChild(actor_name_div);
+
+        as_div = document.createElement("div");
+        as_div.appendChild(document.createTextNode("AS"));
+        actor_profile_div.appendChild(as_div);
+
+        character_name_div = document.createElement("div");
+        character_name_div.setAttribute("class", "character-name");
+        character_name_div.appendChild(document.createTextNode(actor.character));
+        actor_profile_div.appendChild(character_name_div);
+        
+        cast_details_div.appendChild(actor_card);
+
+    });
+}
+
+function get_review_details(endpoint, media_id)
+{
+    var request = new XMLHttpRequest();
+    request.open("GET", "/" + endpoint + "?media_id=" + media_id, true);
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) 
+        {
+            review_details= JSON.parse(this.responseText).reviews;
+            show_review_details(review_details);
+        }
+    };
+    request.send(null);
+}
+
+function show_review_details(review_details_data)
+{
+    reviews_container = document.getElementById("reviews-container");
+
+    review_cards_div= document.createElement("div");
+    review_cards_div.setAttribute("class", "reviews-cards");
+    review_cards_div.setAttribute("id", "cards-reviews");
+    reviews_container.appendChild(review_cards_div);
+
+    review_details_data.forEach(review =>{
+
+        review_card = document.createElement("div");
+        review_card.setAttribute("class", "review-card");
+
+        var date = new Date(review.created_at);
+        user_date_text = document.createTextNode(review.username + " on " + date.toLocaleDateString());
+        user_date = document.createElement("div");
+        user_date.setAttribute("class", "user-date");
+        user_date.appendChild(user_date_text);
+        review_card.appendChild(user_date);
+
+        review_rating = document.createElement("div");
+        review_rating.setAttribute("class", "review-rating");
+        review_rating_text = document.createTextNode((review.rating / 2).toFixed(2));
+        review_rating.appendChild(review_rating_text);
+        review_card.appendChild(review_rating);
+
+        review_content = document.createElement("div");
+        review_content.setAttribute("class", "review-content");
+        review_content_text = document.createTextNode(review.content);
+        review_content.appendChild(review_content_text);
+        review_card.appendChild(review_content);
+
+        review_card.appendChild(document.createElement("hr"));
+        review_cards_div.appendChild(review_card);
+    });
+
 }
 

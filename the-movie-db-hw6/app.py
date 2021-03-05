@@ -142,7 +142,8 @@ def get_movie_details():
         'vote_count': response['vote_count'],
         'poster_path': response['poster_path'],
         'backdrop_path': response['backdrop_path'],
-        'genres': response['genres']
+        'genres': response['genres'],
+        'overview': response['overview']
         }
 
     return make_response(movie_details, 200)
@@ -152,15 +153,14 @@ def get_movie_details():
 @app.route("/movie_credits", methods = ['GET'])
 def get_movie_credits():
     
-    ##### SEARCH QUERY TO BE CHANGED #####
-    movie_id = 284052
+    movie_id = request.args.get('media_id')
     endpoint_url = f'{tmdb_api_url}movie/{movie_id}/credits?api_key={tmdb_api_key}&language=en-US'
 
     response = requests.get(endpoint_url, headers = headers).json()
     
-    movie_actors = {'movie_actors': []}
+    movie_actors = {'actors': []}
     for item in response['cast'][:8]:
-        movie_actors['movie_actors'].append({
+        movie_actors['actors'].append({
             'name': item['name'], 
             'profile_path': item['profile_path'], 
             'character': item['character']
@@ -178,9 +178,9 @@ def get_movie_reviews():
     endpoint_url = f'{tmdb_api_url}movie/{movie_id}/reviews?api_key={tmdb_api_key}&language=en-US&page=1'
     response = requests.get(endpoint_url, headers = headers).json()
     
-    movie_reviews = {'movie_reviews': []}
+    movie_reviews = {'reviews': []}
     for item in response['results'][:5]:
-        movie_reviews['movie_reviews'].append({
+        movie_reviews['reviews'].append({
             'username': item['author_details']['username'], 
             'content': item['content'], 
             'rating': item['author_details']['rating'],
@@ -220,15 +220,14 @@ def get_tv_show_details():
 @app.route("/tv_show_credits", methods = ['GET'])
 def get_tv_show_credits():
     
-    ##### SEARCH QUERY TO BE CHANGED #####
-    tv_show_id = 1399
+    tv_show_id = request.args.get('media_id')
     endpoint_url = f'{tmdb_api_url}tv/{tv_show_id}/credits?api_key={tmdb_api_key}&language=en-US'
 
     response = requests.get(endpoint_url, headers = headers).json()
     
-    tv_show_actors = {'tv_show_actors': []}
+    tv_show_actors = {'actors': []}
     for item in response['cast'][:8]:
-        tv_show_actors['tv_show_actors'].append({
+        tv_show_actors['actors'].append({
             'name': item['name'], 
             'profile_path': item['profile_path'], 
             'character': item['character']
@@ -246,9 +245,9 @@ def get_tv_show_reviews():
     endpoint_url = f'{tmdb_api_url}tv/{tv_show_id}/reviews?api_key={tmdb_api_key}&language=en-US&page=1'
     response = requests.get(endpoint_url, headers = headers).json()
     
-    tv_show_reviews = {'tv_show_reviews': []}
+    tv_show_reviews = {'reviews': []}
     for item in response['results'][:5]:
-        tv_show_reviews['tv_show_reviews'].append({
+        tv_show_reviews['reviews'].append({
             'username': item['author_details']['username'], 
             'content': item['content'], 
             'rating': item['author_details']['rating'],

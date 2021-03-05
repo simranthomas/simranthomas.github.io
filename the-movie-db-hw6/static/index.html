@@ -3,7 +3,7 @@
     <head>
 
         <link rel="stylesheet" type="text/css" href="static/index.css">
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">  
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">  
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
 
         <script src = "static/index.js"></script>
@@ -29,7 +29,7 @@
         <div id = "search-page">
             <div id = "search-box"> 
                 <div>Search</div>
-                <form id = "search-form">
+                
                     <div>
                         <label>Keyword</label><span class = "required">*</span>
                         <input type = "text" id = "keyword">
@@ -46,25 +46,41 @@
                     </div>
 
                     <input class = "form-buttons" type = "button" value = "Search" onclick = "get_form_data()">
-                    <input class = "form-buttons" type = "reset" value = "Clear" onclick = "clear_search()">
-                </form>
+                    <input class = "form-buttons" type = "reset" value = "Clear" onclick = "clear_search(); clear_fields()">
+                
             </div>
 
             <div id = "search-results"></div>
 
-            <div id="details-modal" class="modal">
-                <div class="modal-content">
+            <div id = "details-modal" class="modal">
+                <div class = "modal-content">
+                    
                     <div id = "media-details">
                         <img id = "media-details-img">
-                        <span class="close" onclick = "close_modal()">&times;</span>
+                        <span class = "close" onclick = "close_modal()">&times;</span>
                         <div id = "media-details-title"></div>
                         <div id = "media-details-year-genre"></div>
                         <div id = "media-details-rating-votes"></div>
                         <div id = "media-details-overview"></div>
-                        <div id = "media-details-languages"></div>
+                        <div id = "media-details-languages">Spoken Languages</div>
                     </div>
+                    
+                    <div id = "cast-container">
+                        <div id = "cast-title-text">Cast</div>
+                    </div>
+
+                    <div id = "reviews-container">
+                        <div id = "reviews-title-text">Reviews</div>
+                    </div>
+
+                    <br>
+                    <br>
                 </div>
             </div>
+
+        </div>
+
+        <div id = "footer">
 
         </div>
     </div>

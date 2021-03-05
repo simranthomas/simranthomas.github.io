@@ -3,11 +3,11 @@ body{
 }
 #heading {
     height: 40px;
-    background-image: linear-gradient(to right, rgba(167,0,18,0) 70%, rgba(167,0,18,1));
+    background-image: linear-gradient(to right, rgba(165, 36, 32,0) 70%, rgba(165, 36, 32,1));
 }
 #logo {
-    color : #A70012;
-    font-family: 'Open Sans', sans-serif;
+    color : #A52420;
+    font-family: 'Lato', sans-serif;
 }
 .grid-container {
     display: grid;
@@ -20,6 +20,9 @@ body{
     margin: 10px;
     text-align: center;
     font-size: 30px;
+}
+#footer {
+    background-color: #410807;
 }
 #movie-carousel { position: relative;}
 #tv-show-carousel { position: relative;}
@@ -56,20 +59,20 @@ body{
 }
 
 .side-tabs {
-    color: #A70012;
+    color: #A52420;
     text-decoration: none;
     font-size: 16px;
     cursor: pointer;
 }
 .side-tabs:hover{
-    color: #A70012;
+    color: #A52420;
 }
 #tab-wrapper{
     border-right: 1px solid white;
 }
 #search-box{
     height: 200px;
-    background-image:  linear-gradient(to top, rgba(167, 0, 18, 0.15), rgb(167, 0, 18));
+    background-image:  linear-gradient(to top, rgba(165, 36, 32, 0.15), rgb(165, 36, 32));
 }
 .required{
     color: red;
@@ -82,7 +85,7 @@ body{
 .card {
     display: grid;
     grid-template-columns: 30% 70% auto;
-    border-left: 7px solid #A70012;
+    border-left: 7px solid #A52420;
 }
 .card-item {
     text-align: left;
@@ -91,6 +94,13 @@ body{
 }
 .card-content {
     height: 30px;
+}
+.card-overview {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .modal {
@@ -123,4 +133,38 @@ body{
 .close:focus {
     color: #000;
     cursor: pointer;
+}
+
+.cast-grid {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 10px;
+}
+.actor-card {
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+}
+.actor-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical; 
+}
+.character-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical; 
+}
+
+
+.review-content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
