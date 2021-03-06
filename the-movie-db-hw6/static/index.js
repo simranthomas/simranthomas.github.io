@@ -340,11 +340,11 @@ function show_media_details(media_details)
     });
     document.getElementById("media-details-year-genre").innerHTML = year_genre_text += " | " + genres_text.slice(0, -2);;
 
-    rating_votes_text = (media_details.vote_average / 2).toFixed(2).toString() + "/5";
+    rating_votes_text = parseFloat((media_details.vote_average / 2).toFixed(2)) + "/5";
     document.getElementById("media-details-rating-votes").innerHTML = "\u2605 " + rating_votes_text;
     
     votes_span = document.createElement("span");
-    votes_span.setAttribute("class", "votes-text");
+    votes_span.setAttribute("class", "votes-text-modal");
     votes_span.innerHTML = media_details.vote_count + " votes";
     document.getElementById("media-details-rating-votes").appendChild(votes_span);
     
@@ -443,17 +443,21 @@ function show_review_details(review_details_data)
 
         review_card = document.createElement("div");
         review_card.setAttribute("class", "review-card");
+        
+        bold_tag = document.createElement("b");
+        bold_tag.appendChild(document.createTextNode(review.username));
 
         var date = new Date(review.created_at);
-        user_date_text = document.createTextNode(review.username + " on " + date.toLocaleDateString());
+        user_date_text = document.createTextNode(" on " + date.toLocaleDateString());
         user_date = document.createElement("div");
         user_date.setAttribute("class", "user-date");
+        user_date.appendChild(bold_tag);
         user_date.appendChild(user_date_text);
         review_card.appendChild(user_date);
 
         review_rating = document.createElement("div");
         review_rating.setAttribute("class", "review-rating");
-        review_rating_text = document.createTextNode((review.rating / 2).toFixed(2));
+        review_rating_text = document.createTextNode("\u2605 " + parseFloat((review.rating / 2).toFixed(2)) + "/5");
         review_rating.appendChild(review_rating_text);
         review_card.appendChild(review_rating);
 

@@ -5,8 +5,8 @@
         <link rel="stylesheet" type="text/css" href="static/index.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">  
-        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
-        
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
         <script src = "static/index.js"></script>
 </head>
 <body onload = "initial_load()">
@@ -68,21 +68,20 @@
                         <span class = "close" onclick = "close_modal()">&times;</span>
                         <div id = "media-details-title"></div>
                         <div id = "media-details-year-genre"></div>
-                        <div id = "media-details-rating-votes" class = "card-rating-votes"></div>
+                        <div id = "media-details-rating-votes"></div>
                         <div id = "media-details-overview"></div>
                         <div id = "media-details-languages">Spoken Languages</div>
                     </div>
                     
                     <div id = "cast-container" class = "modal-item">
-                        <div id = "cast-title-text">Cast</div>
+                        <div id = "cast-title-text" class = "details-titles">Cast</div>
                     </div>
 
                     <div id = "reviews-container" class = "modal-item">
-                        <div id = "reviews-title-text">Reviews</div>
+                        <div id = "reviews-title-text" class = "details-titles">Reviews</div>
                     </div>
 
-                    <br>
-                    <br>
+                    <div id = "bottom-overflow"></div>
                 </div>
             </div>
 

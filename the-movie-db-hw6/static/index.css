@@ -252,12 +252,13 @@ body{
     color: black;
     text-align: left;
     font-size: 13px;
+    margin-top: -8px;
 }
-.modal-item{
+.modal-item {
     margin-left: 14px;
 }
-.modal-item > div{
-    padding:10px;
+.modal-item > div {
+    padding-top: 15px;
 }
 .close {
     color: #aaaaaa;
@@ -272,22 +273,63 @@ body{
     cursor: pointer;
 }
 
+#media-details-title {
+    font-size: 20px;
+}
+#info-icon {
+    color: #AC2622;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 3px;
+}
+#media-details-rating-votes {
+    margin: -3px 0px 19px 0px;
+    font-size: 11.5px;
+    color: #AC2622;
+}
+#media-details-languages {
+    font-style: italic;
+    font-weight: 600;
+    font-size: 11.5px;
+}
+.votes-text-modal {
+    color: black;
+    margin-left: 56px;
+    display: block;
+    margin-top: -17px;
+}
+.details-titles {
+    font-size: 18px;
+    font-weight: 700;
+}
+#cast-container {
+    margin-top: 26px;
+}
 .cast-grid {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    padding: 10px;
+    margin-left: -5px;
+    margin-right: 25px;
+    grid-row-gap: 15px;
+}
+.actor-img > img {
+    width: 150px;
+    height: 225px;
 }
 .actor-card {
-    padding: 20px;
-    font-size: 30px;
     text-align: center;
+}
+.actor-profile {
+    font-size: 11px;
+    padding-top: 10px;
 }
 .actor-name {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical; 
+    -webkit-box-orient: vertical;
+    font-weight: 800;
 }
 .character-name {
     overflow: hidden;
@@ -296,12 +338,36 @@ body{
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical; 
 }
-
-
+#reviews-container {
+    margin-top: 27px;
+}
+#reviews-title-text {
+    margin-bottom: -10px;
+}
 .review-content {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+}
+.review-card {
+    margin-top: 10px;
+}
+.review-card > div {
+    padding: 5px 0px 2px 0px;
+}
+.review-rating {
+    color: #AC2622;
+    margin-top: 5px;
+    margin-bottom: -7px;
+    font-size: 11px;
+}
+hr {
+    width: 77%;
+    background-color: gray;
+    margin-right: 81px;
+}
+#bottom-overflow {
+    height: 100px;
 }
