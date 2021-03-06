@@ -15,7 +15,7 @@ function load_home_page()
 {
     document.getElementById("search-page").style.display = "none";
     document.getElementById("home-page").style.display = "block";
-    document.getElementById("home-tab").style.borderBottom = "1px solid white";
+    document.getElementById("home-tab").style.borderBottom = "2px solid #828184";
     document.getElementById("search-text").style.color = "white";
     document.getElementById("home-text").style.color = "#A70012";
     document.getElementById("search-tab").style.borderBottom = "none";
@@ -25,7 +25,7 @@ function load_search_page()
 {
     document.getElementById("search-page").style.display = "block";
     document.getElementById("home-page").style.display = "none";
-    document.getElementById("search-tab").style.borderBottom = "1px solid white";
+    document.getElementById("search-tab").style.borderBottom = "2px solid #828184";
     document.getElementById("search-text").style.color = "#A70012";
     document.getElementById("home-text").style.color = "white";
     document.getElementById("home-tab").style.borderBottom = "none";
@@ -57,6 +57,7 @@ function generate_carousel(item_list, media_type)
 
         // create image tag
         carousel_image = new Image();
+        carousel_image.setAttribute("class", "backdrop-img");
         carousel_image.src = base_url_backdrop_path + item.backdrop_path;
         carousel_element.appendChild(carousel_image);
 
@@ -175,7 +176,7 @@ function display_search_results(search_results)
         return;
     }
 
-    showing_results_text = document.createTextNode("Showing Results...");
+    showing_results_text = document.createTextNode("Showing results...");
     showing_results_div = document.createElement("div");
     showing_results_div.setAttribute("id", "showing-results");
     showing_results_div.appendChild(showing_results_text);
@@ -190,7 +191,7 @@ function display_search_results(search_results)
         card.setAttribute("class", "card");
 
         card_poster = document.createElement("div");
-        card_poster.setAttribute("class", "card-item");
+        card_poster.setAttribute("class", "card-img");
 
         poster_img = new Image();
         poster_img.src = base_url_poster_profile_path + item.poster_path;
@@ -201,7 +202,7 @@ function display_search_results(search_results)
         card_content.setAttribute("class", "card-content");
 
         title = document.createElement("div");
-        title.setAttribute("class", "card-item");
+        title.setAttribute("class", "card-title");
         title_text = document.createTextNode(item.title);
         title.appendChild(title_text);
         card_content.appendChild(title);
@@ -215,21 +216,26 @@ function display_search_results(search_results)
         item.genre_ids.forEach(genre => {
             
             if(item.media_type == "movie")
-                genres += movie_genre_list[genre] + ",";
+                genres += movie_genre_list[genre] + ", ";
             else if(item.media_type == "tv-show")
-                genres += tv_genre_list[genre] + ",";
+                genres += tv_genre_list[genre] + ", ";
         });
-        year_genre_text += " | " + genres.slice(0, -1);
+        year_genre_text += " | " + genres.slice(0, -2);
 
         text_year = document.createTextNode(year_genre_text);
         year_genre.appendChild(text_year);
         card_content.appendChild(year_genre);
 
         rating_votes = document.createElement("div");
-        rating_votes.setAttribute("class", "card-item");
-        rating_votes_text = (item.vote_average / 2).toFixed(2).toString() + "/5  " + item.vote_count.toString();
-        text_rating = document.createTextNode(rating_votes_text);
+        rating_votes.setAttribute("class", "card-rating-votes");
+        rating_votes_text = parseFloat((item.vote_average / 2).toFixed(2)) + "/5";
+        text_rating = document.createTextNode("\u2605 " +rating_votes_text);
         rating_votes.appendChild(text_rating);
+
+        votes = document.createElement("span");
+        votes.setAttribute("class", "votes-text");
+        votes.appendChild(document.createTextNode(item.vote_count.toString() + " votes"));
+        rating_votes.appendChild(votes)
         card_content.appendChild(rating_votes);
 
         overview = document.createElement("div");
@@ -243,7 +249,6 @@ function display_search_results(search_results)
         show_more_button.setAttribute("type", "button");
         show_more_button.setAttribute("class", "show-more-button");
         show_more_button.setAttribute("value", "Show More");
-        //show_more_button.setAttribute("onclick", "show_modal(" + item.id + ",'" + item.overview + "','" + item.media_type +"')")
         show_more_button.setAttribute("onclick", "show_modal(" + item.id + ",'"+ item.media_type +"')");
         card_content.appendChild(show_more_button);
 

@@ -5,8 +5,8 @@
         <link rel="stylesheet" type="text/css" href="static/index.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">  
-        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
-
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+        
         <script src = "static/index.js"></script>
 </head>
 <body onload = "initial_load()">
@@ -16,11 +16,11 @@
     <div class = "grid-container">
         
         <div id = "tab-wrapper">
-            <div id = "home-tab">
-                <a id = "home-text" class = "side-tabs" onclick = "load_home_page()">Home <span class = "arrow"> &#10230; </span></a>
+            <div id = "home-tab" class = "side-tabs">
+                <a id = "home-text"  class = "side-text" onclick = "load_home_page()">Home <span class = "arrow"> &#10230; </span></a>
             </div>
-            <div id = "search-tab" >
-                <a id = "search-text" class = "side-tabs" onclick = "load_search_page()">Search<span class = "arrow"> &#10230; </span></a>
+            <div id = "search-tab" class = "side-tabs">
+                <a id = "search-text"  class = "side-text" onclick = "load_search_page()">Search<span class = "arrow"> &#10230; </span></a>
             </div>
         </div>
 
@@ -33,26 +33,29 @@
 
         <div id = "search-page">
             <div id = "search-box"> 
-                <div>Search</div>
+                <div >
+                    <div id = "search">Search</div>
+                </div>
                 
-                    <div>
-                        <label>Keyword</label><span class = "required">*</span>
-                        <input type = "text" id = "keyword">
-                    </div>
+                <div id = "keyword-label">
+                    <label>Keyword</label><span class = "required">*</span>
+                    <input type = "text" id = "keyword" class = "form-input">
+                </div>
 
-                    <div>
-                        <label for="categories">Category</label><span class = "required">*</span>
-                        <select id="categories" >
-                            <option value = "" selected></option>
-                            <option value = "movies">Movies</option>
-                            <option value = "tv_shows">TV Shows</option>
-                            <option value = "movies_tv_shows">Movies and TV Shows</option>
-                        </select>
-                    </div>
+                <div id = "category-label">
+                    <label for="categories">Category</label><span class = "required">*</span>
+                    <select id="categories" class = "form-input">
+                        <option value = "" selected></option>
+                        <option value = "movies">Movies</option>
+                        <option value = "tv_shows">TV Shows</option>
+                        <option value = "movies_tv_shows">Movies and TV Shows</option>
+                    </select>
+                </div>
 
+                <div>
                     <input class = "form-buttons" type = "button" value = "Search" onclick = "get_form_data()">
-                    <input class = "form-buttons" type = "reset" value = "Clear" onclick = "clear_search(); clear_fields()">
-                
+                    <span id = "button-span"><input class = "form-buttons" type = "reset" value = "Clear" onclick = "clear_search(); clear_fields()"></span>
+                </div>
             </div>
 
             <div id = "search-results"></div>
@@ -60,8 +63,8 @@
             <div id = "details-modal" class="modal">
                 <div class = "modal-content">
                     
-                    <div id = "media-details">
-                        <img id = "media-details-img">
+                    <div id = "media-details" class = "modal-item">
+                        <img id = "media-details-img" class = "backdrop-img">
                         <span class = "close" onclick = "close_modal()">&times;</span>
                         <div id = "media-details-title"></div>
                         <div id = "media-details-year-genre"></div>
@@ -70,11 +73,11 @@
                         <div id = "media-details-languages">Spoken Languages</div>
                     </div>
                     
-                    <div id = "cast-container">
+                    <div id = "cast-container" class = "modal-item">
                         <div id = "cast-title-text">Cast</div>
                     </div>
 
-                    <div id = "reviews-container">
+                    <div id = "reviews-container" class = "modal-item">
                         <div id = "reviews-title-text">Reviews</div>
                     </div>
 
