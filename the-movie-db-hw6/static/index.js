@@ -326,32 +326,42 @@ function show_media_details(media_details)
 {
     document.getElementById("media-details-img").src = base_url_backdrop_path + media_details.backdrop_path;
     document.getElementById("media-details-title").innerHTML = media_details.title;
+    
+    info_icon = document.createElement("span");
+    info_icon.setAttribute("id", "info-icon");
+    info_icon.innerHTML = " &#9432";
+    document.getElementById("media-details-title").appendChild(info_icon);
 
-    year_genre_text = new Date(Date.parse(media_details.release_air_date)).getFullYear()
+    year_genre_text = new Date(Date.parse(media_details.release_air_date)).getFullYear();
     
     genres_text = "";
     media_details.genres.forEach(genre => {            
-        genres_text += genre["name"] + ",";
+        genres_text += genre["name"] + ", ";
     });
-    document.getElementById("media-details-year-genre").innerHTML = year_genre_text += " | " + genres_text.slice(0, -1);;
+    document.getElementById("media-details-year-genre").innerHTML = year_genre_text += " | " + genres_text.slice(0, -2);;
 
-    rating_votes_text = (media_details.vote_average / 2).toFixed(2).toString() + "/5  " + media_details.vote_count.toString();
-    document.getElementById("media-details-rating-votes").innerHTML = rating_votes_text;
-
+    rating_votes_text = (media_details.vote_average / 2).toFixed(2).toString() + "/5";
+    document.getElementById("media-details-rating-votes").innerHTML = "\u2605 " + rating_votes_text;
+    
+    votes_span = document.createElement("span");
+    votes_span.setAttribute("class", "votes-text");
+    votes_span.innerHTML = media_details.vote_count + " votes";
+    document.getElementById("media-details-rating-votes").appendChild(votes_span);
+    
     document.getElementById("media-details-overview").innerHTML = media_details.overview;
 
     languages_text = "";
     media_details.spoken_languages.forEach(language => {          
-        languages_text += language["english_name"] + ",";
+        languages_text += language["english_name"] + ", ";
     });
-    document.getElementById("media-details-languages").innerHTML = languages_text.slice(0, -1);
+    document.getElementById("media-details-languages").innerHTML = "Spoken Languages: " + languages_text.slice(0, -2);
 }
 
 function get_cast_details(endpoint, media_id)
 {
     var request = new XMLHttpRequest();
     request.open("GET", "/" + endpoint + "?media_id=" + media_id, true);
-    request.onreadystatechange = function() {
+    request.onreadystatechange = function() {  
         if (request.readyState == 4 && request.status == 200) 
         {
             cast_details= JSON.parse(this.responseText).actors;

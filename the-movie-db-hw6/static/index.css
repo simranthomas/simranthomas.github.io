@@ -224,6 +224,11 @@ body{
     padding: 7px 13px 7px 13px;
     margin-top: 20px;
 }
+#no-results {
+    font-size: 15px;
+    text-align: center;
+    padding: 64px;
+}
 
 .modal {
     display: none; 
@@ -252,7 +257,7 @@ body{
     margin-left: 14px;
 }
 .modal-item > div{
-    
+    padding:10px;
 }
 .close {
     color: #aaaaaa;
