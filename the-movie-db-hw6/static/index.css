@@ -224,6 +224,9 @@ body{
     padding: 7px 13px 7px 13px;
     margin-top: 20px;
 }
+.show-more-button:hover {
+    background-color: #C2C1C3;
+}
 #no-results {
     font-size: 15px;
     text-align: center;
@@ -281,6 +284,7 @@ body{
     font-size: 11px;
     font-weight: 600;
     margin-left: 3px;
+    cursor: pointer;
 }
 #media-details-rating-votes {
     margin: -3px 0px 19px 0px;
@@ -329,7 +333,7 @@ body{
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-    font-weight: 800;
+    font-weight: 700;
 }
 .character-name {
     overflow: hidden;

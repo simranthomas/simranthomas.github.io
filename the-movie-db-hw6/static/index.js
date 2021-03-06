@@ -329,6 +329,8 @@ function show_media_details(media_details)
     
     info_icon = document.createElement("span");
     info_icon.setAttribute("id", "info-icon");
+    tmdb_url = "https://www.themoviedb.org/movie/" + media_details.id;
+    info_icon.setAttribute("onclick", "window.open('" + tmdb_url + "')");
     info_icon.innerHTML = " &#9432";
     document.getElementById("media-details-title").appendChild(info_icon);
 
