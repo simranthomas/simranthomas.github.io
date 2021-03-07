@@ -224,7 +224,7 @@ function display_search_results(search_results)
         card_content.appendChild(title);
 
         year_genre = document.createElement("div");
-        year_genre.setAttribute("class", "card-item");
+        year_genre.setAttribute("class", "card-year-genre");
 
         if(item.release_air_date != undefined)
             year_genre_text = new Date(Date.parse(item.release_air_date)).getFullYear();
@@ -262,7 +262,7 @@ function display_search_results(search_results)
         card_content.appendChild(rating_votes);
 
         overview = document.createElement("div");
-        overview.setAttribute("class", "card-item card-overview");
+        overview.setAttribute("class", "card-overview");
         overview_text = item.overview;
         text_overview = document.createTextNode(overview_text);
         overview.appendChild(text_overview);

@@ -185,9 +185,6 @@ body{
     width: 185px;
     height: 278px;
 }
-.card-content > div{
-    padding: 10px 0px 10px 0px;
-}
 .card-content {
     height: 30px;
 }
@@ -197,10 +194,13 @@ body{
     color: white;
     font-weight: 600;
 }
+.card-year-genre {
+    margin-top: 26px;
+}
 .card-rating-votes {
     color: #AC2622;
-    margin-top: -18px;
     font-size: 12px;
+    margin-top: 4px;
 }
 .votes-text {
     color: white;
@@ -214,7 +214,7 @@ body{
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    height: 40px;
+    margin-top: 25px;
 }
 .show-more-button {
     background-color: #AA2521;
@@ -291,6 +291,7 @@ body{
     margin: -3px 0px 19px 0px;
     font-size: 11.5px;
     color: #AC2622;
+    font-weight: 500;
 }
 #media-details-languages {
     font-style: italic;
@@ -302,6 +303,7 @@ body{
     margin-left: 56px;
     display: block;
     margin-top: -17px;
+    font-weight: 400;
 }
 .details-titles {
     font-size: 18px;
@@ -356,19 +358,17 @@ body{
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    height: 43px;
+    margin-top: 15px;
+    margin-bottom: 11px;
 }
 .review-card {
-    margin-top: 10px;
-}
-.review-card > div {
-    padding: 10px 0px 4px 0px;
+    margin-top: 20px;
 }
 .review-rating {
     color: #AC2622;
-    margin-top: -4px;
-    margin-bottom: -14px;
-    font-size: 11px;
+    margin-top: 13px;
+    margin-bottom: -15px;
+    font-size: 11.5px;
     font-weight: 500;
 }
 hr {
