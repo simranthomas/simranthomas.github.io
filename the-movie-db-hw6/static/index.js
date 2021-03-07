@@ -1,5 +1,8 @@
 var base_url_backdrop_path = "https://image.tmdb.org/t/p/w780"
 var base_url_poster_profile_path = "https://image.tmdb.org/t/p/w185"
+var backdrop_placeholder = "static/backdrop-placeholder.jpg"
+var poster_placeholder = "static/poster-placeholder.png"
+var profile_placeholder = "static/profile-placeholder.png"
 
 
 function initial_load()
@@ -58,7 +61,11 @@ function generate_carousel(item_list, media_type)
         // create image tag
         carousel_image = new Image();
         carousel_image.setAttribute("class", "backdrop-img");
-        carousel_image.src = base_url_backdrop_path + item.backdrop_path;
+
+        if(item.backdrop_path != null)
+            carousel_image.src = base_url_backdrop_path + item.backdrop_path;
+        else
+            carousel_image.src = backdrop_placeholder;
         carousel_element.appendChild(carousel_image);
 
         // create caption tag
@@ -194,7 +201,11 @@ function display_search_results(search_results)
         card_poster.setAttribute("class", "card-img");
 
         poster_img = new Image();
-        poster_img.src = base_url_poster_profile_path + item.poster_path;
+        if (item.poster_path != null)
+            poster_img.src = base_url_poster_profile_path + item.poster_path;
+        else
+            poster_img.src = poster_placeholder;
+
         card_poster.appendChild(poster_img);
         card.appendChild(card_poster);
 
@@ -296,19 +307,19 @@ function show_modal(media_id, media_type)
     
     if(media_type == "movie")
     {
-       get_media_details("movie_details", media_id);
+       get_media_details("movie_details", media_id, "movie");
        get_cast_details("movie_credits", media_id);
        get_review_details("movie_reviews", media_id);
     }
     else if(media_type == "tv-show")
     {
-       get_media_details("tv_show_details", media_id);
+       get_media_details("tv_show_details", media_id, "tv");
        get_cast_details("tv_show_credits", media_id);
        get_review_details("tv_show_reviews", media_id);
     }
 }
 
-function get_media_details(endpoint, media_id)
+function get_media_details(endpoint, media_id, media_type)
 {
     var request = new XMLHttpRequest();
     request.open("GET", "/" + endpoint + "?media_id=" + media_id, true);
@@ -316,20 +327,24 @@ function get_media_details(endpoint, media_id)
         if (request.readyState == 4 && request.status == 200) 
         {
             media_details= JSON.parse(this.responseText);
-            show_media_details(media_details);
+            show_media_details(media_details, media_type);
         }
     };
     request.send(null);
 }
 
-function show_media_details(media_details)
+function show_media_details(media_details, media_type)
 {
-    document.getElementById("media-details-img").src = base_url_backdrop_path + media_details.backdrop_path;
+    if(media_details.backdrop_path != null)
+        document.getElementById("media-details-img").src = base_url_backdrop_path + media_details.backdrop_path;
+    else
+        document.getElementById("media-details-img").src = backdrop_placeholder;
+
     document.getElementById("media-details-title").innerHTML = media_details.title;
     
     info_icon = document.createElement("span");
     info_icon.setAttribute("id", "info-icon");
-    tmdb_url = "https://www.themoviedb.org/movie/" + media_details.id;
+    tmdb_url = "https://www.themoviedb.org/" + media_type + "/" + media_details.id;
     info_icon.setAttribute("onclick", "window.open('" + tmdb_url + "')");
     info_icon.innerHTML = " &#9432";
     document.getElementById("media-details-title").appendChild(info_icon);
@@ -391,7 +406,12 @@ function show_cast_details(cast_details_data)
         actor_img_div = document.createElement("div");
         actor_img_div.setAttribute("class", "actor-img");
         actor_img = new Image();
-        actor_img.src = base_url_poster_profile_path + actor.profile_path;
+        
+        if(actor.profile_path != null)
+            actor_img.src = base_url_poster_profile_path + actor.profile_path;
+        else
+            actor_img.src = profile_placeholder;
+
         actor_img_div.appendChild(actor_img);
         actor_card.appendChild(actor_img_div);
 
@@ -459,9 +479,13 @@ function show_review_details(review_details_data)
 
         review_rating = document.createElement("div");
         review_rating.setAttribute("class", "review-rating");
-        review_rating_text = document.createTextNode("\u2605 " + parseFloat((review.rating / 2).toFixed(2)) + "/5");
+
+        rating = parseFloat((review.rating / 2).toFixed(2));
+        review_rating_text = document.createTextNode("\u2605 " + rating + "/5");
         review_rating.appendChild(review_rating_text);
-        review_card.appendChild(review_rating);
+        
+        if(rating != 0)
+            review_card.appendChild(review_rating);
 
         review_content = document.createElement("div");
         review_content.setAttribute("class", "review-content");

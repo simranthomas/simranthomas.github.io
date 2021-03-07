@@ -29,7 +29,6 @@ body{
 .side-tabs {
     color: #A52420;
     font-size: 14px;
-    cursor: pointer;
     font-family: 'Open Sans', sans-serif;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -37,6 +36,7 @@ body{
 
 .side-text:hover{
     color: #A52420 !important;
+    cursor: pointer;
 }
 .side-text {
     margin-left: -20px;
@@ -354,18 +354,20 @@ body{
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+    height: 43px;
 }
 .review-card {
     margin-top: 10px;
 }
 .review-card > div {
-    padding: 5px 0px 2px 0px;
+    padding: 10px 0px 4px 0px;
 }
 .review-rating {
     color: #AC2622;
-    margin-top: 5px;
-    margin-bottom: -7px;
+    margin-top: -4px;
+    margin-bottom: -14px;
     font-size: 11px;
+    font-weight: 600;
 }
 hr {
     width: 77%;
@@ -373,5 +375,5 @@ hr {
     margin-right: 81px;
 }
 #bottom-overflow {
-    height: 100px;
+    height: 100px;;
 }
