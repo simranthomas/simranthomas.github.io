@@ -72,7 +72,7 @@ function generate_carousel(item_list, media_type)
         carousel_caption_div = document.createElement("div");
         carousel_caption_div.className = "caption-text";
         
-        if(item.release_air_date == "")
+        if(item.release_air_date == "" || item.release_air_date == null)
             release_air_date_text = "N/A"
         else
             release_air_date_text = new Date(Date.parse(item.release_air_date)).getFullYear()
@@ -226,7 +226,7 @@ function display_search_results(search_results)
         year_genre = document.createElement("div");
         year_genre.setAttribute("class", "card-year-genre");
 
-        if(item.release_air_date != "")
+        if(item.release_air_date != "" && item.release_air_date != null)
             year_genre_text = new Date(Date.parse(item.release_air_date)).getFullYear();
         else
             year_genre_text = "N/A";
@@ -365,7 +365,7 @@ function show_media_details(media_details, media_type)
     info_icon.innerHTML = " &#9432";
     document.getElementById("media-details-title").appendChild(info_icon);
 
-    if(media_details.release_air_date != "")
+    if(media_details.release_air_date != "" && media_details.release_air_date != null)
         year_genre_text = new Date(Date.parse(media_details.release_air_date)).getFullYear();
     else
         year_genre_text = "N/A";
@@ -420,7 +420,13 @@ function get_cast_details(endpoint, media_id)
 
 function show_cast_details(cast_details_data)
 {
+    if(cast_details_data.length == 0)
+    {
+        document.getElementById("cast-title-text").innerHTML = "Cast :   N/A";
+        return;
+    }
 
+    document.getElementById("cast-title-text").innerHTML = "Cast";
     cast_container = document.getElementById("cast-container");
 
     cast_details_div= document.createElement("div");
@@ -484,6 +490,13 @@ function get_review_details(endpoint, media_id)
 
 function show_review_details(review_details_data)
 {
+    if(review_details_data.length == 0)
+    {
+        document.getElementById("reviews-title-text").innerHTML = "Reviews :   N/A";
+        return;
+    }
+
+    document.getElementById("reviews-title-text").innerHTML = "Reviews";
     reviews_container = document.getElementById("reviews-container");
 
     review_cards_div= document.createElement("div");
