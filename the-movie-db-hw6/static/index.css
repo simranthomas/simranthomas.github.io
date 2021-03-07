@@ -86,7 +86,8 @@ body{
     font-style: italic;
     color: #828184;
     padding: 10px;
-    margin-left: 1px;
+    height: 25px;
+    margin-left: 2px;
 }
 .fade {
     -webkit-animation-name: fade;
@@ -106,7 +107,7 @@ body{
 
 
 #search-page {
-    margin-right: 210px;
+    margin-right: 200px;
     margin-left: 2px;
 }
 #search-box{
@@ -118,11 +119,11 @@ body{
     padding: 9px;
 }
 #keyword-label {
-    font-size: 14px;
+    font-size: 13px;
     margin-left: 15px;
 }
 #category-label {
-    font-size: 14px;
+    font-size: 13px;
     margin-left: -166px;
     margin-top: -6px;
 }
@@ -166,7 +167,7 @@ body{
 
 #search-results {
     min-height: 440px;
-    font-size: 18px;
+    font-size: 15px;
     text-align: left;
     color: #cececef7;
 }
@@ -176,11 +177,11 @@ body{
 
 .card {
     display: grid;
-    grid-template-columns: 25% 75% auto;
+    grid-template-columns: 20% 80% auto;
     border-left: 7px solid #A52420;
     padding: 10px;
     margin-bottom: 20px;
-    font-size: 14px;
+    font-size: 12px;
 }
 .card-img {
     width: 185px;
@@ -190,24 +191,34 @@ body{
     height: 30px;
 }
 .card-title {
-    font-size: 24px;
-    margin-top: 10px;
+    font-size: 21px;
+    margin-top: 15px;
     color: white;
     font-weight: 600;
 }
+.card-img {
+    width: 150px;
+    height: 225px;
+}
+
+.card-img > img {
+    width: 150px;
+    height: 220px;
+}
+
 .card-year-genre {
-    margin-top: 26px;
+    margin-top: 15px;
 }
 .card-rating-votes {
     color: #AC2622;
-    font-size: 12px;
+    font-size: 10.5px;
     margin-top: 4px;
 }
 .votes-text {
     color: white;
-    margin-left: 57px;
+    margin-left: 51px;
     display: block;
-    margin-top: -18px;
+    margin-top: -16px;
 }
 .card-overview {
     overflow: hidden;
@@ -215,16 +226,16 @@ body{
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    margin-top: 25px;
+    margin-top: 15px;
 }
 .show-more-button {
     background-color: #AA2521;
     color: white;
     border: none;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 12px;
     padding: 7px 13px 7px 13px;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 .show-more-button:hover {
     background-color: #C2C1C3;
