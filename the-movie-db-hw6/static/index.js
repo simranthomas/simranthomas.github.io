@@ -1,8 +1,8 @@
 var base_url_backdrop_path = "https://image.tmdb.org/t/p/w780"
 var base_url_poster_profile_path = "https://image.tmdb.org/t/p/w185"
-var backdrop_placeholder = "static/backdrop-placeholder.jpg"
-var poster_placeholder = "static/poster-placeholder.png"
-var profile_placeholder = "static/profile-placeholder.png"
+var backdrop_placeholder = "https://bytes.usc.edu/cs571/s21_JSwasm00/hw/HW6/imgs/movie-placeholder.jpg"
+var poster_placeholder = "https://cinemaone.net/images/movie_placeholder.png"
+var profile_placeholder = "https://bytes.usc.edu/cs571/s21_JSwasm00/hw/HW6/imgs/person-placeholder.png"
 
 
 function initial_load()
@@ -71,7 +71,12 @@ function generate_carousel(item_list, media_type)
         // create caption tag
         carousel_caption_div = document.createElement("div");
         carousel_caption_div.className = "caption-text";
-        text = document.createTextNode(item.title + " (" + new Date(Date.parse(item.release_air_date)).getFullYear() +")");
+        
+        if(item.release_air_date == undefined)
+            release_air_date_text = "N/A"
+        else
+            release_air_date_text = new Date(Date.parse(item.release_air_date)).getFullYear()
+        text = document.createTextNode(item.title + " (" + release_air_date_text +")");
         carousel_caption_div.appendChild(text);
         carousel_element.appendChild(carousel_caption_div)
 
@@ -220,7 +225,11 @@ function display_search_results(search_results)
 
         year_genre = document.createElement("div");
         year_genre.setAttribute("class", "card-item");
-        year_genre_text = new Date(Date.parse(item.release_air_date)).getFullYear()
+
+        if(item.release_air_date != undefined)
+            year_genre_text = new Date(Date.parse(item.release_air_date)).getFullYear();
+        else
+            year_genre_text = "N/A";
 
         genres = "";
         
@@ -239,7 +248,10 @@ function display_search_results(search_results)
 
         rating_votes = document.createElement("div");
         rating_votes.setAttribute("class", "card-rating-votes");
-        rating_votes_text = parseFloat((item.vote_average / 2).toFixed(2)) + "/5";
+        rating = parseFloat((item.vote_average / 2).toFixed(2));
+        if (Number.isInteger(rating))
+            rating = rating.toFixed(1);
+        rating_votes_text = rating + "/5";
         text_rating = document.createTextNode("\u2605 " +rating_votes_text);
         rating_votes.appendChild(text_rating);
 
@@ -349,7 +361,10 @@ function show_media_details(media_details, media_type)
     info_icon.innerHTML = " &#9432";
     document.getElementById("media-details-title").appendChild(info_icon);
 
-    year_genre_text = new Date(Date.parse(media_details.release_air_date)).getFullYear();
+    if(media_details.release_air_date != undefined)
+        year_genre_text = new Date(Date.parse(media_details.release_air_date)).getFullYear();
+    else
+        year_genre_text = "N/A";
     
     genres_text = "";
     media_details.genres.forEach(genre => {            
@@ -357,7 +372,10 @@ function show_media_details(media_details, media_type)
     });
     document.getElementById("media-details-year-genre").innerHTML = year_genre_text += " | " + genres_text.slice(0, -2);;
 
-    rating_votes_text = parseFloat((media_details.vote_average / 2).toFixed(2)) + "/5";
+    rating = parseFloat((media_details.vote_average / 2).toFixed(2));
+    if (Number.isInteger(rating))
+        rating = rating.toFixed(1);
+    rating_votes_text = rating + "/5";
     document.getElementById("media-details-rating-votes").innerHTML = "\u2605 " + rating_votes_text;
     
     votes_span = document.createElement("span");
@@ -480,7 +498,7 @@ function show_review_details(review_details_data)
         review_rating = document.createElement("div");
         review_rating.setAttribute("class", "review-rating");
 
-        rating = parseFloat((review.rating / 2).toFixed(2));
+        rating = (review.rating / 2).toFixed(1);
         review_rating_text = document.createTextNode("\u2605 " + rating + "/5");
         review_rating.appendChild(review_rating_text);
         

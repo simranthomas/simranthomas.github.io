@@ -5,6 +5,7 @@ app = Flask(__name__)
 # Define api_token, url and headers
 tmdb_api_key = "38bbe79ff3d3e4cc74577eb730d7626f"
 tmdb_api_url = "https://api.themoviedb.org/3/"
+
 headers = {
     "Content-type" : "application/json"
 }
@@ -30,7 +31,7 @@ def get_trending_movies():
         top_trending_movies['top'].append({
             'title': item['title'], 
             'backdrop_path': item['backdrop_path'], 
-            'release_air_date': item['release_date']
+            'release_air_date': item.get('release_date')
             })
 
     return make_response(top_trending_movies, 200)
@@ -49,7 +50,7 @@ def get_tv_shows_airing_today():
         top_tv_shows['top'].append({
             'title': item['name'], 
             'backdrop_path': item['backdrop_path'], 
-            'release_air_date': item['first_air_date']
+            'release_air_date': item.get('first_air_date')
             })
 
     return make_response(top_tv_shows, 200)
@@ -71,7 +72,7 @@ def extract_search_fields(search_list, media_type):
             media['title'] = item[title_key]
             media['overview'] = item['overview']
             media['poster_path'] = item['poster_path']
-            media['release_air_date'] = item[date_key]
+            media['release_air_date'] = item.get(date_key)
             media['vote_average'] = item['vote_average']
             media['vote_count'] = item['vote_count']
             media['genre_ids'] = item['genre_ids']
@@ -136,7 +137,7 @@ def get_movie_details():
         'id': response['id'],
         'title': response['title'],
         'runtime': response['runtime'],
-        'release_air_date': response['release_date'],
+        'release_air_date': response.get('release_date'),
         'spoken_languages': response['spoken_languages'],
         'vote_average': response['vote_average'],
         'vote_count': response['vote_count'],
@@ -173,8 +174,7 @@ def get_movie_credits():
 @app.route("/movie_reviews", methods = ['GET'])
 def get_movie_reviews():
     
-    ##### SEARCH QUERY TO BE CHANGED #####
-    movie_id = 284052
+    movie_id = request.args.get('media_id')
     endpoint_url = f'{tmdb_api_url}movie/{movie_id}/reviews?api_key={tmdb_api_key}&language=en-US&page=1'
     response = requests.get(endpoint_url, headers = headers).json()
     
@@ -202,7 +202,7 @@ def get_tv_show_details():
         'id' : response['id'],
         'title' : response['name'],
         'runtime': response['episode_run_time'],
-        'release_air_date': response['first_air_date'],
+        'release_air_date': response.get('first_air_date'),
         'spoken_languages': response['spoken_languages'],
         'vote_average': response['vote_average'],
         'vote_count': response['vote_count'],
@@ -240,8 +240,7 @@ def get_tv_show_credits():
 @app.route("/tv_show_reviews", methods = ['GET'])
 def get_tv_show_reviews():
     
-    ##### SEARCH QUERY TO BE CHANGED #####
-    tv_show_id = 1399
+    tv_show_id = request.args.get('media_id')
     endpoint_url = f'{tmdb_api_url}tv/{tv_show_id}/reviews?api_key={tmdb_api_key}&language=en-US&page=1'
     response = requests.get(endpoint_url, headers = headers).json()
     

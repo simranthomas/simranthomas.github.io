@@ -139,9 +139,10 @@ body{
     width: 300px;
 }
 #search {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-size: 20px;
     margin-top: 7px;
+    font-weight: 600;
 }
 #categories {
     width: 125px;
@@ -311,7 +312,7 @@ body{
 }
 .cast-grid {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 25% 25% 25% 25%;
     margin-left: -5px;
     margin-right: 25px;
     grid-row-gap: 15px;
@@ -344,6 +345,7 @@ body{
 }
 #reviews-container {
     margin-top: 27px;
+    padding-right: 10px;
 }
 #reviews-title-text {
     margin-bottom: -10px;
@@ -367,12 +369,14 @@ body{
     margin-top: -4px;
     margin-bottom: -14px;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 500;
 }
 hr {
     width: 77%;
-    background-color: gray;
+    background-color: #a9a8a8;
     margin-right: 81px;
+    height: 1px;
+    border: none;
 }
 #bottom-overflow {
     height: 100px;;
