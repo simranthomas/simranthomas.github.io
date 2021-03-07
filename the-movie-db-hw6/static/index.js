@@ -72,7 +72,7 @@ function generate_carousel(item_list, media_type)
         carousel_caption_div = document.createElement("div");
         carousel_caption_div.className = "caption-text";
         
-        if(item.release_air_date == undefined || item.release_air_date == "")
+        if(item.release_air_date == "")
             release_air_date_text = "N/A"
         else
             release_air_date_text = new Date(Date.parse(item.release_air_date)).getFullYear()
@@ -226,7 +226,7 @@ function display_search_results(search_results)
         year_genre = document.createElement("div");
         year_genre.setAttribute("class", "card-year-genre");
 
-        if(item.release_air_date != undefined && item.release_air_date != "")
+        if(item.release_air_date != "")
             year_genre_text = new Date(Date.parse(item.release_air_date)).getFullYear();
         else
             year_genre_text = "N/A";
@@ -365,7 +365,7 @@ function show_media_details(media_details, media_type)
     info_icon.innerHTML = " &#9432";
     document.getElementById("media-details-title").appendChild(info_icon);
 
-    if(media_details.release_air_date != undefined && media_details.release_air_date != "")
+    if(media_details.release_air_date != "")
         year_genre_text = new Date(Date.parse(media_details.release_air_date)).getFullYear();
     else
         year_genre_text = "N/A";

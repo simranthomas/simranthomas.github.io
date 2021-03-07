@@ -31,7 +31,7 @@ def get_trending_movies():
         top_trending_movies['top'].append({
             'title': item['title'], 
             'backdrop_path': item['backdrop_path'], 
-            'release_air_date': item.get('release_date')
+            'release_air_date': item.get('release_date', '')
             })
 
     return make_response(top_trending_movies, 200)
@@ -50,7 +50,7 @@ def get_tv_shows_airing_today():
         top_tv_shows['top'].append({
             'title': item['name'], 
             'backdrop_path': item['backdrop_path'], 
-            'release_air_date': item.get('first_air_date')
+            'release_air_date': item.get('first_air_date', '')
             })
 
     return make_response(top_tv_shows, 200)
@@ -137,7 +137,7 @@ def get_movie_details():
         'id': response['id'],
         'title': response['title'],
         'runtime': response['runtime'],
-        'release_air_date': response.get('release_date'),
+        'release_air_date': response.get('release_date', ''),
         'spoken_languages': response['spoken_languages'],
         'vote_average': response['vote_average'],
         'vote_count': response['vote_count'],
@@ -202,7 +202,7 @@ def get_tv_show_details():
         'id' : response['id'],
         'title' : response['name'],
         'runtime': response['episode_run_time'],
-        'release_air_date': response.get('first_air_date'),
+        'release_air_date': response.get('first_air_date', ''),
         'spoken_languages': response['spoken_languages'],
         'vote_average': response['vote_average'],
         'vote_count': response['vote_count'],
