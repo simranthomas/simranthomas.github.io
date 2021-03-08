@@ -308,8 +308,13 @@ function clear_fields()
 function close_modal() 
 {
     document.getElementById("details-modal").style.display = "none";
-    document.getElementById("actors-grid").remove();
-    document.getElementById("cards-reviews").remove();
+    actor_grid = document.getElementById("actors-grid");
+    card_review = document.getElementById("cards-reviews");
+    
+    if(actor_grid != null)
+        actor_grid.remove();
+    if(card_review != null)
+        card_review.remove();
 }
 
 window.onclick = function(event) {
