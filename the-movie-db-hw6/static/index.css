@@ -67,12 +67,11 @@ body{
     font-size: 19px;
     position: absolute;
     bottom: 6px;
-    width: 72%;
+    width: 100%;
     text-align: center;
     background-color: rgba(0,0,0,0.5);
     height: 43px;
     padding-top: 30px;
-    margin-left: 126px;
     padding-bottom: 11px;
 }
 .backdrop-img {
