@@ -144,7 +144,7 @@ function get_form_data()
     var keyword = document.getElementById("keyword").value;
     var category = document.getElementById("categories").value;
 
-    if(keyword == "" || category == "")
+    if(keyword.trim() == "" || category == "")
         alert("Please enter valid values.")  
 
     else
