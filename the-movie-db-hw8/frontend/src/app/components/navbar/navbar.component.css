@@ -1,0 +1,14 @@
+.navbar {
+    background-color: #020B1D;
+    padding: 10px 50px 10px 50px;
+    outline: none;
+}
+#search-input {
+    background-color: #020B1D;
+    border-width: 0 0 2px;
+    border-radius: 0px;
+}
+.nav-item {
+    text-align: right;
+    margin: 0px 10px 0px 10px;
+}
