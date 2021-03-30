@@ -1,0 +1,9 @@
+::ng-deep .card {
+  background-color: rgb(0,0,0,0);
+}
+:host ::ng-deep .carousel-control-prev {
+  left: -50px;
+}
+:host ::ng-deep .carousel-control-next {
+  right: -50px;
+}

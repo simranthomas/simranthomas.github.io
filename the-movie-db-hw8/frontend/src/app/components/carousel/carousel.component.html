@@ -1,0 +1,17 @@
+
+<div class="main-carousel mx-auto mt-5 pt-5 pt-lg-4">
+<ngb-carousel #carousel [interval]= "5000" [pauseOnHover]= "pauseOnHover" [pauseOnFocus]= "pauseOnFocus" (slide)= "onSlide($event)">
+  <ng-template ngbSlide *ngFor= "let img of mediaList; index as i">
+    <div class="carousel-caption">
+      <p>{{img.title}}</p>
+    </div>
+    <a>
+      <div class="picsum-img-wrapper">
+        <img class="main-carousel-backdrop-img" [src]= "img.image_path">
+      </div>
+    </a>
+  </ng-template>
+</ngb-carousel>
+</div>
+
+

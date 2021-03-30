@@ -11,6 +11,9 @@ import { SearchComponent } from './components/navbar/search/search.component';
 import { WatchlistComponent } from './components/watchlist/watchlist.component';
 import { MediaDetailsComponent } from './components/media-details/media-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { CarouselCardsComponent } from './components/carousel-cards/carousel-cards.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +23,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FooterComponent,
     SearchComponent,
     WatchlistComponent,
-    MediaDetailsComponent
+    MediaDetailsComponent,
+    CarouselComponent,
+    CarouselCardsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -26,6 +26,7 @@ app.get('/api/homepage', async (req, res) => {
         // Check media_type to get correct key from response
         var title_key = (media_type == 'movie') ? 'title' : 'name';
         var poster_path_key = (result_dict_key == 'carousel_movies') ? 'backdrop_path' : 'poster_path'
+        var img_base_url = (result_dict_key == 'carousel_movies') ? 'https://image.tmdb.org/t/p/original' : 'https://image.tmdb.org/t/p/w500'
 
         await axios.get(endpoint_url)
         .then((response) => {
@@ -37,7 +38,8 @@ app.get('/api/homepage', async (req, res) => {
                     var media = {
                         'id' : response[i]['id'],
                         'title' : response[i][title_key],
-                        'image_path' : response[i][poster_path_key]
+                        'image_path' : img_base_url + response[i][poster_path_key],
+                        'media_type' : media_type
                     }
                     media_list.push(media);
                 }
@@ -77,9 +79,8 @@ app.get('/api/homepage', async (req, res) => {
 app.get('/api/media_details', async (req, res) => {
 
     // Videos Endpoint
-    /********** TO BE CHANGED *************/
-    var media_type = 'movie';
-    var media_id = 464052;
+    var media_type = req.query.mediaType;
+    var media_id = req.query.id;
 
     // var media_type = 'movie';
     // var media_id = 464052;
@@ -265,8 +266,7 @@ app.get('/api/media_details', async (req, res) => {
 app.get('/api/cast_details', async (req, res) => {
 
     // Cast Deatils Endpoint
-    /********** TO BE CHANGED *************/
-    var person_id = 550843;
+    var person_id = req.query.personId;
 
     let result = {}
 
@@ -326,7 +326,8 @@ app.get('/api/autocomplete', async (req, res) => {
     .then((response) => {
         response = response.data.results;
         var search_list = [];
-        for(var i = 0; i < response.length; i++)
+        // retrieve only first 7 results
+        for(var i = 0; i < response.length && search_list.length < 7; i++)
         {
             var media_type = response[i]['media_type'];
             var title_key = (media_type == 'movie') ? 'title' : 'name';

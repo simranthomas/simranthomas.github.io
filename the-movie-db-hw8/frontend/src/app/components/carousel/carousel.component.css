@@ -1,0 +1,50 @@
+.main-carousel {
+  width: 70%;
+  height:360px;
+  overflow: hidden;
+}
+.carousel-caption {
+  opacity: 0;
+  background: linear-gradient(to top, black 36%,rgb(0,0,0,0));
+  margin-left: -9.5em;
+  width: 101%;
+  padding: 13% 0% 0% 6%;
+  margin-bottom: 11em;
+  height: 36%;
+}
+p {
+  text-align:left;
+}
+
+.main-carousel-backdrop-img {
+  width: 100%;
+}
+
+.main-carousel:hover img {
+  transform: scale(1.05);
+}
+.main-carousel:hover .carousel-caption {
+  opacity: 1;
+}
+
+::ng-deep ngb-carousel {
+  max-height: 100%;
+  outline: none;
+}
+
+@media only screen and (max-width: 414px) {
+  .carousel-caption {
+    opacity: 1;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,1));
+  }
+  .main-carousel-backdrop-img:hover  img{
+    transform: scale(1.5);
+  }
+}
+
+::ng-deep a.carousel-control-prev {
+  width: 5%;
+}
+::ng-deep a.carousel-control-next {
+  width: 5%;
+}

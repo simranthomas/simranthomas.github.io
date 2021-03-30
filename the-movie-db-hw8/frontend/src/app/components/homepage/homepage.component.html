@@ -1,1 +1,33 @@
-<p>homepage works!</p>
+<app-carousel [mediaList]= "carouselMovies"></app-carousel>
+
+<div class= "category-carousel-container">
+  <div class= "category-title">Popular Movies</div>
+  <app-carousel-cards [mediaList]= "popularMovies"></app-carousel-cards>
+</div>
+
+<div class= "category-carousel-container">
+  <div class= "category-title">Top Rated Movies</div>
+  <app-carousel-cards [mediaList]= "topRatedMovies"></app-carousel-cards>
+</div>
+
+<div class= "category-carousel-container">
+  <div class= "category-title">Trending Movies</div>
+  <app-carousel-cards [mediaList]= "trendingMovies"></app-carousel-cards>
+</div>
+
+<div class= "category-carousel-container">
+  <div class= "category-title">Popular TV Shows</div>
+  <app-carousel-cards [mediaList]= "popularTv"></app-carousel-cards>
+</div>
+
+<div class= "category-carousel-container">
+  <div class= "category-title">Top Rated TV Shows</div>
+  <app-carousel-cards [mediaList]= "topRatedTv"></app-carousel-cards>
+</div>
+
+<div class= "category-carousel-container">
+  <div class= "category-title">Trending TV Shows</div>
+  <app-carousel-cards [mediaList]= "trendingTv"></app-carousel-cards>
+</div>
+
+

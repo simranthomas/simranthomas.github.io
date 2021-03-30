@@ -7,10 +7,10 @@ import { debounceTime, map } from 'rxjs/operators';
 })
 export class FetchDataService {
 
-  apiURLHomepage = "http://localhost:8080/api/homepage"
-  apiURLMediaDetails = "http://localhost:8080/api/media_details"
-  apiURLCastDetails = "http://localhost:8080/api/cast_details"
-  apiURLAutocomplete = "http://localhost:8080/api/autocomplete"
+  apiURLHomepage = "http://localhost:8080/api/homepage";
+  apiURLMediaDetails = "http://localhost:8080/api/media_details?mediaType=";
+  apiURLCastDetails = "http://localhost:8080/api/cast_details?personId=";
+  apiURLAutocomplete = "http://localhost:8080/api/autocomplete";
 
   constructor( private httpclient : HttpClient ) { }
 
@@ -19,13 +19,13 @@ export class FetchDataService {
     return response as any;
   }
 
-  getMediaDetailsData(mediaID : number) {
-    var response = this.httpclient.get(this.apiURLMediaDetails);
+  getMediaDetailsData(mediaType : string, mediaId : number) {
+    var response = this.httpclient.get(this.apiURLMediaDetails + mediaType + '&id=' + mediaId);
     return response as any;
   }
 
-  getCastDetailsData(personID : number) {
-    var response = this.httpclient.get(this.apiURLCastDetails);
+  getCastDetailsData(personId : number) {
+    var response = this.httpclient.get(this.apiURLCastDetails + personId);
     return response as any;
   }
 

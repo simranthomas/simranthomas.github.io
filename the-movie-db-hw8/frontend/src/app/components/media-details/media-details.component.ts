@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FetchDataService } from 'src/app/services/fetch-data.service';
 
 @Component({
@@ -8,11 +9,17 @@ import { FetchDataService } from 'src/app/services/fetch-data.service';
 })
 export class MediaDetailsComponent implements OnInit {
 
-  constructor(private service : FetchDataService) { }
+  mediaType : any = "";
+  mediaId!: any;
+
+  constructor(private service : FetchDataService, private route : ActivatedRoute) { }
 
   ngOnInit(): void {
 
-    this.service.getMediaDetailsData(1)
+    this.mediaType = this.route.snapshot.paramMap.get('mediaType');
+    this.mediaId = this.route.snapshot.paramMap.get('id');
+
+    this.service.getMediaDetailsData(this.mediaType, this.mediaId)
     .subscribe(
       (data: any) => {
         console.log("im hereeeee in media details");
