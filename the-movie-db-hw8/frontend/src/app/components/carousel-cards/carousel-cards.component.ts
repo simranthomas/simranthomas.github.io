@@ -62,7 +62,6 @@ export class CarouselCardsComponent implements OnInit {
 
   getDetails(mediaType: string, mediaId: number)
   {
-    console.log("herereee");
     if (mediaType == "movie") {
       this._router.navigate(['/watch/movie/', mediaId])
     }

@@ -13,6 +13,9 @@ app.use(cors());
 
 var tmdb_api_key = '38bbe79ff3d3e4cc74577eb730d7626f';
 var tmdb_base_url = 'https://api.themoviedb.org/3/'; 
+var image_base_url = 'https://image.tmdb.org/t/p/w500';
+var carousel_image_base_url = 'https://image.tmdb.org/t/p/original';
+
 var result_homepage = {}
 
 // API Route for homepage
@@ -26,7 +29,7 @@ app.get('/api/homepage', async (req, res) => {
         // Check media_type to get correct key from response
         var title_key = (media_type == 'movie') ? 'title' : 'name';
         var poster_path_key = (result_dict_key == 'carousel_movies') ? 'backdrop_path' : 'poster_path'
-        var img_base_url = (result_dict_key == 'carousel_movies') ? 'https://image.tmdb.org/t/p/original' : 'https://image.tmdb.org/t/p/w500'
+        var img_base_url = (result_dict_key == 'carousel_movies') ?  carousel_image_base_url : image_base_url; 
 
         await axios.get(endpoint_url)
         .then((response) => {
@@ -157,7 +160,7 @@ app.get('/api/media_details', async (req, res) => {
                     'id' : response[i]['id'],
                     'name' : response[i]['name'],
                     'character' : response[i]['character'],
-                    'profile_path' : response[i]['profile_path']
+                    'profile_path' : image_base_url + response[i]['profile_path']
                 }
                 cast_list.push(cast);
             }
@@ -222,7 +225,8 @@ app.get('/api/media_details', async (req, res) => {
                 var media = {
                     'id' : response[i]['id'],
                     'title' : response[i][title_key],
-                    'poster_path' : response[i]['poster_path']
+                    'image_path' : image_base_url + response[i]['poster_path'],
+                    'media_type' : media_type
                 }
                 recommendations_list.push(media);
             }
@@ -247,7 +251,8 @@ app.get('/api/media_details', async (req, res) => {
                 var media = {
                     'id' : response[i]['id'],
                     'title' : response[i][title_key],
-                    'poster_path' : response[i]['poster_path']
+                    'image_path' : image_base_url + response[i]['poster_path'],
+                    'media_type' : media_type
                 }
                 similar_list.push(media);
             }

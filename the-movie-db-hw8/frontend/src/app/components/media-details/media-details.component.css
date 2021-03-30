@@ -1,0 +1,10 @@
+div {
+  border: 2px solid red;
+}
+
+.card-body {
+  min-height: 300px;
+  min-width: 300px;
+  margin-right: 5px;
+  color:red;
+}

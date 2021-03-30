@@ -13,7 +13,8 @@ import { MediaDetailsComponent } from './components/media-details/media-details.
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CarouselComponent } from './components/carousel/carousel.component';
-import { CarouselCardsComponent } from './components/carousel-cards/carousel-cards.component';
+import { CarouselCardsComponent } from './components/carousel-cards/carousel-cards.component'
+import { YouTubePlayerModule } from "@angular/youtube-player";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CarouselCardsComponent } from './components/carousel-cards/carousel-car
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    YouTubePlayerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

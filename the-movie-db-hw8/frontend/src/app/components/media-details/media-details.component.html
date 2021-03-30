@@ -1,1 +1,103 @@
-<p>media-details works!</p>
+<div *ngIf= "!isLoading"  class= "details-container">
+  <div class= "row mt-5 pt-5">
+    <div class = "col">
+      <youtube-player
+        videoId= "{{mediaResults.media_video_details.key}}"
+        [height]= "375"
+        [width]= "670">
+      </youtube-player>
+    </div>
+    <div class = "col">
+      <div>{{mediaResults.media_details.title}}</div>
+      <div>{{mediaResults.media_details.tagline}}</div>
+      <div>
+        {{releaseAirYear}} | &#9733; {{mediaResults.media_details.vote_average}} | {{duration}}
+      </div>
+      <div> Genres : {{genres}}</div>
+      <div> Spoken Languages : {{languages}}</div>
+      <div><button type="button" class="btn btn-primary">Add to Watchlist</button></div>
+    </div>
+  </div>
+
+  <div class= "row">
+    <div class = "col">
+      <div>Description</div>
+      <div>{{mediaResults.media_details.overview}}</div>
+    </div>
+  </div>
+
+  <div class= "row">
+    <div class = "col">
+      <div>Share</div>
+      <div>
+        <a class="twitter-share-button" href="{{twitterURL}}" target="_blank" rel="noopener noreferrer" >
+          <i class="fab fa-twitter" style="color: #1DA1F2"></i>
+        </a>
+        <a class="fb-share-button" href="{{facebookURL}}" target="_blank" rel="noopener noreferrer" >
+          <span><i class="fab fa-facebook-square" style="color: #0027FC"></i></span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Cast and Crew-->
+  <div class = "row">
+    <div class = "col">
+      <div>Full Cast and Crew</div>
+      <div class="container-fluid py-2">
+        <div class="d-flex flex-row flex-nowrap overflow-auto" >
+            <div class="card card-body" *ngFor= "let cast of castList">
+              <img src= {{cast.profile_path}}>
+              <div>
+                <div>{{cast.name}}</div>
+                <div>AS</div>
+                <div>{{cast.character}}</div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Reviews -->
+  <div class = "row">
+    <div class = "col">
+      <div>Reviews {{numberOfReviews}}</div>
+      <div class="container-fluid">
+        <div class="card card-body" *ngFor= "let review of reviewList">
+          <div class="row">
+            <div class= "col">
+              <img src= {{review.avatar_path}}>
+            </div>
+
+            <div class= "col">
+              <div>A review created by {{review.author}}</div>
+              <div>Written by {{review.author}} on </div>
+              <div>{{review.content}}</div>
+              <a href={{review.url}} target="_blank" rel="noopener noreferrer"><u>Read the rest</u></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Recommended Media-->
+  <div class= "row">
+    <div class= "col">
+      <div>Recommended {{typeMedia}}</div>
+      <app-carousel-cards [mediaList]= "recommendedMedia"></app-carousel-cards>
+    </div>
+  </div>
+
+  <!--Similar Media-->
+  <div class= "row">
+    <div class= "col">
+      <div>Similar {{typeMedia}}</div>
+      <app-carousel-cards [mediaList]= "similarMedia"></app-carousel-cards>
+    </div>
+  </div>
+
+</div>
+
