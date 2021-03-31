@@ -1,1 +1,14 @@
-<p>watchlist works!</p>
+<div class= "container mt-5 pt-5">
+  <div *ngIf= "!isWatchListEmpty">My WatchList</div>
+  <div *ngIf= "isWatchListEmpty">No items found in Watchlist</div>
+
+  <div class= "container">
+    <div class="row mx-auto">
+      <div *ngFor= "let item of watchlistLRU" class="col-lg-2 py-5 px-2">
+        <a class='btn'  (click)= "getDetails(item.media_type, item.id)">
+          <img class="img-fluid" src="{{item.image_path}}">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

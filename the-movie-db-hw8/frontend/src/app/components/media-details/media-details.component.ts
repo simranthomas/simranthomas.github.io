@@ -27,6 +27,7 @@ export class MediaDetailsComponent implements OnInit {
   facebookURL : string = "";
   posterPath : string = "";
   title : string = "";
+  buttonName : string = "Add to Watchlist";
   isLoading : boolean = true;
 
   constructor(private service : FetchDataService, private route : ActivatedRoute) { }
@@ -53,26 +54,52 @@ export class MediaDetailsComponent implements OnInit {
 
   updateWatchlist() {
 
-    let toAdd : any = {'id': this.mediaId, 'title': this.title, 'image_path': this.posterPath, 'media_type': this.mediaType};
-    let watchList: any[] = JSON.parse(localStorage.getItem('WatchList')!);
+    if(this.buttonName == "Add to Watchlist") {
+      this.buttonName = "Remove from Watchlist";
+      let toAdd : any = {'id': this.mediaId, 'title': this.title, 'image_path': this.posterPath, 'media_type': this.mediaType};
+      let watchList: any[] = JSON.parse(localStorage.getItem('WatchList')!);
 
-    if(watchList == null) {
-      let _temp : any[] = [];
-      _temp.push(toAdd);
-      localStorage.setItem('WatchList', JSON.stringify(_temp));
-      console.log("in if", JSON.parse(localStorage.getItem('WatchList')!))
-    }
-    else {
-      watchList.push(toAdd);
+      if(watchList == null) {
+        let _temp : any[] = [];
+        _temp.push(toAdd);
+        localStorage.setItem('WatchList', JSON.stringify(_temp));
+        console.log("in if", JSON.parse(localStorage.getItem('WatchList')!))
+      }
+      else {
+        watchList.push(toAdd);
+        localStorage.setItem('WatchList', JSON.stringify(watchList));
+        console.log("in else", JSON.parse(localStorage.getItem('WatchList')!))
+      }
+    } else {
+      this.buttonName = "Add to Watchlist";
+      let watchList: any[] = JSON.parse(localStorage.getItem('WatchList')!);
+      watchList.forEach((item ,index) => {
+        if(item.id == this.mediaId && item.media_type == this.mediaType)
+          watchList.splice(index, 1);
+      });
       localStorage.setItem('WatchList', JSON.stringify(watchList));
-      console.log("in else", JSON.parse(localStorage.getItem('WatchList')!))
     }
+
+  }
+
+  checkInWatchList() {
+
+    let watchList: any[] = JSON.parse(localStorage.getItem('WatchList')!);
+    if(watchList != null) {
+      watchList.forEach(item => {
+        if(item.id == this.mediaId && item.media_type == this.mediaType)
+          this.buttonName = "Remove from Watchlist";
+      });
+    }
+
   }
 
   ngOnInit(): void {
 
     this.mediaType = this.route.snapshot.paramMap.get('mediaType');
     this.mediaId = this.route.snapshot.paramMap.get('id');
+
+    this.checkInWatchList();
 
     this.service.getMediaDetailsData(this.mediaType, this.mediaId)
     .subscribe(

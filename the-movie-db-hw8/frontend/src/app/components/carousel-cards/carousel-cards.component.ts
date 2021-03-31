@@ -5,7 +5,7 @@ import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/n
 import { single } from 'rxjs/operators';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-import { getDefaultCompilerOptions } from 'typescript';
+
 
 
 @Component({
