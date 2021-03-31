@@ -1,3 +1,4 @@
+import { FetchDataService } from 'src/app/services/fetch-data.service';
 import { Media } from './../homepage/homepage.component';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
@@ -14,7 +15,7 @@ import { getDefaultCompilerOptions } from 'typescript';
 })
 export class CarouselCardsComponent implements OnInit {
 
-  constructor(private breakpointObserver : BreakpointObserver, private _router : Router) { }
+  constructor(private breakpointObserver : BreakpointObserver, private _router : Router, private service : FetchDataService) { }
 
   @Input() mediaList!: any;
 

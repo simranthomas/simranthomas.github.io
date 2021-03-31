@@ -21,10 +21,24 @@ export class HomepageComponent implements OnInit {
   topRatedMovies: Media[] =[];
   trendingTv: Media[] =[];
   trendingMovies: Media[] =[];
+  continueWatching: any;
+  continueWatchingLRU : Media[] = [];
+  isContinueWatchingEmpty : boolean = true;
 
   constructor(private service : FetchDataService) { }
 
   ngOnInit(): void {
+
+  this.continueWatching = JSON.parse(localStorage.getItem('ContinueWatching')!);
+
+  if(this.continueWatching == null)
+    this.isContinueWatchingEmpty = true;
+  else
+  {
+    this.isContinueWatchingEmpty = false;
+    this.continueWatchingLRU = this.continueWatching.reverse();
+  }
+
     this.service.getHomepageData()
     .subscribe(
       (data: any) => {

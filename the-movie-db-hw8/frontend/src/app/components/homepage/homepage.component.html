@@ -1,5 +1,10 @@
 <app-carousel [mediaList]= "carouselMovies"></app-carousel>
 
+<div *ngIf = "!isContinueWatchingEmpty" class= "category-carousel-container">
+  <div class= "category-title">Continue Watching</div>
+  <app-carousel-cards [mediaList]= "continueWatchingLRU"></app-carousel-cards>
+</div>
+
 <div class= "category-carousel-container">
   <div class= "category-title">Popular Movies</div>
   <app-carousel-cards [mediaList]= "popularMovies"></app-carousel-cards>

@@ -141,6 +141,8 @@ app.get('/api/media_details', async (req, res) => {
         result['media_details']['overview'] = response['overview'];
         result['media_details']['vote_average'] = response['vote_average'];
         result['media_details']['tagline'] = response['tagline'];
+        result['media_details']['poster_path'] = image_base_url + response['poster_path'];
+
     },
     (error) => {
         result['error'] = "Error";
@@ -297,7 +299,6 @@ app.get('/api/cast_details', async (req, res) => {
     // Cast External IDs Endpoint
     var endpoint_url = `${tmdb_base_url}person/${person_id}/external_ids?api_key=${tmdb_api_key}&language=en-US&page=1`;
 
-    console.log(endpoint_url)
     await axios.get(endpoint_url)
     .then((response) => {
         response = response.data;

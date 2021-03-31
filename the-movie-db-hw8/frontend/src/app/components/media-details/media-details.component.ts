@@ -25,9 +25,30 @@ export class MediaDetailsComponent implements OnInit {
   similarMedia : any = [];
   twitterURL : string = "";
   facebookURL : string = "";
+  posterPath : string = "";
   isLoading : boolean = true;
 
   constructor(private service : FetchDataService, private route : ActivatedRoute) { }
+
+  addToLocalStorage(id: any, title: any, posterPath: any, type: any) {
+
+    let mediaObject : any = {'id': id, 'title': title, 'image_path': posterPath, 'media_type': type};
+    let continueWatching : any[] = JSON.parse(localStorage.getItem('ContinueWatching')!);
+
+    if(continueWatching == null) {
+      let _temp : any[] = [];
+      _temp.push(mediaObject);
+      localStorage.setItem('ContinueWatching', JSON.stringify(_temp));
+    }
+    else {
+      continueWatching.forEach((item ,index) => {
+        if(item.id == id)
+          continueWatching.splice(index, 1);
+      });
+      continueWatching.push(mediaObject);
+      localStorage.setItem('ContinueWatching', JSON.stringify(continueWatching));
+    }
+  }
 
   ngOnInit(): void {
 
@@ -75,7 +96,7 @@ export class MediaDetailsComponent implements OnInit {
         // format facebook vide url
         let facebook = "https://www.youtube.com/watch?v=" + data.media_video_details.key;
         this.facebookURL = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(facebook);
-        
+
         // get cast data
         this.castList = data.cast_details;
 
@@ -92,6 +113,8 @@ export class MediaDetailsComponent implements OnInit {
 
         // get the similar media list
         this.similarMedia = data.similar;
+
+        this.addToLocalStorage(this.mediaId, data.media_details.title, data.media_details.poster_path, this.mediaType);
 
         this.isLoading = false;
       }
