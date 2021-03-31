@@ -8,14 +8,14 @@
       </youtube-player>
     </div>
     <div class = "col">
-      <div>{{mediaResults.media_details.title}}</div>
+      <div>{{title}}</div>
       <div>{{mediaResults.media_details.tagline}}</div>
       <div>
         {{releaseAirYear}} | &#9733; {{mediaResults.media_details.vote_average}} | {{duration}}
       </div>
       <div> Genres : {{genres}}</div>
       <div> Spoken Languages : {{languages}}</div>
-      <div><button type="button" class="btn btn-primary">Add to Watchlist</button></div>
+      <div><button type="button" class="btn btn-primary" (click) = "updateWatchlist()">Add to Watchlist</button></div>
     </div>
   </div>
 

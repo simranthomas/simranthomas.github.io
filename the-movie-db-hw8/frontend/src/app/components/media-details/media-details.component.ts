@@ -26,13 +26,14 @@ export class MediaDetailsComponent implements OnInit {
   twitterURL : string = "";
   facebookURL : string = "";
   posterPath : string = "";
+  title : string = "";
   isLoading : boolean = true;
 
   constructor(private service : FetchDataService, private route : ActivatedRoute) { }
 
-  addToLocalStorage(id: any, title: any, posterPath: any, type: any) {
+  addToLocalStorage() {
 
-    let mediaObject : any = {'id': id, 'title': title, 'image_path': posterPath, 'media_type': type};
+    let mediaObject : any = {'id': this.mediaId, 'title': this.title, 'image_path': this.posterPath, 'media_type': this.mediaType};
     let continueWatching : any[] = JSON.parse(localStorage.getItem('ContinueWatching')!);
 
     if(continueWatching == null) {
@@ -42,11 +43,29 @@ export class MediaDetailsComponent implements OnInit {
     }
     else {
       continueWatching.forEach((item ,index) => {
-        if(item.id == id)
+        if(item.id == this.mediaId)
           continueWatching.splice(index, 1);
       });
       continueWatching.push(mediaObject);
       localStorage.setItem('ContinueWatching', JSON.stringify(continueWatching));
+    }
+  }
+
+  updateWatchlist() {
+
+    let toAdd : any = {'id': this.mediaId, 'title': this.title, 'image_path': this.posterPath, 'media_type': this.mediaType};
+    let watchList: any[] = JSON.parse(localStorage.getItem('WatchList')!);
+
+    if(watchList == null) {
+      let _temp : any[] = [];
+      _temp.push(toAdd);
+      localStorage.setItem('WatchList', JSON.stringify(_temp));
+      console.log("in if", JSON.parse(localStorage.getItem('WatchList')!))
+    }
+    else {
+      watchList.push(toAdd);
+      localStorage.setItem('WatchList', JSON.stringify(watchList));
+      console.log("in else", JSON.parse(localStorage.getItem('WatchList')!))
     }
   }
 
@@ -59,6 +78,8 @@ export class MediaDetailsComponent implements OnInit {
     .subscribe(
       (data: any) => {
         this.mediaResults = data;
+        this.title = data.media_details.title;
+        this.posterPath = data.media_details.poster_path;
 
         // get the release air date
         this.releaseAirYear = new Date(data.media_details.release_air_date).getFullYear();
@@ -114,7 +135,7 @@ export class MediaDetailsComponent implements OnInit {
         // get the similar media list
         this.similarMedia = data.similar;
 
-        this.addToLocalStorage(this.mediaId, data.media_details.title, data.media_details.poster_path, this.mediaType);
+        this.addToLocalStorage();
 
         this.isLoading = false;
       }
