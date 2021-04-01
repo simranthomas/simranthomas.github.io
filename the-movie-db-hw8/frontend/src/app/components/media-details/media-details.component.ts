@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FetchDataService } from 'src/app/services/fetch-data.service';
 
 
@@ -29,8 +30,17 @@ export class MediaDetailsComponent implements OnInit {
   title : string = "";
   buttonName : string = "Add to Watchlist";
   isLoading : boolean = true;
+  closeResult: string = '';
+  cast_result: any;
+  cast_instagram: boolean = false;
+  cast_imdb: boolean = false;
+  cast_facebook: boolean = false;
+  cast_twitter: boolean = false;
+  isLoadingModal: boolean = true;
 
-  constructor(private service : FetchDataService, private route : ActivatedRoute) { }
+  constructor(private service : FetchDataService, private route : ActivatedRoute, private _router : Router, private modalService: NgbModal) {
+    this._router.routeReuseStrategy.shouldReuseRoute = () => false;
+   }
 
   addToLocalStorage() {
 
@@ -63,12 +73,10 @@ export class MediaDetailsComponent implements OnInit {
         let _temp : any[] = [];
         _temp.push(toAdd);
         localStorage.setItem('WatchList', JSON.stringify(_temp));
-        console.log("in if", JSON.parse(localStorage.getItem('WatchList')!))
       }
       else {
         watchList.push(toAdd);
         localStorage.setItem('WatchList', JSON.stringify(watchList));
-        console.log("in else", JSON.parse(localStorage.getItem('WatchList')!))
       }
     } else {
       this.buttonName = "Add to Watchlist";
@@ -93,6 +101,7 @@ export class MediaDetailsComponent implements OnInit {
     }
 
   }
+
 
   ngOnInit(): void {
 
@@ -168,13 +177,54 @@ export class MediaDetailsComponent implements OnInit {
       }
     );
 
-    this.service.getCastDetailsData(1)
-    .subscribe(
-      (data: any) => {
-        console.log("im hereeeee in cast details");
-        console.log(data);
-      }
-    );
   }
 
+  open(content : any, id: any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size:'lg'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+    this.service.getCastDetailsData(id)
+        .subscribe((result : any) => {
+        console.log("After clicking on modal - Cast Details");
+        console.log(result);
+        this.cast_result = result;
+        if (this.cast_result.gender == "1") {
+          this.cast_result.gender = 'Female';
+        } else {
+          this.cast_result.gender = "Male";
+        }
+        var aka: string = '';
+        console.log(this.cast_result);
+        this.cast_result.also_known_as.forEach((element: any) => {
+          aka += element+', ';
+        });
+        this.cast_result.also_known_as = aka.slice(0,aka.length-2);
+
+        if (this.cast_result.instagram_id != "" && this.cast_result.instagram_id != null) {
+          this.cast_instagram = true;
+        }
+        if (this.cast_result.imdb_id != "" && this.cast_result.imdb_id != null) {
+          this.cast_imdb = true;
+        }
+        if (this.cast_result.facebook_id != "" && this.cast_result.facebook_id != null) {
+          this.cast_facebook = true;
+        }
+        if (this.cast_result.twitter_id != "" && this.cast_result.twitter_id != null) {
+          this.cast_twitter = true;
+        }
+        this.isLoadingModal = false;
+        });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 }

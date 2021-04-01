@@ -2,10 +2,8 @@ import { FetchDataService } from 'src/app/services/fetch-data.service';
 import { Media } from './../homepage/homepage.component';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
-import { single } from 'rxjs/operators';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {BreakpointObserver} from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-
 
 
 @Component({
@@ -15,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class CarouselCardsComponent implements OnInit {
 
-  constructor(private breakpointObserver : BreakpointObserver, private _router : Router, private service : FetchDataService) { }
+  constructor(private breakpointObserver : BreakpointObserver, private _router : Router) { }
 
   @Input() mediaList!: any;
 

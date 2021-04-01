@@ -8,3 +8,17 @@ div {
   margin-right: 5px;
   color:red;
 }
+
+::ng-deep .modal-title {
+  color:black;
+}
+::ng-deep .modal-body {
+  color: rgb(110, 110, 110);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 16px;
+}
+::ng-deep  .modal-headings {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 27px;
+  color: black;
+}

@@ -2,4 +2,12 @@
   background-color: #020B1D;
   border-width: 0 0 2px;
   border-radius: 0px;
+
+}
+
+::ng-deep .dropdown-menu.show {
+  background-color: #040730;
+}
+::ng-deep ngb-highlight {
+  color:white;
 }

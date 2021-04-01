@@ -282,14 +282,16 @@ app.get('/api/cast_details', async (req, res) => {
     await axios.get(endpoint_url)
     .then((response) => {
         response = response.data;
-        result['person_details'] = {}
-        result['person_details']['birthday'] = response['birthday'];
-        result['person_details']['gender'] = response['genres'];
-        result['person_details']['name'] = response['name'];
-        result['person_details']['homepage'] = response['homepage'];
-        result['person_details']['also_known_as'] = response['also_known_as'];
-        result['person_details']['known_for_department'] = response['known_for_department'];
-        result['person_details']['biography'] = response['biography'];
+        // result = {}
+        result['birthday'] = response['birthday'];
+        result['gender'] = response['gender'];
+        result['name'] = response['name'];
+        result['homepage'] = response['homepage'];
+        result['also_known_as'] = response['also_known_as'];
+        result['known_for_department'] = response['known_for_department'];
+        result['biography'] = response['biography'];
+        result['place_of_birth'] = response['place_of_birth'];
+        result['profile_path'] = response['profile_path'];
     },
     (error) => {
         result['error'] = "Error";
@@ -302,16 +304,17 @@ app.get('/api/cast_details', async (req, res) => {
     await axios.get(endpoint_url)
     .then((response) => {
         response = response.data;
-        result['cast_external_ids'] = {}
-        result['cast_external_ids']['imdb_id'] = response['imdb_id'];
-        result['cast_external_ids']['facebook_id'] = response['facebook_id'];
-        result['cast_external_ids']['instagram_id'] = response['instagram_id'];
-        result['cast_external_ids']['twitter_id'] = response['twitter_id'];
+        // result = {}
+        result['imdb_id'] = response['imdb_id'];
+        result['facebook_id'] = response['facebook_id'];
+        result['instagram_id'] = response['instagram_id'];
+        result['twitter_id'] = response['twitter_id'];
     },
     (error) => {
         result['error'] = "Error";
     });
 
+    console.log(result);
     res.status(200).send(result);
 
 });
