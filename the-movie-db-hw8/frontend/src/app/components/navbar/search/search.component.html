@@ -1,19 +1,18 @@
 
 <ng-template #searchResultTemplate let-r="result" let-t="term">
-  <img [src]="'https://image.tmdb.org/t/p/w500' + r['backdrop_path']" class="mr-1" style="width: 16px">
+  <img [src]="'https://image.tmdb.org/t/p/w500' + r['backdrop_path']" class="mr-1" style="width: 30px">
   <ngb-highlight [result]="r.title" [term]="t"></ngb-highlight>
 </ng-template>
 
 <form class="form-inline">
   <input  id="search-input"
           class="form-control"
-          type="search"
+          type="text"
           placeholder="Search"
-          aria-label="Search"/>
-          <!--[(ngModel)]= "model">
+          aria-label="Search"
           [ngbTypeahead]= "search"
           [resultTemplate]= "searchResultTemplate"
-          [inputFormatter]= "formatter" /> -->
+          [inputFormatter]= "inputFormatBandListValue"
+          #instance="ngbTypeahead"/>
 </form>
-
 

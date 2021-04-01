@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { debounceTime, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class FetchDataService {
   apiURLHomepage = "http://localhost:8080/api/homepage";
   apiURLMediaDetails = "http://localhost:8080/api/media_details?mediaType=";
   apiURLCastDetails = "http://localhost:8080/api/cast_details?personId=";
-  apiURLAutocomplete = "http://localhost:8080/api/autocomplete";
+  apiURLAutocomplete = "http://localhost:8080/api/autocomplete?searchQuery=";
 
   constructor( private httpclient : HttpClient ) { }
 
@@ -29,9 +30,9 @@ export class FetchDataService {
     return response as any;
   }
 
-  getAutocompleteData(query : string) {
-    var response = this.httpclient.get(this.apiURLAutocomplete);
-    return response as any;
+  getAutocompleteData(query : string): Observable<string[]> {
+    var response = this.httpclient.get<any[]>(this.apiURLAutocomplete + query);
+    return response;
   }
 
 }

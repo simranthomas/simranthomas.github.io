@@ -322,7 +322,7 @@ app.get('/api/autocomplete', async (req, res) => {
 
     // Multi-Search Endpoint
     /********** TO BE CHANGED *************/
-    var query = 'game';
+    var query = req.query.searchQuery;
 
     let result = {}
     
@@ -357,7 +357,7 @@ app.get('/api/autocomplete', async (req, res) => {
         result['error'] = "Error";
     });
 
-    res.status(200).send(result);
+    res.status(200).send(result['search_results']);
 
 });
 

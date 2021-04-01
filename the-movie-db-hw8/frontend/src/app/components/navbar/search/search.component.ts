@@ -1,14 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, OperatorFunction } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { Observable, of, OperatorFunction } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, map, tap } from 'rxjs/operators';
 import { FetchDataService } from 'src/app/services/fetch-data.service';
 
-export interface SearchResults {
-  id: number,
-  title: string,
-  backdrop_path: string,
-  media_type: string
-}
 
 @Component({
   selector: 'app-search',
@@ -17,33 +12,30 @@ export interface SearchResults {
 })
 export class SearchComponent implements OnInit {
 
+  model: any;
+  searching = false;
+  searchFailed = false;
+
   constructor(private service : FetchDataService) { }
 
-  public model: any;
-
-  search: OperatorFunction<string, readonly {SearchResults : any}[]> = (text$: Observable<string>) => {
-    // console.log("i got the results");
-    // console.log(text$.pipe(
-    //   debounceTime(200),
-    //   switchMap( (searchText) =>  this.service.getAutocompleteData(searchText) as any[] )));
-
+  search = (text$: Observable<string>) => {
     return text$.pipe(
-      debounceTime(200),
-      switchMap( (searchText) =>  this.service.getAutocompleteData(searchText) as any[] ),
+        debounceTime(200),
+        distinctUntilChanged(),
+        // switchMap allows returning an observable rather than maps array
+        switchMap( (searchText) =>  this.service.getAutocompleteData(searchText) )
     );
   }
+  
+  inputFormatBandListValue(value: any)   {
+    if(value.name)
+      return value.name
+    return value;
+  }
 
-  formatter = (x: {title: string}) => x.title;
 
   ngOnInit(): void {
 
-  //   this.service.getAutocompleteData("game")
-  //   .subscribe(
-  //     (data: any) => {
-  //       console.log("im hereeeee in autocomplete");
-  //       console.log(data);
-  //     }
-  //   );
   }
 
 }
