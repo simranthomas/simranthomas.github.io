@@ -1,7 +1,3 @@
-div {
-  /* border: 1px solid red; */
-}
-
 .details-container {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
@@ -113,4 +109,23 @@ img.btn.cast-img.p-0.border-0 {
   color: #1D185A;
   font-weight: 400;
 }
+
+::-webkit-scrollbar {
+  height: 6px;
+  outline: 2px solid slategrey;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(117, 110, 110, 0.3);
+  border-radius: 10px;
+  outline: 2px solid slategrey;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 10px;
+}
+
+
 

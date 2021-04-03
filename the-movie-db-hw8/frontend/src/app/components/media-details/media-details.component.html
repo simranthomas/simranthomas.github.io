@@ -1,6 +1,6 @@
 
 <div *ngIf= "!isLoading"  class= "details-container mx-lg-5 px-lg-5 mx-4 px-3">
-  <div class= "row mt-5 pt-4 mx-lg-5 px-lg-5">
+  <div class= "row mt-5 pt-5 mx-lg-5 px-lg-5">
     <div class = "embed-responsive embed-responsive-16by9 col-sm-8">
       <youtube-player class = "embed-responsi-item mx-lg-3"
         videoId= "{{mediaResults.media_video_details.key}}">
@@ -53,7 +53,7 @@
     <div class = "col-lg mx-lg-5 px-lg-5 mx-0 px-0">
       <div class="cast-review-title mb-2">Full Cast and Crew</div>
       <div>
-        <div class="d-flex flex-row flex-nowrap overflow-auto" >
+        <div class="pb-2 d-flex flex-row flex-nowrap overflow-auto" >
             <div class="card card-body p-0 cast-card border-0 mr-lg-4 mr-5" *ngFor= "let cast of castList">
                 <div><img src= {{cast.profile_path}} class="btn cast-img p-0 border-0" (click)= "open(content, cast.id)"></div>
                 <div class="cast-details my-auto">
@@ -132,14 +132,15 @@
        </div>
        <div class="col">
        <div>Birth: {{cast_result.birthday}}</div>
+       <div>Birth Place: {{cast_result.place_of_birth}}</div>
        <div>Gender: {{cast_result.gender}}</div>
        <div>Known For: {{cast_result.known_for_department}}</div>
        <div>Also Known As: {{cast_result.also_known_as}}</div>
-       <div>
-          <a *ngIf= "cast_imdb" href= "https://imdb.com/name/{{cast_result.imdb_id }}" target="_blank" rel="noopener"><i class="icon fab fa-imdb fa-2x"></i></a>
-          <a *ngIf= "cast_instagram" href= "https://instagram.com/{{cast_result.instagram_id }}" target="_blank" rel="noopener"><i class="icon fab fa-instagram fa-2x"></i></a>
-          <a *ngIf= "cast_facebook" href=  "https://facebook.com/{{cast_result.facebook_id}}" target="_blank" rel="noopener"><i class="icon fab fa-facebook-square fa-2x"></i></a>
-          <a *ngIf= "cast_twitter"  href= "https://twitter.com/{{cast_result.twitter_id}}" target="_blank" rel="noopener"><i class="icon fab fa-twitter fa-2x"></i></a>
+       <div class="mt-3">
+          <a *ngIf= "cast_imdb" href= "https://imdb.com/name/{{cast_result.imdb_id }}" target="_blank" rel="noopener" placement="top" triggers="mouseenter:mouseleave" ngbPopover= "Visit IMDB" style="color: #f0bd06"><i class="icon fa-fw fab fa-imdb fa-2x"></i></a>
+          <a *ngIf= "cast_instagram" href= "https://instagram.com/{{cast_result.instagram_id }}" target="_blank" rel="noopener" placement="top" triggers="mouseenter:mouseleave" ngbPopover= "Visit Instagram" style= "color: #ac4699"><i class="icon fa-fw fab fa-instagram fa-2x"></i></a>
+          <a *ngIf= "cast_facebook" href=  "https://facebook.com/{{cast_result.facebook_id}}" target="_blank" rel="noopener" placement="top" triggers="mouseenter:mouseleave" ngbPopover= "Visit Facebook" style="color:#0027FC"><i class="icon fa-fw fab fa-facebook-square fa-2x"></i></a>
+          <a *ngIf= "cast_twitter"  href= "https://twitter.com/{{cast_result.twitter_id}}" target="_blank" rel="noopener" placement="top" triggers="mouseenter:mouseleave" ngbPopover= "Visit Twitter" style="color:#1DA1F2"><i class="icon fa-fw fab fa-twitter fa-2x"></i></a>
       </div>
        </div>
    </div>
