@@ -1,14 +1,11 @@
 div {
-  border: 2px solid red;
+  /* border: 1px solid red; */
 }
 
-.card-body {
-  min-height: 300px;
-  min-width: 300px;
-  margin-right: 5px;
-  color:red;
+.details-container {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
-
 ::ng-deep .modal-title {
   color:black;
 }
@@ -22,3 +19,98 @@ div {
   font-size: 27px;
   color: black;
 }
+#media_title {
+  font-size:45px;
+  line-height: 57px;
+}
+#media_tagline {
+  font-size: 20px;
+  font-style: italic;
+  color: lightgrey;
+}
+#year-rating {
+  font-size: 18px;
+  color: lightgrey;
+}
+.description-share-title {
+  color:white;
+  font-weight:400;
+  font-size:18px
+}
+#description {
+  color:darkgrey;
+  font-weight:300;
+  font-size:18px;
+  text-align:justify
+}
+.cast-review-title {
+  font-size: 36px;
+  font-weight: 400;
+}
+.cast-card {
+  background-color: white;
+  color:black;
+  border-radius: 14px 14px 14px 14px;
+  min-width: 165px;
+  height: 340px;
+  width:165px;
+}
+img.btn.cast-img.p-0.border-0 {
+  border-radius: 14px 14px 0px 0px;
+  width:165px;
+}
+.card.card-body.p-0.card-bg.border-0.mr-4 {
+  border-radius: 14px;
+  position:relative;
+}
+.cast-details {
+  color: black;
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+  position:absolute;
+  min-width: 165px;
+  width:165px;
+  bottom: 0;
+  background-color: white;
+  border-radius: 0px 0px 14px 14px;
+}
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 15px;
+}
+.avatar-img {
+  max-width: 100px;
+  max-height: 100px;
+}
+.created-by {
+  font-size: 22px;
+  font-weight: 400;
+}
+.written-by {
+  color: rgb(161, 159, 159);
+}
+.review-card {
+  background-color: white;
+  color:black;
+  border-radius: 14px 14px 14px 14px;
+}
+.rating-icon-div {
+  background-color: black;
+  font-size: 24px;
+}
+.rating-icon {
+  color: white;
+  font-size: 18px;
+}
+.rating {
+  font-size: 15px;
+}
+.read-rest-link {
+  color: #1D185A;
+  font-weight: 400;
+}
+

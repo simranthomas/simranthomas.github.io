@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FetchDataService } from 'src/app/services/fetch-data.service';
@@ -10,6 +10,8 @@ import { FetchDataService } from 'src/app/services/fetch-data.service';
   styleUrls: ['./media-details.component.css']
 })
 export class MediaDetailsComponent implements OnInit {
+
+  @ViewChild('watchlistAlert', {static: false}) watchlistAlert: any;
 
   mediaType : any = "";
   mediaId!: any;
@@ -37,6 +39,8 @@ export class MediaDetailsComponent implements OnInit {
   cast_facebook: boolean = false;
   cast_twitter: boolean = false;
   isLoadingModal: boolean = true;
+  addedFlag: boolean = false;
+  removedFlag: boolean = false;
 
   constructor(private service : FetchDataService, private route : ActivatedRoute, private _router : Router, private modalService: NgbModal) {
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -64,7 +68,11 @@ export class MediaDetailsComponent implements OnInit {
 
   updateWatchlist() {
 
+    setTimeout(() => this.watchlistAlert.close(), 2000);
+
     if(this.buttonName == "Add to Watchlist") {
+
+      this.addedFlag = true;
       this.buttonName = "Remove from Watchlist";
       let toAdd : any = {'id': this.mediaId, 'title': this.title, 'image_path': this.posterPath, 'media_type': this.mediaType};
       let watchList: any[] = JSON.parse(localStorage.getItem('WatchList')!);
@@ -80,6 +88,7 @@ export class MediaDetailsComponent implements OnInit {
       }
     } else {
       this.buttonName = "Add to Watchlist";
+      this.removedFlag = true;
       let watchList: any[] = JSON.parse(localStorage.getItem('WatchList')!);
       watchList.forEach((item ,index) => {
         if(item.id == this.mediaId && item.media_type == this.mediaType)
@@ -135,7 +144,7 @@ export class MediaDetailsComponent implements OnInit {
         // create genre list
         let genreList = data.media_details.genres;
         for(var i = 0; i<genreList.length - 1; i++)
-          this.genres += genreList[i].name + ',';
+          this.genres += genreList[i].name + ', ';
         this.genres += genreList[i].name
 
         // create spoken languages
@@ -163,6 +172,28 @@ export class MediaDetailsComponent implements OnInit {
         // get review data
         this.reviewList = data.review_details;
 
+        // format created at date and rating
+        this.reviewList.forEach((element: any) => {
+
+          let monthList = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
+          var createdDate = new Date(element.created_at);
+          var month = createdDate.getMonth();
+          var _date = createdDate.getDate().toString();
+          var year = createdDate.getFullYear();
+          var hours = createdDate.getHours();
+          var AMPM = hours >= 12 ? 'PM' : 'AM';
+          _date = _date.charAt(0) == '0' ? _date.charAt(1) : _date
+
+          var _time = new Date(element.created_at).toString().substring(16,24);
+          var text = monthList[month] + ' ' + _date + ', ' + year + ', ' + _time + ' ' + AMPM;
+
+          element.created_at = text;
+
+          if(element.rating == null)
+            element.rating = 0;
+        });
+
         this.typeMedia = (this.mediaType == "movie") ? "Movies" : "TV Shows";
 
         // get the recommended media list
@@ -180,6 +211,12 @@ export class MediaDetailsComponent implements OnInit {
   }
 
   open(content : any, id: any) {
+
+    this.cast_instagram = false;
+    this.cast_imdb = false;
+    this.cast_twitter = false;
+    this.cast_facebook = false;
+
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size:'lg'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -187,8 +224,6 @@ export class MediaDetailsComponent implements OnInit {
     });
     this.service.getCastDetailsData(id)
         .subscribe((result : any) => {
-        console.log("After clicking on modal - Cast Details");
-        console.log(result);
         this.cast_result = result;
         if (this.cast_result.gender == "1") {
           this.cast_result.gender = 'Female';
@@ -200,6 +235,7 @@ export class MediaDetailsComponent implements OnInit {
         this.cast_result.also_known_as.forEach((element: any) => {
           aka += element+', ';
         });
+
         this.cast_result.also_known_as = aka.slice(0,aka.length-2);
 
         if (this.cast_result.instagram_id != "" && this.cast_result.instagram_id != null) {
@@ -211,9 +247,11 @@ export class MediaDetailsComponent implements OnInit {
         if (this.cast_result.facebook_id != "" && this.cast_result.facebook_id != null) {
           this.cast_facebook = true;
         }
+        console.log(this.cast_result.twitter_id);
         if (this.cast_result.twitter_id != "" && this.cast_result.twitter_id != null) {
           this.cast_twitter = true;
         }
+
         this.isLoadingModal = false;
         });
   }

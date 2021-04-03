@@ -1,41 +1,47 @@
 
-<div *ngIf= "!isLoading"  class= "details-container">
-  <div class= "row mt-5 pt-5">
-    <div class = "col">
-      <youtube-player
-        videoId= "{{mediaResults.media_video_details.key}}"
-        [height]= "375"
-        [width]= "670">
+<div *ngIf= "!isLoading"  class= "details-container mx-lg-5 px-lg-5 mx-4 px-3">
+  <div class= "row mt-5 pt-4 mx-lg-5 px-lg-5">
+    <div class = "embed-responsive embed-responsive-16by9 col-sm-8">
+      <youtube-player class = "embed-responsi-item mx-lg-3"
+        videoId= "{{mediaResults.media_video_details.key}}">
       </youtube-player>
     </div>
-    <div class = "col">
-      <div>{{title}}</div>
-      <div>{{mediaResults.media_details.tagline}}</div>
-      <div>
-        {{releaseAirYear}} | &#9733; {{mediaResults.media_details.vote_average}} | {{duration}}
+    <div class = "col-sm-4 px-lg-4 px-0">
+      <div id="media_title">{{title}}</div>
+      <div id="media_tagline">{{mediaResults.media_details.tagline}}</div>
+      <div id="year-rating" class= "mt-4">
+        {{releaseAirYear}} |   &#9733; {{mediaResults.media_details.vote_average}} |  {{duration}}
       </div>
-      <div> Genres : {{genres}}</div>
-      <div> Spoken Languages : {{languages}}</div>
+      <div class="mt-3"> <span style="font-size:14px">Genres : </span><span style="color:darkgrey; font-size:16px">{{genres}}</span></div>
+      <div class= "mb-3"> <span style="font-size:14px">Spoken Languages : </span><span style="color:darkgrey; font-size:16px">{{languages}}</span></div>
       <div><button type="button" class="btn btn-primary" (click) = "updateWatchlist()">{{buttonName}}</button></div>
+
+      <ngb-alert #watchlistAlert type="success" *ngIf="addedFlag" (closed)="addedFlag = false" class="mt-3">
+        Added to watchlist.
+      </ngb-alert>
+      <ngb-alert #watchlistAlert type="danger" *ngIf="removedFlag" (closed)="removedFlag = false" class="mt-3">
+        Removed from watchlist.
+      </ngb-alert>
+
     </div>
   </div>
 
-  <div class= "row">
-    <div class = "col">
-      <div>Description</div>
-      <div>{{mediaResults.media_details.overview}}</div>
+  <div class= "row mt-3 mx-lg-2">
+    <div class = "col-lg mx-lg-5 px-lg-5 mx-0 px-0">
+      <div class= "description-share-title">Description</div>
+      <div id="description" class= "mt-2">{{mediaResults.media_details.overview}}</div>
     </div>
   </div>
 
-  <div class= "row">
-    <div class = "col">
-      <div>Share</div>
+  <div class= "row mt-4 mx-lg-2">
+    <div class = "col-lg mx-lg-5 px-lg-5 mx-0 px-0">
+      <div class="description-share-title mb-2">Share</div>
       <div>
         <a class="twitter-share-button" href="{{twitterURL}}" target="_blank" rel="noopener noreferrer" >
-          <i class="fab fa-twitter" style="color: #1DA1F2"></i>
+          <i class="fab fa-twitter fa-2x fa-fw" style="color: #1DA1F2"></i>
         </a>
         <a class="fb-share-button" href="{{facebookURL}}" target="_blank" rel="noopener noreferrer" >
-          <span><i class="fab fa-facebook-square" style="color: #0027FC"></i></span>
+          <span><i class="fab fa-facebook-square fa-2x fa-fw" style="color: #0027FC"></i></span>
         </a>
       </div>
     </div>
@@ -43,20 +49,19 @@
 
 
   <!--Cast and Crew-->
-  <div class = "row">
-    <div class = "col">
-      <div>Full Cast and Crew</div>
-      <div class="container-fluid py-2">
+  <div class = "row mt-5 px-lg-3">
+    <div class = "col-lg mx-lg-5 px-lg-5 mx-0 px-0">
+      <div class="cast-review-title mb-2">Full Cast and Crew</div>
+      <div>
         <div class="d-flex flex-row flex-nowrap overflow-auto" >
-            <div class="card card-body" *ngFor= "let cast of castList">
-              <!-- <a class="btn" (click)= "open(content, cast.id)"> -->
-                <img src= {{cast.profile_path}} class="btn" (click)= "open(content, cast.id)">
-                <div>
-                  <div>{{cast.name}}</div>
+            <div class="card card-body p-0 cast-card border-0 mr-lg-4 mr-5" *ngFor= "let cast of castList">
+                <div><img src= {{cast.profile_path}} class="btn cast-img p-0 border-0" (click)= "open(content, cast.id)"></div>
+                <div class="cast-details my-auto">
+                  <div class="pt-2">{{cast.name}}</div>
                   <div>AS</div>
-                  <div>{{cast.character}}</div>
+                  <div style="font-weight: 300;">{{cast.character}}</div>
+                  <br>
                 </div>
-                <!-- </a> -->
             </div>
         </div>
       </div>
@@ -64,21 +69,27 @@
   </div>
 
   <!--Reviews -->
-  <div class = "row">
-    <div class = "col">
-      <div>Reviews {{numberOfReviews}}</div>
-      <div class="container-fluid">
-        <div class="card card-body" *ngFor= "let review of reviewList">
+  <div class = "row mt-5 px-lg-3">
+    <div class = "col-lg mx-lg-5 px-lg-5 mx-0 px-0">
+      <div class="cast-review-title mb-2">Reviews <span class="ml-3" style="color:darkgrey">{{numberOfReviews}}</span></div>
+      <div >
+        <div class="card card-body review-card mb-4" *ngFor= "let review of reviewList">
           <div class="row">
-            <div class= "col">
-              <img src= {{review.avatar_path}}>
+            <div class= "col-lg-2">
+              <img class="avatar-img rounded-circle"src= {{review.avatar_path}}>
             </div>
 
             <div class= "col">
-              <div>A review created by {{review.author}}</div>
-              <div>Written by {{review.author}} on </div>
-              <div>{{review.content}}</div>
-              <a href={{review.url}} target="_blank" rel="noopener noreferrer"><u>Read the rest</u></a>
+              <div class="created-by">A review created by {{review.author}}
+                <span class="rounded-pill rating-icon-div mx-auto">
+                  <span class="rating-icon m-1 my-2 p-1"><span class="symbol m-1 my-2">&#9733;</span>
+                    <span class="rating">{{review.rating}}</span>
+                  </span>
+                </span>
+              </div>
+              <div class="written-by mt-4">Written by {{review.author}} on {{review.created_at}}</div>
+              <div class="line-clamp mt-3 mb-3">{{review.content}}</div>
+              <a class="read-rest-link" href={{review.url}} target="_blank" rel="noopener noreferrer"><u>Read the rest</u></a>
             </div>
           </div>
         </div>
@@ -123,12 +134,12 @@
        <div>Birth: {{cast_result.birthday}}</div>
        <div>Gender: {{cast_result.gender}}</div>
        <div>Known For: {{cast_result.known_for_department}}</div>
-       <!-- <div>Also Known As: {{cast_result.also_known_as}}</div> -->
+       <div>Also Known As: {{cast_result.also_known_as}}</div>
        <div>
-          <a *ngIf="cast_imdb"><i class="icon fab fa-imdb fa-2x"></i></a>
-          <a *ngIf="cast_instagram"><i class="icon fab fa-instagram fa-2x"></i></a>
-          <a *ngIf="cast_facebook"><i class="icon fab fa-facebook-square fa-2x"></i></a>
-          <a *ngIf="cast_twitter"><i class="icon fab fa-twitter fa-2x"></i></a>
+          <a *ngIf= "cast_imdb" href= "https://imdb.com/name/{{cast_result.imdb_id }}" target="_blank" rel="noopener"><i class="icon fab fa-imdb fa-2x"></i></a>
+          <a *ngIf= "cast_instagram" href= "https://instagram.com/{{cast_result.instagram_id }}" target="_blank" rel="noopener"><i class="icon fab fa-instagram fa-2x"></i></a>
+          <a *ngIf= "cast_facebook" href=  "https://facebook.com/{{cast_result.facebook_id}}" target="_blank" rel="noopener"><i class="icon fab fa-facebook-square fa-2x"></i></a>
+          <a *ngIf= "cast_twitter"  href= "https://twitter.com/{{cast_result.twitter_id}}" target="_blank" rel="noopener"><i class="icon fab fa-twitter fa-2x"></i></a>
       </div>
        </div>
    </div>

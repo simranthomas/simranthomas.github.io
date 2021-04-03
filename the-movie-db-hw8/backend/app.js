@@ -277,7 +277,7 @@ app.get('/api/cast_details', async (req, res) => {
 
     let result = {}
 
-    var endpoint_url = `${tmdb_base_url}/person/${person_id}?api_key=${tmdb_api_key}&language=en-US&page=1`;
+    var endpoint_url = `${tmdb_base_url}person/${person_id}?api_key=${tmdb_api_key}&language=en-US&page=1`;
 
     await axios.get(endpoint_url)
     .then((response) => {

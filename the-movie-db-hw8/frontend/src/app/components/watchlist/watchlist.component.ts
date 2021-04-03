@@ -27,8 +27,28 @@ export class WatchlistComponent implements OnInit {
 
   }
 
+  updateWatchList(mediaId: any)
+  {
+    let watchlist : any[] = JSON.parse(localStorage.getItem('WatchList')!);
+    let mediaObject :any;
+
+    watchlist.forEach((item ,index) => {
+      if(item.id == mediaId)
+      {
+        mediaObject = item;
+        watchlist.splice(index, 1);
+      }
+    });
+    watchlist.push(mediaObject);
+    localStorage.setItem('WatchList', JSON.stringify(watchlist));
+
+  }
+
   getDetails(mediaType: string, mediaId: number)
   {
+
+    this.updateWatchList(mediaId);
+
     if (mediaType == "movie") {
       this._router.navigate(['/watch/movie/', mediaId])
     }
