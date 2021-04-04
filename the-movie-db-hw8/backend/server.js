@@ -1,6 +1,6 @@
 // Import express
 const express = require('express');
-
+const path = require('path');
 // import axios 
 const axios = require("axios");
 
@@ -10,6 +10,8 @@ const cors = require("cors");
 // Initialize express
 const app = express();
 app.use(cors());
+
+app.use(express.static(path.join(__dirname, 'dist/frontend')));
 
 var tmdb_api_key = '38bbe79ff3d3e4cc74577eb730d7626f';
 var tmdb_base_url = 'https://api.themoviedb.org/3/'; 
@@ -363,6 +365,12 @@ app.get('/api/autocomplete', async (req, res) => {
 
 });
 
+app.use('/*', function(req, res) {
+    res.sendFile(path.join(__dirname + '/dist/frontend/index.html'));
+})
+
 var server = app.listen(8080, () => {
     console.log("Backend Application listening at http://localhost:8080")
 });
+
+module.exports = app;
