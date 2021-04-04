@@ -32,12 +32,15 @@ export class SearchComponent implements OnInit {
     return value;
   }
 
-  selectedItem(media: { item: any; }){
+  selectedItem(media: any){
 
     let mediaId = media.item['id'];
     let mediaType = media.item['media_type'];
-    this._router.navigate(['/watch/', mediaType, mediaId]);
 
+    // media.preventDefault();
+    // this.model='';
+
+    this._router.navigate(['/watch/', mediaType, mediaId]);
   }
 
   ngOnInit(): void {

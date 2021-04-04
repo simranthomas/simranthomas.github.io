@@ -314,7 +314,6 @@ app.get('/api/cast_details', async (req, res) => {
         result['error'] = "Error";
     });
 
-    console.log(result);
     res.status(200).send(result);
 
 });

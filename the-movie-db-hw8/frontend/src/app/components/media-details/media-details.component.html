@@ -81,9 +81,9 @@
 
             <div class= "col">
               <div class="created-by">A review created by {{review.author}}
-                <span class="rounded-pill rating-icon-div mx-auto">
-                  <span class="rating-icon m-1 my-2 p-1"><span class="symbol m-1 my-2">&#9733;</span>
-                    <span class="rating">{{review.rating}}</span>
+                <span class="rounded-pill rating-icon-div mx-auto pb-1">
+                  <span class="rating-icon my-auto"><span class="symbol mb-3 p-2">&#9733;</span>
+                    <span class="rating pr-2">{{review.rating}}</span>
                   </span>
                 </span>
               </div>
@@ -98,17 +98,17 @@
   </div>
 
   <!--Recommended Media-->
-  <div class= "row">
-    <div class= "col">
-      <div>Recommended {{typeMedia}}</div>
+  <div class= "row row mx-lg-1 my-5">
+    <div class= "col mx-lg-5 my-2 px-lg-4">
+      <div class= "mx-lg-5 px-lg-2 category-title">Recommended {{typeMedia}}</div>
       <app-carousel-cards [mediaList]= "recommendedMedia"></app-carousel-cards>
     </div>
   </div>
 
   <!--Similar Media-->
-  <div class= "row">
-    <div class= "col">
-      <div>Similar {{typeMedia}}</div>
+  <div class= "row row mx-lg-1 my-5">
+    <div class= "col mx-lg-5 my-2 px-lg-4">
+      <div class= "mx-lg-5 px-lg-2 category-title">Similar {{typeMedia}}</div>
       <app-carousel-cards [mediaList]= "similarMedia"></app-carousel-cards>
     </div>
   </div>
