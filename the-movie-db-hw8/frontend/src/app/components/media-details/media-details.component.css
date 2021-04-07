@@ -1,3 +1,6 @@
+div {
+  border: 1px solid red;
+}
 .details-container {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
@@ -48,6 +51,7 @@
   color:black;
   border-radius: 14px 14px 14px 14px;
   min-width: 165px;
+  max-width: 165px;
   height: 340px;
   width:165px;
 }

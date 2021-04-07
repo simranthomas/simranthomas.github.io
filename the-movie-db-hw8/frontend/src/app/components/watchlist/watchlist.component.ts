@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,21 +10,25 @@ import { Router } from '@angular/router';
 })
 export class WatchlistComponent implements OnInit {
 
-  constructor(private _router : Router) { }
+  constructor(private breakpoint: BreakpointObserver, private _router : Router) { }
 
   watchList: any;
   watchlistLRU : any;
   isWatchListEmpty : boolean = true;
+  isMobile :boolean = false;
 
   ngOnInit(): void {
+
+    this.isMobile = this.breakpoint.isMatched('(max-width: 600px');
 
     this.watchList = JSON.parse(localStorage.getItem("WatchList")!);
     this.watchlistLRU = this.watchList.reverse();
 
-    if(this.watchList == null)
+    if(this.watchList.length == 0 || this.watchList == null)
       this.isWatchListEmpty = true;
     else
       this.isWatchListEmpty = false;
+
 
   }
 

@@ -98,18 +98,18 @@
   </div>
 
   <!--Recommended Media-->
-  <div class= "row row mx-lg-1 my-5">
+  <div class= "row mx-lg-1 my-5">
     <div class= "col mx-lg-5 my-2 px-lg-4">
       <div class= "mx-lg-5 px-lg-2 category-title">Recommended {{typeMedia}}</div>
-      <app-carousel-cards [mediaList]= "recommendedMedia"></app-carousel-cards>
+      <div class="details-carousel mx-lg-5 px-lg-2"><app-carousel-cards  [mediaList]= "recommendedMedia"></app-carousel-cards></div>
     </div>
   </div>
 
   <!--Similar Media-->
-  <div class= "row row mx-lg-1 my-5">
+  <div class= "row mx-lg-1 my-5">
     <div class= "col mx-lg-5 my-2 px-lg-4">
       <div class= "mx-lg-5 px-lg-2 category-title">Similar {{typeMedia}}</div>
-      <app-carousel-cards [mediaList]= "similarMedia"></app-carousel-cards>
+      <div class="details-carousel mx-lg-5 px-lg-2"><app-carousel-cards  [mediaList]= "similarMedia"></app-carousel-cards></div>
     </div>
   </div>
 

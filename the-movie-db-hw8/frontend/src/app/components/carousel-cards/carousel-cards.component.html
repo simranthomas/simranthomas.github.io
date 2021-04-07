@@ -1,8 +1,8 @@
 
 <div class="main-card-carousel m-4">
-  <ngb-carousel *ngIf= "!mobile" #carousel [interval]= "0">
+  <ngb-carousel class="carousel-main" *ngIf= "!mobile" #carousel [interval]= "0">
     <ng-template ngbSlide *ngFor= "let group of groupMedia; index as i">
-      <div class="row">
+      <div class="mb-2 row pb-5">
         <div ngbSlide *ngFor= "let img of group" class="col px-1">
           <a class='btn'  (click)= "getDetails(img.media_type, img.id)">
             <div class="card card-body p-0">
@@ -14,18 +14,17 @@
     </ng-template>
   </ngb-carousel>
 
-  <ngb-carousel *ngIf= "mobile" #carousel [interval]= "0" [showNavigationIndicators]= "false">
+  <ngb-carousel class="carousel-mobile" *ngIf= "mobile" #carousel [interval]= "0" [showNavigationIndicators]= "false">
     <ng-template ngbSlide *ngFor= "let img of mediaList; index as i">
       <div class="row">
         <a class='btn' (click)= "getDetails(img.media_type, img.id)">
-            <div class="card card-body p-0">
+            <div class="card card-body">
               <img class="img-fluid" [src]= "img.image_path">
             </div>
           </a>
         </div>
     </ng-template>
   </ngb-carousel>
-
-  </div>
+</div>
 
 

@@ -15,6 +15,10 @@ export class NavbarComponent implements OnInit {
     this.isMenuCollapsed = !this.isMenuCollapsed
   }
 
+  setMenuCollapsedNav(val:boolean) {
+    this.isMenuCollapsed = true;
+  }
+
   ngOnInit(): void {
   }
 
