@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class FetchDataService {
 
-  apiURLHomepage = "http://localhost:8080/api/homepage";
-  apiURLMediaDetails = "http://localhost:8080/api/media_details?mediaType=";
-  apiURLCastDetails = "http://localhost:8080/api/cast_details?personId=";
-  apiURLAutocomplete = "http://localhost:8080/api/autocomplete?searchQuery=";
+  apiURLHomepage = "https://the-movie-db-simranthomas.wl.r.appspot.com/api/homepage";
+  apiURLMediaDetails = "https://the-movie-db-simranthomas.wl.r.appspot.com/api/media_details?mediaType=";
+  apiURLCastDetails = "https://the-movie-db-simranthomas.wl.r.appspot.com/api/cast_details?personId=";
+  apiURLAutocomplete = "https://the-movie-db-simranthomas.wl.r.appspot.com/api/autocomplete?searchQuery=";
 
   constructor( private httpclient : HttpClient ) { }
 
