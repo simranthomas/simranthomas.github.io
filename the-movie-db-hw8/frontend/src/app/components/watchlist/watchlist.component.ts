@@ -22,12 +22,14 @@ export class WatchlistComponent implements OnInit {
     this.isMobile = this.breakpoint.isMatched('(max-width: 600px)');
 
     this.watchList = JSON.parse(localStorage.getItem("WatchList")!);
-    this.watchlistLRU = this.watchList.reverse();
 
-    if(this.watchList.length == 0 || this.watchList == null)
+
+    if(this.watchList == null || this.watchList.length == 0)
       this.isWatchListEmpty = true;
-    else
+    else {
+      this.watchlistLRU = this.watchList.reverse();
       this.isWatchListEmpty = false;
+    }
 
 
   }
