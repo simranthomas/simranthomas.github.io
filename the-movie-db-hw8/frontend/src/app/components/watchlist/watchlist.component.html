@@ -4,7 +4,7 @@
 
   <div class= "container mx-0 px-5 px-lg-0">
     <div class="row mx-auto">
-      <div *ngFor= "let item of watchlistLRU" class="col-lg-2 px-2 py-5">
+      <div *ngFor= "let item of watchlistLRU" class="col-lg-2 px-2 py-5" style="cursor: pointer">
 
         <div *ngIf ="isMobile" class="watchlist-item mobile-item" (click)= "getDetails(item.media_type, item.id)">
           <a class='btn'>

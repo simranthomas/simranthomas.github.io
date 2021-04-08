@@ -1,28 +1,36 @@
 
 <div class="main-card-carousel m-4">
-  <ngb-carousel class="carousel-main" *ngIf= "!mobile" #carousel [interval]= "0">
+  <ngb-carousel class="carousel-main" *ngIf= "!isMobile" #carousel [interval]= "0">
     <ng-template ngbSlide *ngFor= "let group of groupMedia; index as i">
       <div class="mb-2 row pb-5">
-        <div ngbSlide *ngFor= "let img of group" class="col px-1">
-          <a class='btn'  (click)= "getDetails(img.media_type, img.id)">
-            <div class="card card-body p-0">
-              <img class="img-fluid" [src]= "img.image_path">
+        <div ngbSlide *ngFor= "let img of group" class="col px-1" style="cursor: pointer">
+
+          <div *ngIf ="!isMobile" class="card-item desktop-item" (click)= "getDetails(img.media_type, img.id)" >
+            <a class='btn'>
+              <img class="img-fluid poster-img" src="{{img.image_path}}">
+            </a>
+            <div class="carousel-caption caption-text">
+              <p>{{img.title}}</p>
             </div>
-          </a>
+          </div>
+
         </div>
       </div>
     </ng-template>
   </ngb-carousel>
 
-  <ngb-carousel class="carousel-mobile" *ngIf= "mobile" #carousel [interval]= "0" [showNavigationIndicators]= "false">
-    <ng-template ngbSlide *ngFor= "let img of mediaList; index as i">
-      <div class="row">
-        <a class='btn' (click)= "getDetails(img.media_type, img.id)">
-            <div class="card card-body">
-              <img class="img-fluid" [src]= "img.image_path">
-            </div>
+  <ngb-carousel class="carousel-mobile" *ngIf= "isMobile" #carousel [interval]= "0" [showNavigationIndicators]= "false">
+    <ng-template ngbSlide *ngFor= "let img of mediaList; index as i" style="cursor: pointer">
+
+        <div *ngIf ="isMobile" class="row card-item mobile-item m-3 p-1" (click)= "getDetails(img.media_type, img.id)">
+          <a class='btn'>
+            <img class="img-fluid poster-img" src="{{img.image_path}}">
           </a>
+          <div class="carousel-caption caption-text">
+            <p>{{img.title}}</p>
+          </div>
         </div>
+
     </ng-template>
   </ngb-carousel>
 </div>

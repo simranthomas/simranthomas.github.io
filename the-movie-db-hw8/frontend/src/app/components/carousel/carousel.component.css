@@ -3,6 +3,11 @@
   height:360px;
   overflow: hidden;
 }
+.main-carousel-mobile {
+  width: 70%;
+  height:100%;
+  overflow: hidden;
+}
 .carousel-caption {
   opacity: 0;
   background: linear-gradient(to top, black 36%,rgb(0,0,0,0));
@@ -11,6 +16,16 @@
   padding: 13% 0% 0% 6%;
   margin-bottom: 11em;
   height: 36%;
+}
+.caption-text-mobile {
+  opacity: 1;
+  background: linear-gradient(to top, black 36%,rgb(0,0,0,0));
+  margin-left: -9.5em;
+  width: 101%;
+  padding: 13% 0% 0% 6%;
+  margin-bottom: 11em;
+  height: 36%;
+  text-align:left;
 }
 p {
   text-align:left;

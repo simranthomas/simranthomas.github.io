@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,7 +9,7 @@ import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/n
 })
 export class CarouselComponent implements OnInit {
 
-  constructor() { }
+  constructor(private breakpointObserver : BreakpointObserver) { }
 
   @Input() mediaList!: any;
 
@@ -17,6 +18,7 @@ export class CarouselComponent implements OnInit {
   pauseOnIndicator = false;
   pauseOnHover = true;
   pauseOnFocus = true;
+  isMobile = false;
 
   @ViewChild('carousel', { static: true })
   carousel!: NgbCarousel;
@@ -41,7 +43,7 @@ export class CarouselComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 599px)');
   }
 
 }

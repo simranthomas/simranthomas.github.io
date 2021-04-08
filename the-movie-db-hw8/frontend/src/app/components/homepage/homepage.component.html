@@ -1,37 +1,37 @@
 <app-carousel [mediaList]= "carouselMovies"></app-carousel>
 
-<div *ngIf = "!isContinueWatchingEmpty" class= "category-carousel-container">
-  <div class= "category-title">Continue Watching</div>
+<div *ngIf = "!isContinueWatchingEmpty" class= "category-carousel-container mt-1">
+  <div class= "category-title mx-4 px-2">Continue Watching</div>
   <app-carousel-cards [mediaList]= "continueWatchingLRU"></app-carousel-cards>
 </div>
 
 <div class= "category-carousel-container">
-  <div class= "category-title">Popular Movies</div>
+  <div class= "category-title mx-4 px-2">Popular Movies</div>
   <app-carousel-cards [mediaList]= "popularMovies"></app-carousel-cards>
 </div>
 
 <div class= "category-carousel-container">
-  <div class= "category-title">Top Rated Movies</div>
+  <div class= "category-title mx-4 px-2">Top Rated Movies</div>
   <app-carousel-cards [mediaList]= "topRatedMovies"></app-carousel-cards>
 </div>
 
 <div class= "category-carousel-container">
-  <div class= "category-title">Trending Movies</div>
+  <div class= "category-title mx-4 px-2">Trending Movies</div>
   <app-carousel-cards [mediaList]= "trendingMovies"></app-carousel-cards>
 </div>
 
 <div class= "category-carousel-container">
-  <div class= "category-title">Popular TV Shows</div>
+  <div class= "category-title mx-4 px-2">Popular TV Shows</div>
   <app-carousel-cards [mediaList]= "popularTv"></app-carousel-cards>
 </div>
 
 <div class= "category-carousel-container">
-  <div class= "category-title">Top Rated TV Shows</div>
+  <div class= "category-title mx-4 px-2">Top Rated TV Shows</div>
   <app-carousel-cards [mediaList]= "topRatedTv"></app-carousel-cards>
 </div>
 
 <div class= "category-carousel-container">
-  <div class= "category-title">Trending TV Shows</div>
+  <div class= "category-title mx-4 px-2">Trending TV Shows</div>
   <app-carousel-cards [mediaList]= "trendingTv"></app-carousel-cards>
 </div>
 

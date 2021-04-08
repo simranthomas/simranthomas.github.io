@@ -12,8 +12,8 @@
       <div id="year-rating" class= "mt-4">
         {{releaseAirYear}} |   &#9733; {{mediaResults.media_details.vote_average}} |  {{duration}}
       </div>
-      <div class="mt-3"> <span style="font-size:14px">Genres : </span><span style="color:darkgrey; font-size:16px">{{genres}}</span></div>
-      <div class= "mb-3"> <span style="font-size:14px">Spoken Languages : </span><span style="color:darkgrey; font-size:16px">{{languages}}</span></div>
+      <div *ngIf= "genres.length!=0 && genres!= null" class="mt-3"> <span style="font-size:14px">Genres : </span><span style="color:darkgrey; font-size:16px">{{genres}}</span></div>
+      <div *ngIf= "languages.length!=0 && languages!= null" class= "mb-3"> <span style="font-size:14px">Spoken Languages : </span><span style="color:darkgrey; font-size:16px">{{languages}}</span></div>
       <div><button type="button" class="btn btn-primary" (click) = "updateWatchlist()">{{buttonName}}</button></div>
 
       <ngb-alert #watchlistAlert type="success" *ngIf="addedFlag" (closed)="addedFlag = false" class="mt-3">
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <div class= "row mt-3 mx-lg-2">
+  <div *ngIf= "mediaResults.media_details.overview.length!=0 && mediaResults.media_details.overview!=null" class= "row mt-3 mx-lg-2">
     <div class = "col-lg mx-lg-5 px-lg-5 mx-0 px-0">
       <div class= "description-share-title">Description</div>
       <div id="description" class= "mt-2">{{mediaResults.media_details.overview}}</div>
@@ -49,8 +49,8 @@
 
 
   <!--Cast and Crew-->
-  <div class = "row mt-5 px-lg-3">
-    <div class = "col-lg mx-lg-5 px-lg-5 mx-0 px-0">
+  <div class = "row mt-5 px-lg-3" *ngIf = "castList.length!=0 && castList.length!=null">
+    <div class = "col-lg-11 mx-lg-5 px-lg-5 mx-0 px-0">
       <div class="cast-review-title mb-2">Full Cast and Crew</div>
       <div>
         <div class="pb-2 d-flex flex-row flex-nowrap overflow-auto" >
@@ -69,7 +69,7 @@
   </div>
 
   <!--Reviews -->
-  <div class = "row mt-5 px-lg-3">
+  <div class = "row mt-5 px-lg-3" *ngIf= "numberOfReviews != 0">
     <div class = "col-lg mx-lg-5 px-lg-5 mx-0 px-0">
       <div class="cast-review-title mb-2">Reviews <span class="ml-3" style="color:darkgrey">{{numberOfReviews}}</span></div>
       <div >
@@ -98,7 +98,7 @@
   </div>
 
   <!--Recommended Media-->
-  <div class= "row mx-lg-1 my-5">
+  <div class= "row mx-lg-1 my-5" *ngIf = "recommendedMedia.length!=0 && recommendedMedia != null">
     <div class= "col mx-lg-5 my-2 px-lg-4">
       <div class= "mx-lg-5 px-lg-2 category-title">Recommended {{typeMedia}}</div>
       <div class="details-carousel mx-lg-5 px-lg-2"><app-carousel-cards  [mediaList]= "recommendedMedia"></app-carousel-cards></div>
@@ -106,7 +106,7 @@
   </div>
 
   <!--Similar Media-->
-  <div class= "row mx-lg-1 my-5">
+  <div class= "row mx-lg-1 my-5" *ngIf = "similarMedia.length!=0 && similarMedia != null">
     <div class= "col mx-lg-5 my-2 px-lg-4">
       <div class= "mx-lg-5 px-lg-2 category-title">Similar {{typeMedia}}</div>
       <div class="details-carousel mx-lg-5 px-lg-2"><app-carousel-cards  [mediaList]= "similarMedia"></app-carousel-cards></div>
@@ -121,23 +121,24 @@
   <ng-container *ngIf= "!isLoadingModal">
   <div class="modal-header">
     <div class="modal-title modal-headings" id="modal-basic-title">{{cast_result.name}}</div>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="close" aria-label="Close" (click)= "modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
    <div class="row">
-       <div class="col-10 col-lg-3">
+       <div class="col-lg-10 col-lg-3 col-12">
           <img class="img-fluid" src="https://image.tmdb.org/t/p/w500/{{cast_result.profile_path}}">
        </div>
        <div class="col">
-       <div>Birth: {{cast_result.birthday}}</div>
-       <div>Birth Place: {{cast_result.place_of_birth}}</div>
-       <div>Gender: {{cast_result.gender}}</div>
-       <div>Known For: {{cast_result.known_for_department}}</div>
-       <div>Also Known As: {{cast_result.also_known_as}}</div>
+       <div *ngIf= "cast_result.birthday != null && cast_result.birthday != ''">Birth: {{cast_result.birthday}}</div>
+       <div *ngIf= "cast_result.place_of_birth != null && cast_result.place_of_birth != ''">Birth Place: {{cast_result.place_of_birth}}</div>
+       <div *ngIf= "cast_result.gender != null && cast_result.gender != ''">Gender: {{cast_result.gender}}</div>
+       <div *ngIf= "cast_result.known_for_department != null && cast_result.known_for_department != ''">Known For: {{cast_result.known_for_department}}</div>
+       <div *ngIf= "cast_result.also_known_as != null && cast_result.also_known_as != ''">Also Known As: {{cast_result.also_known_as}}</div>
        <div class="mt-3">
-          <a *ngIf= "cast_imdb" href= "https://imdb.com/name/{{cast_result.imdb_id }}" target="_blank" rel="noopener" placement="top" triggers="mouseenter:mouseleave" ngbPopover= "Visit IMDB" style="color: #f0bd06"><i class="icon fa-fw fab fa-imdb fa-2x"></i></a>
+          <a *ngIf= "cast_imdb && isMobile" href= "https://imdb.com/name/{{cast_result.imdb_id }}" target="_blank" rel="noopener" placement="right" triggers="mouseenter:mouseleave" ngbPopover= "Visit IMDB" style="color: #f0bd06"><i class="icon fa-fw fab fa-imdb fa-2x"></i></a>
+          <a *ngIf= "cast_imdb && !isMobile" href= "https://imdb.com/name/{{cast_result.imdb_id }}" target="_blank" rel="noopener" placement="top" triggers="mouseenter:mouseleave" ngbPopover= "Visit IMDB" style="color: #f0bd06"><i class="icon fa-fw fab fa-imdb fa-2x"></i></a>
           <a *ngIf= "cast_instagram" href= "https://instagram.com/{{cast_result.instagram_id }}" target="_blank" rel="noopener" placement="top" triggers="mouseenter:mouseleave" ngbPopover= "Visit Instagram" style= "color: #ac4699"><i class="icon fa-fw fab fa-instagram fa-2x"></i></a>
           <a *ngIf= "cast_facebook" href=  "https://facebook.com/{{cast_result.facebook_id}}" target="_blank" rel="noopener" placement="top" triggers="mouseenter:mouseleave" ngbPopover= "Visit Facebook" style="color:#0027FC"><i class="icon fa-fw fab fa-facebook-square fa-2x"></i></a>
           <a *ngIf= "cast_twitter"  href= "https://twitter.com/{{cast_result.twitter_id}}" target="_blank" rel="noopener" placement="top" triggers="mouseenter:mouseleave" ngbPopover= "Visit Twitter" style="color:#1DA1F2"><i class="icon fa-fw fab fa-twitter fa-2x"></i></a>

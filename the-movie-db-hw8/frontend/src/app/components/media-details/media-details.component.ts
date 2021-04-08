@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -41,12 +42,13 @@ export class MediaDetailsComponent implements OnInit {
   isLoadingModal: boolean = true;
   addedFlag: boolean = false;
   removedFlag: boolean = false;
+  isMobile: boolean = false;
 
-  constructor(private service : FetchDataService, private route : ActivatedRoute, private _router : Router, private modalService: NgbModal) {
+  constructor(private breakpoint: BreakpointObserver, private service : FetchDataService, private route : ActivatedRoute, private _router : Router, private modalService: NgbModal) {
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
    }
 
-  addToLocalStorage() {
+  addToContinueWatching() {
 
     let mediaObject : any = {'id': this.mediaId, 'title': this.title, 'image_path': this.posterPath, 'media_type': this.mediaType};
     let continueWatching : any[] = JSON.parse(localStorage.getItem('ContinueWatching')!);
@@ -62,6 +64,7 @@ export class MediaDetailsComponent implements OnInit {
           continueWatching.splice(index, 1);
       });
       continueWatching.push(mediaObject);
+      continueWatching = continueWatching.splice(-24);
       localStorage.setItem('ContinueWatching', JSON.stringify(continueWatching));
     }
   }
@@ -94,6 +97,7 @@ export class MediaDetailsComponent implements OnInit {
         if(item.id == this.mediaId && item.media_type == this.mediaType)
           watchList.splice(index, 1);
       });
+
       localStorage.setItem('WatchList', JSON.stringify(watchList));
     }
 
@@ -114,6 +118,8 @@ export class MediaDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.isMobile = this.breakpoint.isMatched('(max-width: 600px)');
+
     this.mediaType = this.route.snapshot.paramMap.get('mediaType');
     this.mediaId = this.route.snapshot.paramMap.get('id');
 
@@ -132,7 +138,6 @@ export class MediaDetailsComponent implements OnInit {
         // format the duration
         let minutes : number = data.media_details.runtime;
         let hours = 0;
-        console.log(minutes);
         while(minutes/60 > 1) {
           hours++;
           minutes -= 60;
@@ -150,7 +155,8 @@ export class MediaDetailsComponent implements OnInit {
         // create spoken languages
         let languageList = data.media_details.spoken_languages;
         for(var i = 0; i<languageList.length - 1; i++)
-          this.languages += languageList[i].english_name + ',';
+          if(languageList[i].english_name != undefined)
+          this.languages += languageList[i].english_name + ', ';
         this.languages += languageList[i].english_name;
 
         // format twitter share message
@@ -181,12 +187,15 @@ export class MediaDetailsComponent implements OnInit {
           var month = createdDate.getMonth();
           var _date = createdDate.getDate().toString();
           var year = createdDate.getFullYear();
-          var hours = createdDate.getHours();
-          var AMPM = hours >= 12 ? 'PM' : 'AM';
           _date = _date.charAt(0) == '0' ? _date.charAt(1) : _date
 
-          var _time = new Date(element.created_at).toString().substring(16,24);
-          var text = monthList[month] + ' ' + _date + ', ' + year + ', ' + _time + ' ' + AMPM;
+          var hours :any = createdDate.getHours() > 12 ? createdDate.getHours() - 12 : createdDate.getHours();
+          var ampm = createdDate.getHours() >= 12 ? "PM" : "AM";
+          hours = hours < 10 ? "0" + hours : hours;
+          var minutes = createdDate.getMinutes() < 10 ? "0" + createdDate.getMinutes() : createdDate.getMinutes();
+          var seconds = createdDate.getSeconds() < 10 ? "0" + createdDate.getSeconds() : createdDate.getSeconds();
+          var _time = hours + ":" + minutes + ":" + seconds + " ";
+          var text = monthList[month] + ' ' + _date + ', ' + year + ', ' + _time + ' ' + ampm;
 
           element.created_at = text;
 
@@ -202,7 +211,7 @@ export class MediaDetailsComponent implements OnInit {
         // get the similar media list
         this.similarMedia = data.similar;
 
-        this.addToLocalStorage();
+        this.addToContinueWatching();
 
         this.isLoading = false;
       }
@@ -231,7 +240,6 @@ export class MediaDetailsComponent implements OnInit {
           this.cast_result.gender = "Male";
         }
         var aka: string = '';
-        console.log(this.cast_result);
         this.cast_result.also_known_as.forEach((element: any) => {
           aka += element+', ';
         });
@@ -247,7 +255,6 @@ export class MediaDetailsComponent implements OnInit {
         if (this.cast_result.facebook_id != "" && this.cast_result.facebook_id != null) {
           this.cast_facebook = true;
         }
-        console.log(this.cast_result.twitter_id);
         if (this.cast_result.twitter_id != "" && this.cast_result.twitter_id != null) {
           this.cast_twitter = true;
         }

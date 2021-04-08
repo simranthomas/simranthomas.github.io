@@ -24,6 +24,7 @@ export class HomepageComponent implements OnInit {
   continueWatching: any;
   continueWatchingLRU : Media[] = [];
   isContinueWatchingEmpty : boolean = true;
+  isLoading: boolean = true;
 
   constructor(private service : FetchDataService) { }
 
@@ -51,6 +52,9 @@ export class HomepageComponent implements OnInit {
         this.trendingMovies = data['trending_movies'];
       }
     );
+
+    this.isLoading = false;
+
   }
 
 }

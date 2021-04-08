@@ -20,7 +20,7 @@ export class CarouselCardsComponent implements OnInit {
   groupMedia : any = [];
   singleGroup : Media[] = [];
   emptyMedia : any = {"id": 0, "title": "" ,"image_path": ""};
-  mobile =false;
+  isMobile =false;
 
   @ViewChild('carousel', { static: true })
   carousel!: NgbCarousel;
@@ -56,7 +56,7 @@ export class CarouselCardsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.mobile = this.breakpointObserver.isMatched('(max-width: 599px)');
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 599px)');
   }
 
   getDetails(mediaType: string, mediaId: number)

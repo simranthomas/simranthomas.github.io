@@ -19,7 +19,7 @@ export class WatchlistComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.isMobile = this.breakpoint.isMatched('(max-width: 600px');
+    this.isMobile = this.breakpoint.isMatched('(max-width: 600px)');
 
     this.watchList = JSON.parse(localStorage.getItem("WatchList")!);
     this.watchlistLRU = this.watchList.reverse();
