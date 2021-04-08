@@ -4,9 +4,15 @@
   overflow: hidden;
 }
 .main-carousel-mobile {
-  width: 70%;
-  height:100%;
+  width: 85%;
+  height: 100%;
   overflow: hidden;
+}
+.main-carousel-mobile:hover img{
+  transform: scale(1.1);
+}
+.main-carousel-mobile:hover .carousel-caption{
+  transform: scale(1.1);
 }
 .carousel-caption {
   opacity: 0;
@@ -16,16 +22,20 @@
   padding: 13% 0% 0% 6%;
   margin-bottom: 11em;
   height: 36%;
+  
+}
+.caption-text-desktop {
+  bottom: 35px;
 }
 .caption-text-mobile {
   opacity: 1;
   background: linear-gradient(to top, black 36%,rgb(0,0,0,0));
-  margin-left: -9.5em;
-  width: 101%;
-  padding: 13% 0% 0% 6%;
-  margin-bottom: 11em;
-  height: 36%;
-  text-align:left;
+  margin-left: -3.5em;
+  width: 105%;
+  padding: 11% 4% 4% 13%;
+  margin-bottom: -20px;
+  height: 42%;
+  text-align: left;
 }
 p {
   text-align:left;

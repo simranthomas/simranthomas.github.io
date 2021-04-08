@@ -20,9 +20,9 @@
   </ngb-carousel>
 
   <ngb-carousel class="carousel-mobile" *ngIf= "isMobile" #carousel [interval]= "0" [showNavigationIndicators]= "false">
-    <ng-template ngbSlide *ngFor= "let img of mediaList; index as i" style="cursor: pointer">
+    <ng-template ngbSlide *ngFor= "let img of mediaList; index as i" >
 
-        <div *ngIf ="isMobile" class="row card-item mobile-item m-3 p-1" (click)= "getDetails(img.media_type, img.id)">
+        <div *ngIf ="isMobile" class="row card-item mobile-item m-3 p-1" (click)= "getDetails(img.media_type, img.id)" style="cursor: pointer">
           <a class='btn'>
             <img class="img-fluid poster-img" src="{{img.image_path}}">
           </a>

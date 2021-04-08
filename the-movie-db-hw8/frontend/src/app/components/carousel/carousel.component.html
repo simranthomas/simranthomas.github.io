@@ -2,10 +2,10 @@
 <div *ngIf= "!isMobile" class="main-carousel mx-auto mt-5 pt-lg-4 pt-5">
 <ngb-carousel #carousel [interval]= "5000" [pauseOnHover]= "pauseOnHover" [pauseOnFocus]= "pauseOnFocus" (slide)= "onSlide($event)">
   <ng-template ngbSlide *ngFor= "let img of mediaList">
-    <div class="carousel-caption">
-      <p>{{img.title}}</p>
+    <div class="carousel-caption caption-text-desktop" routerLink= "/watch/{{img.media_type}}/{{img.id}}" style= "cursor:pointer">
+      <p class="text-desktop">{{img.title}}</p>
     </div>
-    <a routerLink= "/watch/{{img.media_type}}/{{img.id}}">
+    <a routerLink= "/watch/{{img.media_type}}/{{img.id}}" style= "cursor:pointer">
       <div class="picsum-img-wrapper">
         <img class="main-carousel-backdrop-img" [src]= "img.image_path">
       </div>
@@ -14,14 +14,14 @@
 </ngb-carousel>
 </div>
 
-<div *ngIf= "isMobile" class="main-carousel-mobile mx-auto mt-5 pt-lg-4 pt-5">
+<div *ngIf= "isMobile" class="main-carousel-mobile mt-5 pt-4 mr-2 ml-4 pl-2">
   <ngb-carousel #carousel [showNavigationIndicators]= "false" [interval]= "5000" [pauseOnHover]= "pauseOnHover" [pauseOnFocus]= "pauseOnFocus" (slide)= "onSlide($event)">
     <ng-template ngbSlide *ngFor= "let img of mediaList">
-      <div class="carousel-caption caption-text-mobile">
+      <div class="carousel-caption caption-text-mobile" routerLink= "/watch/{{img.media_type}}/{{img.id}}" style= "cursor:pointer">
         <p>{{img.title}}</p>
       </div>
-      <a routerLink= "/watch/{{img.media_type}}/{{img.id}}">
-        <div class="picsum-img-wrapper">
+      <a routerLink= "/watch/{{img.media_type}}/{{img.id}}" style= "cursor:pointer">
+        <div class="picsum-img-wrapper mt-3">
           <img class="main-carousel-backdrop-img" [src]= "img.image_path">
         </div>
       </a>

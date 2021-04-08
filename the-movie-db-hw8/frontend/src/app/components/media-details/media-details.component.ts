@@ -148,16 +148,21 @@ export class MediaDetailsComponent implements OnInit {
 
         // create genre list
         let genreList = data.media_details.genres;
-        for(var i = 0; i<genreList.length - 1; i++)
-          this.genres += genreList[i].name + ', ';
-        this.genres += genreList[i].name
+        if(genreList.length != 0) 
+        {
+          for(var i = 0; i<genreList.length - 1; i++)
+            this.genres += genreList[i].name + ', ';
+          this.genres += genreList[i].name
+        }
 
         // create spoken languages
         let languageList = data.media_details.spoken_languages;
-        for(var i = 0; i<languageList.length - 1; i++)
-          if(languageList[i].english_name != undefined)
-          this.languages += languageList[i].english_name + ', ';
-        this.languages += languageList[i].english_name;
+        if(languageList.length != 0) 
+        {
+          for(var i = 0; i<languageList.length - 1; i++)
+            this.languages += languageList[i].english_name + ', ';
+          this.languages += languageList[i].english_name;
+        }
 
         // format twitter share message
         let twitterMessageTitle = "Watch " + data.media_details.title;

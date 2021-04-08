@@ -1,12 +1,12 @@
 
 <div *ngIf= "!isLoading"  class= "details-container mx-lg-5 px-lg-5 mx-4 px-3">
-  <div class= "row mt-5 pt-5 mx-lg-5 px-lg-5">
+  <div class= "row mt-5 pt-5 ml-lg-5 mr-lg-0 pl-lg-5 pr-lg-0">
     <div class = "embed-responsive embed-responsive-16by9 col-sm-8">
       <youtube-player class = "embed-responsi-item mx-lg-3"
         videoId= "{{mediaResults.media_video_details.key}}">
       </youtube-player>
     </div>
-    <div class = "col-sm-4 px-lg-4 px-0">
+    <div class = "col-sm-4 px-lg-4 px-0 mt-3 mt-lg-0">
       <div id="media_title">{{title}}</div>
       <div id="media_tagline">{{mediaResults.media_details.tagline}}</div>
       <div id="year-rating" class= "mt-4">
@@ -54,8 +54,8 @@
       <div class="cast-review-title mb-2">Full Cast and Crew</div>
       <div>
         <div class="pb-2 d-flex flex-row flex-nowrap overflow-auto" >
-            <div class="card card-body p-0 cast-card border-0 mr-lg-4 mr-5" *ngFor= "let cast of castList">
-                <div><img src= {{cast.profile_path}} class="btn cast-img p-0 border-0" (click)= "open(content, cast.id)"></div>
+            <div class="card card-body p-0 cast-card border-0 mr-lg-4 mr-5" *ngFor= "let cast of castList" (click)= "open(content, cast.id)" style= "cursor:pointer">
+                <div><img src= {{cast.profile_path}} class="btn cast-img p-0 border-0" ></div>
                 <div class="cast-details my-auto">
                   <div class="pt-2">{{cast.name}}</div>
                   <div>AS</div>
@@ -81,7 +81,14 @@
 
             <div class= "col">
               <div class="created-by">A review created by {{review.author}}
-                <span class="rounded-pill rating-icon-div mx-auto pb-1">
+                <div *ngIf ="isMobile">
+                  <span class="rounded-pill rating-icon-div mx-auto pb-1">
+                    <span class="rating-icon my-auto"><span class="symbol mb-3 p-2">&#9733;</span>
+                      <span class="rating pr-2">{{review.rating}}</span>
+                    </span>
+                  </span>
+                </div>
+                <span *ngIf ="!isMobile" class="rounded-pill rating-icon-div mx-auto pb-1">
                   <span class="rating-icon my-auto"><span class="symbol mb-3 p-2">&#9733;</span>
                     <span class="rating pr-2">{{review.rating}}</span>
                   </span>
@@ -127,7 +134,7 @@
   </div>
   <div class="modal-body">
    <div class="row">
-       <div class="col-lg-10 col-lg-3 col-12">
+       <div class="col-lg-3 col-12">
           <img class="img-fluid" src="https://image.tmdb.org/t/p/w500/{{cast_result.profile_path}}">
        </div>
        <div class="col">
@@ -145,7 +152,7 @@
       </div>
        </div>
    </div>
-   <div class="row">
+   <div class="row" *ngIf="cast_result.biography != null && cast_result.biography.length !=0 ">
       <div class="col">
           <div class="modal-headings">Biography</div>
           <div>{{cast_result.biography}}</div>

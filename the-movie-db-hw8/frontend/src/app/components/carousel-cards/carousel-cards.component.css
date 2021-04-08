@@ -16,6 +16,9 @@
   width: 5%;
 }
 
+* {
+  outline :none;
+}
 
 /*******HOVER *******/
 .card-item {
@@ -60,12 +63,12 @@
 }
 
 ::ng-deep .carousel-mobile > .carousel-control-prev {
-  left: -14px;
+  left: -20px;
   width: 7%;
   bottom: -4px;
 }
 ::ng-deep .carousel-mobile > .carousel-control-next {
-  right: -14px;
+  right: -20px;
   width: 7%;
   bottom: -4px;
 }
