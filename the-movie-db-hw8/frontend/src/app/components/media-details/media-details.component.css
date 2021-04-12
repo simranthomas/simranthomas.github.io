@@ -34,6 +34,9 @@
   font-weight:400;
   font-size:18px
 }
+::ng-deep .modal, .modal-open {
+  padding-top: 9%;
+}
 #description {
   color:darkgrey;
   font-weight:300;

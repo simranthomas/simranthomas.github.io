@@ -71,7 +71,7 @@ export class MediaDetailsComponent implements OnInit {
 
   updateWatchlist() {
 
-    setTimeout(() => this.watchlistAlert.close(), 2000);
+    setTimeout(() => this.watchlistAlert.close(), 5000);
 
     if(this.buttonName == "Add to Watchlist") {
 

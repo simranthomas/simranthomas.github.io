@@ -141,6 +141,7 @@
        <div *ngIf= "cast_result.birthday != null && cast_result.birthday != ''">Birth: {{cast_result.birthday}}</div>
        <div *ngIf= "cast_result.place_of_birth != null && cast_result.place_of_birth != ''">Birth Place: {{cast_result.place_of_birth}}</div>
        <div *ngIf= "cast_result.gender != null && cast_result.gender != ''">Gender: {{cast_result.gender}}</div>
+       <div *ngIf= "cast_result.homepage != null && cast_result.homepage != ''">Website: <a href="{{cast_result.homepage}}" target="_blank">{{cast_result.homepage}}</a></div>
        <div *ngIf= "cast_result.known_for_department != null && cast_result.known_for_department != ''">Known For: {{cast_result.known_for_department}}</div>
        <div *ngIf= "cast_result.also_known_as != null && cast_result.also_known_as != ''">Also Known As: {{cast_result.also_known_as}}</div>
        <div class="mt-3">
