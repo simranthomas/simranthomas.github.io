@@ -16,7 +16,6 @@ app.use(express.static(path.join(__dirname, 'dist/frontend')));
 var tmdb_api_key = '38bbe79ff3d3e4cc74577eb730d7626f';
 var tmdb_base_url = 'https://api.themoviedb.org/3/'; 
 var image_base_url = 'https://image.tmdb.org/t/p/w500';
-var carousel_image_base_url = 'https://image.tmdb.org/t/p/original';
 
 var result_homepage = {}
 
@@ -30,8 +29,8 @@ app.get('/api/homepage', async (req, res) => {
 
         // Check media_type to get correct key from response
         var title_key = (media_type == 'movie') ? 'title' : 'name';
-        var poster_path_key = (result_dict_key == 'carousel_movies') ? 'backdrop_path' : 'poster_path'
-        var img_base_url = (result_dict_key == 'carousel_movies') ?  carousel_image_base_url : image_base_url; 
+        // var poster_path_key = (result_dict_key == 'carousel_movies') ? 'backdrop_path' : 'poster_path'
+        // var img_base_url = (result_dict_key == 'carousel_movies') ?  carousel_image_base_url : image_base_url; 
 
         await axios.get(endpoint_url)
         .then((response) => {
@@ -39,11 +38,11 @@ app.get('/api/homepage', async (req, res) => {
             var media_list = [];
             for(var i = 0; i < response.length; i++)
             {
-                if(response[i][poster_path_key] != null) {
+                if(response[i]['poster_path'] != null) {
                     var media = {
                         'id' : response[i]['id'],
                         'title' : response[i][title_key],
-                        'image_path' : img_base_url + response[i][poster_path_key],
+                        'poster_path' : image_base_url + response[i]['poster_path'],
                         'media_type' : media_type
                     }
                     media_list.push(media);
@@ -56,7 +55,7 @@ app.get('/api/homepage', async (req, res) => {
         });
     }
     // Currently Playing Movies Carousel Endpoint
-    get_endpoint_data('movie', 'movie/now_playing', '&language=en-US&page=1', 'carousel_movies');
+    get_endpoint_data('movie', 'movie/now_playing', '&language=en-US&page=1', 'now_playing_movies');
     
     // Popular Movies Endpoint
     get_endpoint_data('movie', 'movie/popular', '&language=en-US&page=1', 'popular_movies');
