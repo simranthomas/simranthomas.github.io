@@ -17,10 +17,12 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
     // list for storing urls of images.
     private final List<SliderData> mSliderItems;
+    Context context = null;
 
     // Constructor
     public SliderAdapter(Context context, ArrayList<SliderData> sliderDataArrayList) {
         this.mSliderItems = sliderDataArrayList;
+        this.context = context;
     }
 
     // We are inflating the slider_layout
@@ -44,6 +46,13 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
                 .load(sliderItem.getImgUrl())
                 .fitCenter()
                 .into(viewHolder.imageViewBackground);
+
+        Glide.with(context)
+                .load(sliderItem.getImgUrl())
+                .transform(new BlurTransformation(context))
+                .into(viewHolder.imageViewBackgroundBlurred);
+
+
     }
 
     // this method will return
@@ -58,10 +67,12 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         // the views of our slider view.
         View itemView;
         ImageView imageViewBackground;
+        ImageView imageViewBackgroundBlurred;
 
         public SliderAdapterViewHolder(View itemView) {
             super(itemView);
             imageViewBackground = itemView.findViewById(R.id.myimage);
+            imageViewBackgroundBlurred = itemView.findViewById(R.id.myimageBlurred);
             this.itemView = itemView;
         }
     }

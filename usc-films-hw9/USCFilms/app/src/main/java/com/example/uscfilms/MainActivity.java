@@ -1,10 +1,11 @@
 package com.example.uscfilms;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,16 +19,18 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.Theme_USCFilms);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.ic_theaters_white_18dp);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
 
         BottomNavigationView bottomNavBar = findViewById(R.id.bottom_navigation);
         bottomNavBar.setOnNavigationItemSelectedListener(navListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomePage()).commit();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.homepage_menu, menu);
+        return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomePage">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="404dp"
+        android:layout_height="77dp"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="USC Films"
+        app:titleTextAppearance="@style/ToolbarText"
+        tools:ignore="MissingConstraints" />
 
     <!--
     slideranimation duration is to set duration for transition between two slides
@@ -21,9 +33,11 @@
     -->
     <com.smarteist.autoimageslider.SliderView
         android:id="@+id/slider"
-        android:layout_width="319dp"
-        android:layout_height="323dp"
-        android:layout_centerInParent="true"
+        android:layout_width="366dp"
+        android:layout_height="373dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar"
         app:sliderAnimationDuration="600"
         app:sliderAutoCycleDirection="back_and_forth"
         app:sliderIndicatorAnimationDuration="600"
@@ -35,6 +49,7 @@
         app:sliderIndicatorRadius="1dp"
         app:sliderIndicatorSelectedColor="#5A5A5A"
         app:sliderIndicatorUnselectedColor="#FFF"
-        app:sliderScrollTimeInSec="1" />
+        app:sliderScrollTimeInSec="1"
+        tools:ignore="MissingConstraints,NotSibling" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

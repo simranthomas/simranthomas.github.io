@@ -5,11 +5,21 @@
     android:layout_height="match_parent">
 
     <!--Image we will display is our slider view-->
+
+    <ImageView
+        android:id="@+id/myimageBlurred"
+        android:layout_width="match_parent"
+        android:layout_height="388dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop" />
+
     <ImageView
         android:id="@+id/myimage"
-        android:layout_width="408dp"
-        android:layout_height="286dp"
+        android:layout_width="273dp"
+        android:layout_height="388dp"
         android:layout_centerHorizontal="true"
-        android:contentDescription="@string/app_name" />
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop" />
 
 </RelativeLayout>

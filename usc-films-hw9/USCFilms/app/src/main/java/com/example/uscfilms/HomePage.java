@@ -6,13 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.smarteist.autoimageslider.SliderView;
@@ -25,6 +28,15 @@ import java.util.ArrayList;
 
 
 public class HomePage extends Fragment {
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Toolbar myToolbar = getView().findViewById(R.id.my_toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setLogo(R.drawable.ic_theaters_white_18dp);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(true);
+    }
 
     @Nullable
     @Override
@@ -61,6 +73,7 @@ public class HomePage extends Fragment {
         return home;
     }
 
+
     public void displaySlider(JSONArray nowPlayingMovies, View home) throws JSONException {
 
         ArrayList<SliderData> sliderDataArrayList = new ArrayList<>();
@@ -76,7 +89,6 @@ public class HomePage extends Fragment {
             String title = jsonObject.getString("title");
             String posterPath = jsonObject.getString("poster_path");
             String mediaType = jsonObject.getString("media_type");
-
 
             sliderDataArrayList.add(new SliderData(posterPath));
         }
