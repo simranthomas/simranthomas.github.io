@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 public class HomePage extends Fragment {
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Toolbar myToolbar = getView().findViewById(R.id.my_toolbar);
@@ -65,7 +66,7 @@ public class HomePage extends Fragment {
                         e.printStackTrace();
                     }
 
-                }, error -> Log.d("respo","That didn't work!"));
+                }, error -> Log.d("error","That didn't work!"));
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
