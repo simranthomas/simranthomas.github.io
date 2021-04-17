@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavBar = findViewById(R.id.bottom_navigation);
         bottomNavBar.setOnNavigationItemSelectedListener(navListener);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomePage()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
                 switch(item.getItemId()) {
 
-                    case R.id.nav_home: selectedFragment = new HomePage();
+                    case R.id.nav_home: selectedFragment = new HomeFragment();
                                         break;
-                    case R.id.nav_search: selectedFragment = new SearchPage();
+                    case R.id.nav_search: selectedFragment = new SearchFragment();
                                         break;
-                    case R.id.nav_watchlist: selectedFragment = new WatchlistPage();
+                    case R.id.nav_watchlist: selectedFragment = new WatchlistFragment();
                                         break;
 
                 }
