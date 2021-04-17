@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class HomePage extends Fragment {
+public class HomeFragment extends Fragment {
 
 
     @Override
