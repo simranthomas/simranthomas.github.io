@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -61,6 +64,7 @@ public class HomeFragment extends Fragment {
                         JSONArray topRatedTv = new JSONArray(responseObject.getString("top_rated_tv"));
 
                         displaySlider(nowPlayingMovies, home);
+                        displayScroll(topRatedMovies, home);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -116,6 +120,28 @@ public class HomeFragment extends Fragment {
         // to start autocycle below method is used.
         sliderView.startAutoCycle();
 
+    }
+
+    public void displayScroll(JSONArray mediaList, View home) throws JSONException {
+
+        ArrayList<String> scrollDataArrayList = new ArrayList<>();
+
+        for(int i=0; i<10; i++) {
+
+            JSONObject jsonObject = mediaList.getJSONObject(i);
+            String id = jsonObject.getString("id");
+            String title = jsonObject.getString("title");
+            String posterPath = jsonObject.getString("poster_path");
+            String mediaType = jsonObject.getString("media_type");
+
+            scrollDataArrayList.add(posterPath);
+        }
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView = home.findViewById(R.id.recyclerViewTopRatedMovie);
+        recyclerView.setLayoutManager(layoutManager);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), scrollDataArrayList);
+        recyclerView.setAdapter(adapter);
     }
 
 }
