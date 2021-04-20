@@ -106,7 +106,28 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/popular_movies"/>
 
+            <TextView
+                android:id="@+id/footerTMDB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="900dp"
+                android:gravity="center"
+                android:text="Powered By TMDB"
+                android:textColor="@color/icon_blue"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="-7dp" />
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Developed by Simran Thomas"
+                android:textColor="@color/icon_blue"
+                app:layout_constraintTop_toBottomOf="@id/footerTMDB"
+                tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
