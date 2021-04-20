@@ -63,8 +63,9 @@ public class HomeFragment extends Fragment {
                         JSONArray popularTv = new JSONArray(responseObject.getString("popular_tv"));
                         JSONArray topRatedTv = new JSONArray(responseObject.getString("top_rated_tv"));
 
-                        displaySlider(nowPlayingMovies, home);
-                        displayScroll(topRatedMovies, home);
+                        displaySlider(nowPlayingMovies, home.findViewById(R.id.slider));
+                        displayScroll(topRatedMovies, home.findViewById(R.id.recyclerViewTopRatedMovie) );
+                        displayScroll(popularMovies, home.findViewById(R.id.recyclerViewPopularMovie));
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -79,12 +80,9 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public void displaySlider(JSONArray nowPlayingMovies, View home) throws JSONException {
+    public void displaySlider(JSONArray nowPlayingMovies, SliderView sliderView) throws JSONException {
 
         ArrayList<SliderData> sliderDataArrayList = new ArrayList<>();
-
-        // initializing the slider view.
-        SliderView sliderView = home.findViewById(R.id.slider);
 
         // adding the urls inside array list
         for(int i=0; i<6; i++) {
@@ -122,7 +120,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void displayScroll(JSONArray mediaList, View home) throws JSONException {
+    public void displayScroll(JSONArray mediaList, RecyclerView recyclerView) throws JSONException {
 
         ArrayList<String> scrollDataArrayList = new ArrayList<>();
 
@@ -138,7 +136,6 @@ public class HomeFragment extends Fragment {
         }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView = home.findViewById(R.id.recyclerViewTopRatedMovie);
         recyclerView.setLayoutManager(layoutManager);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), scrollDataArrayList);
         recyclerView.setAdapter(adapter);

@@ -55,17 +55,6 @@
                 tools:ignore="MissingConstraints,NotSibling"
                 tools:layout_editor_absoluteY="29dp" />
 
-            <!--    <HorizontalScrollView-->
-            <!--        android:layout_width="365dp"-->
-            <!--        android:layout_height="195dp"-->
-            <!--        android:layout_marginStart="20dp"-->
-            <!--        android:layout_marginEnd="20dp"-->
-            <!--        app:layout_constraintEnd_toEndOf="parent"-->
-            <!--        app:layout_constraintStart_toStartOf="parent"-->
-            <!--        app:layout_constraintTop_toBottomOf="@+id/top_rated_movies">-->
-
-
-            <!--    </HorizontalScrollView>-->
 
             <TextView
                 android:id="@+id/top_rated_movies"
@@ -86,13 +75,37 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewTopRatedMovie"
                 android:layout_width="380dp"
-                android:layout_height="311dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_rated_movies">
+                app:layout_constraintTop_toBottomOf="@+id/top_rated_movies"/>
 
-            </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:id="@+id/popular_movies"
+                android:layout_width="364dp"
+                android:layout_height="49dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="20dp"
+                android:text="Popular Movies"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.666"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewTopRatedMovie"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewPopularMovie"
+                android:layout_width="380dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popular_movies"/>
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
