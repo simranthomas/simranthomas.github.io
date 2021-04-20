@@ -10,13 +10,18 @@
         android:layout_centerInParent="true"
         android:layout_marginRight="20dp"
         app:cardCornerRadius="14dp">
-
-        <ImageView
-            android:id="@+id/posterImg"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/posterImg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"/>
+            <View android:background="@drawable/gradient"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"/>
+        </FrameLayout>
 
     </androidx.cardview.widget.CardView>
-
 </RelativeLayout>
