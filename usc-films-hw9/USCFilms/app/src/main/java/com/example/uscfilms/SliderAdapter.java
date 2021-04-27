@@ -1,13 +1,13 @@
 package com.example.uscfilms;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.uscfilms.SliderData;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;
@@ -16,11 +16,11 @@ import java.util.List;
 public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterViewHolder> {
 
     // list for storing urls of images.
-    private final List<SliderData> mSliderItems;
+    private final List<MediaItem> mSliderItems;
     Context context = null;
 
     // Constructor
-    public SliderAdapter(Context context, ArrayList<SliderData> sliderDataArrayList) {
+    public SliderAdapter(Context context, ArrayList<MediaItem> sliderDataArrayList) {
         this.mSliderItems = sliderDataArrayList;
         this.context = context;
     }
@@ -38,21 +38,29 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
     @Override
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
 
-        final SliderData sliderItem = mSliderItems.get(position);
+        final MediaItem sliderItem = mSliderItems.get(position);
 
         // Glide is use to load image
         // from url in your imageview.
         Glide.with(viewHolder.itemView)
-                .load(sliderItem.getImgUrl())
+                .load(sliderItem.getPosterPath())
                 .fitCenter()
                 .into(viewHolder.imageViewBackground);
 
         Glide.with(context)
-                .load(sliderItem.getImgUrl())
+                .load(sliderItem.getPosterPath())
                 .transform(new BlurTransformation(context))
                 .into(viewHolder.imageViewBackgroundBlurred);
 
-
+        viewHolder.imageViewBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(context, DetailsActivity.class);
+                myIntent.putExtra("mediaType", sliderItem.getMediaType());
+                myIntent.putExtra("mediaId", sliderItem.getMediaId());
+                context.startActivity(myIntent);
+            }
+        });
     }
 
     // this method will return

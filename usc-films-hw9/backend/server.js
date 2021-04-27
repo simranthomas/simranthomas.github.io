@@ -143,6 +143,7 @@ app.get('/api/media_details', async (req, res) => {
         result['media_details']['vote_average'] = response['vote_average'];
         result['media_details']['tagline'] = response['tagline'];
         result['media_details']['poster_path'] = image_base_url + response['poster_path'];
+        result['media_details']['backdrop_path'] = 'https://image.tmdb.org/t/p/original' + response['backdrop_path'];
 
     },
     (error) => {

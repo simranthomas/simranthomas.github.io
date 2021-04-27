@@ -11,12 +11,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -43,6 +45,7 @@ public class DetailsActivity extends AppCompatActivity {
         String mediaType = prevIntent.getStringExtra("mediaType");
         String mediaId= prevIntent.getStringExtra("mediaId");
 
+        Log.d("mediaId", mediaId);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String apiURLDetails = "http://10.0.2.2:8080/api/media_details?mediaType=" + mediaType+ "&id=" + mediaId;
@@ -68,18 +71,27 @@ public class DetailsActivity extends AppCompatActivity {
                         title.setText(mediaDetails.getString("title"));
 
                         // youtube video
-                        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-                            @Override
-                            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                                String videoId = null;
-                                try {
-                                    videoId = videoDetails.getString("key");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                        if(videoDetails.length() != 0) {
+                            youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                                @Override
+                                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                                    String videoId = null;
+                                    try {
+                                        videoId = videoDetails.getString("key");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    youTubePlayer.cueVideo(videoId, 0);
                                 }
-                                youTubePlayer.cueVideo(videoId, 0);
-                            }
-                        });
+                            });
+                        }
+                        else {
+                            ImageView backdrop = findViewById(R.id.backdropImage);
+                            Glide.with(this)
+                                    .asBitmap()
+                                    .load(mediaDetails.getString("backdrop_path"))
+                                    .into(backdrop);
+                        }
 
                         // overview
                         TextView overview = findViewById(R.id.overview);
@@ -119,13 +131,28 @@ public class DetailsActivity extends AppCompatActivity {
                         });
 
                         // display cast
-                        displayCastGrid(castDetails, findViewById(R.id.recyclerViewCast));
+                        if(castDetails != null && castDetails.length()!= 0)
+                            displayCastGrid(castDetails, findViewById(R.id.recyclerViewCast));
+                        else {
+                            TextView castTitle = findViewById(R.id.castTitle);
+                            castTitle.setVisibility(castTitle.GONE);
+                        }
 
                         // display review
-                        displayReviewCards(reviewDetails, findViewById(R.id.recyclerViewReviews));
+                        if(reviewDetails != null && reviewDetails.length()!= 0)
+                            displayReviewCards(reviewDetails, findViewById(R.id.recyclerViewReviews));
+                        else {
+                            TextView reviewTitle = findViewById(R.id.reviewsTitle);
+                            reviewTitle.setVisibility(reviewTitle.GONE);
+                        }
 
                         // display recommendations
-                        displayRecommendations(recommendations, findViewById(R.id.recyclerViewRecommended) );
+                        if(recommendations != null && recommendations.length()!= 0)
+                            displayRecommendations(recommendations, findViewById(R.id.recyclerViewRecommended) );
+                        else {
+                            TextView recommendedTitle = findViewById(R.id.recommendedTitle);
+                            recommendedTitle.setVisibility(recommendedTitle.GONE);
+                        }
 
 
                     } catch (JSONException e) {
@@ -142,7 +169,7 @@ public class DetailsActivity extends AppCompatActivity {
     public void displayCastGrid(JSONArray castList, RecyclerView recyclerView) throws JSONException {
 
         ArrayList<CastItem> castDataList = new ArrayList<>();
-        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < Math.min(castList.length(), 6); i++) {
 
             JSONObject jsonObject = castList.getJSONObject(i);
             String name = jsonObject.getString("name");
@@ -159,7 +186,7 @@ public class DetailsActivity extends AppCompatActivity {
     public void displayReviewCards(JSONArray reviewList, RecyclerView recyclerView) throws JSONException {
 
         ArrayList<ReviewItem> reviewDataList = new ArrayList<>();
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < Math.min(reviewList.length(), 3); i++) {
 
             JSONObject jsonObject = reviewList.getJSONObject(i);
             String author = jsonObject.getString("author");
@@ -179,7 +206,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         ArrayList<MediaItem> scrollDataArrayList = new ArrayList<>();
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < Math.min(recommendedList.length(), 10); i++) {
 
             JSONObject jsonObject = recommendedList.getJSONObject(i);
             String id = jsonObject.getString("id");

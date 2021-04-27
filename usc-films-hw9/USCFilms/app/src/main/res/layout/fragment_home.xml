@@ -30,9 +30,10 @@
             android:background="@color/colorPrimary"
             android:text="Movies"
             android:textAllCaps="false"
-            android:textColor="@color/icon_blue"
-            android:textSize="18dp"
-            android:layout_marginLeft="68dp"/>
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:layout_marginLeft="68dp"
+            style="?android:attr/borderlessButtonStyle"/>
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -42,8 +43,10 @@
             android:background="@color/colorPrimary"
             android:text="TV Shows"
             android:textAllCaps="false"
+            android:layout_marginRight="20dp"
             android:textColor="@color/icon_blue"
-            android:textSize="18dp" />
+            style="?android:attr/borderlessButtonStyle"
+            android:textSize="16dp" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.constraintlayout.widget.ConstraintLayout

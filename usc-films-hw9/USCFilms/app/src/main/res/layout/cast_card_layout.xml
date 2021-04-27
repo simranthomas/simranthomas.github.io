@@ -12,7 +12,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImg"
             android:layout_width="119dp"
-            android:layout_height="124dp" />
+            android:layout_height="124dp"/>
 
         <TextView
             android:id="@+id/actorName"

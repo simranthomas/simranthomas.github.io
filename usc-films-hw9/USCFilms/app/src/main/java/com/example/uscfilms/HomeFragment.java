@@ -1,6 +1,7 @@
 package com.example.uscfilms;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -78,12 +79,16 @@ public class HomeFragment extends Fragment {
         movieButton.setOnClickListener(v -> {
             movieTab.setVisibility(movieTab.VISIBLE);
             tvTab.setVisibility(tvTab.INVISIBLE);
+            movieButton.setTextColor(Color.parseColor("#ffffff"));
+            tvButton.setTextColor(Color.parseColor("#287BC1"));
         });
         tvButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 movieTab.setVisibility(movieTab.INVISIBLE);
                 tvTab.setVisibility(tvTab.VISIBLE);
+                tvButton.setTextColor(Color.parseColor("#ffffff"));
+                movieButton.setTextColor(Color.parseColor("#287BC1"));
             }
         });
 
@@ -129,18 +134,19 @@ public class HomeFragment extends Fragment {
 
     public void displaySlider(JSONArray nowPlayingMovies, SliderView sliderView) throws JSONException {
 
-        ArrayList<SliderData> sliderDataArrayList = new ArrayList<>();
+        ArrayList<MediaItem> sliderDataArrayList = new ArrayList<>();
 
         // adding the urls inside array list
-        for(int i=0; i<6; i++) {
+        for(int i=0; i < Math.min(nowPlayingMovies.length(), 6); i++) {
 
             JSONObject jsonObject = nowPlayingMovies.getJSONObject(i);
             String id = jsonObject.getString("id");
             String title = jsonObject.getString("title");
             String posterPath = jsonObject.getString("poster_path");
             String mediaType = jsonObject.getString("media_type");
+            MediaItem mediaItem = new MediaItem(id, title, posterPath, mediaType);
 
-            sliderDataArrayList.add(new SliderData(posterPath));
+            sliderDataArrayList.add(mediaItem);
         }
 
         // passing this array list inside our adapter class.
@@ -171,7 +177,7 @@ public class HomeFragment extends Fragment {
 
         ArrayList<MediaItem> scrollDataArrayList = new ArrayList<>();
 
-        for(int i=0; i<10; i++) {
+        for(int i=0; i < Math.min(mediaList.length(), 10); i++) {
 
             JSONObject jsonObject = mediaList.getJSONObject(i);
             String id = jsonObject.getString("id");
