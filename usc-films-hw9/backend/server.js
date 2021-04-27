@@ -198,12 +198,13 @@ app.get('/api/media_details', async (req, res) => {
             else
                 avatar_path = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnPmUvFLjjmoYWAbLTEmLLIRCPpV_OgxCVA&usqp=CAU";
 
+            var rating = response[i]['author_details']['rating'] == null ? 0 : response[i]['author_details']['rating'];
             var review = {
                 'author' : response[i]['author'],
                 'content' : response[i]['content'],
                 'created_at' : response[i]['created_at'],
                 'url' : response[i]['url'],
-                'rating' : response[i]['author_details']['rating'],
+                'rating' : rating,
                 'avatar_path' : avatar_path
             }
             review_list.push(review);

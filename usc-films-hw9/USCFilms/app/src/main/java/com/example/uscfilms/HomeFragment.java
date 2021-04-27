@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -122,7 +121,7 @@ public class HomeFragment extends Fragment {
 
     public void displayScroll(JSONArray mediaList, RecyclerView recyclerView) throws JSONException {
 
-        ArrayList<String> scrollDataArrayList = new ArrayList<>();
+        ArrayList<MediaItem> scrollDataArrayList = new ArrayList<>();
 
         for(int i=0; i<10; i++) {
 
@@ -131,14 +130,23 @@ public class HomeFragment extends Fragment {
             String title = jsonObject.getString("title");
             String posterPath = jsonObject.getString("poster_path");
             String mediaType = jsonObject.getString("media_type");
+            MediaItem mediaItem = new MediaItem(id, title, posterPath, mediaType);
 
-            scrollDataArrayList.add(posterPath);
+            scrollDataArrayList.add(mediaItem);
         }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), scrollDataArrayList);
         recyclerView.setAdapter(adapter);
+
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onActivityCreated(savedInstanceState);
+        // get the button view
+
     }
 
 }
