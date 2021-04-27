@@ -1,10 +1,17 @@
 package com.example.uscfilms;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -46,6 +54,42 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View home = inflater.inflate(R.layout.fragment_home, container, false);
+
+        View movieTab = home.findViewById(R.id.scroll_view_movies);
+        View tvTab = home.findViewById(R.id.scroll_view_tvshows);
+
+        Button movieButton = home.findViewById(R.id.button_movies);
+        Button tvButton = home.findViewById(R.id.button_tvshows);
+
+        TextView footerTMDB = home.findViewById(R.id.footerTMDB);
+        TextView footerTMDBTV = home.findViewById(R.id.footerTMDBTV);
+
+        tvTab.setVisibility(tvTab.INVISIBLE);
+
+        footerTMDB.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/"));
+            v.getContext().startActivity(browserIntent);
+        });
+        footerTMDBTV.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/"));
+            v.getContext().startActivity(browserIntent);
+        });
+
+        movieButton.setOnClickListener(v -> {
+            movieTab.setVisibility(movieTab.VISIBLE);
+            tvTab.setVisibility(tvTab.INVISIBLE);
+        });
+        tvButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movieTab.setVisibility(movieTab.INVISIBLE);
+                tvTab.setVisibility(tvTab.VISIBLE);
+            }
+        });
+
+
+
+        setHasOptionsMenu(true);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String apiURLHome = "http://10.0.2.2:8080/api/homepage";
 
@@ -62,11 +106,15 @@ public class HomeFragment extends Fragment {
                         JSONArray popularTv = new JSONArray(responseObject.getString("popular_tv"));
                         JSONArray topRatedTv = new JSONArray(responseObject.getString("top_rated_tv"));
 
-                        displaySlider(nowPlayingMovies, home.findViewById(R.id.slider));
+                        displaySlider(nowPlayingMovies, home.findViewById(R.id.slider_movies));
                         displayScroll(topRatedMovies, home.findViewById(R.id.recyclerViewTopRatedMovie) );
                         displayScroll(popularMovies, home.findViewById(R.id.recyclerViewPopularMovie));
 
-                    } catch (JSONException e) {
+                        displaySlider(trendingTv, home.findViewById(R.id.slider_tvshows));
+                        displayScroll(topRatedTv, home.findViewById(R.id.recyclerViewTopRatedTVShows) );
+                        displayScroll(popularTv, home.findViewById(R.id.recyclerViewPopularTVShows));
+
+                    } catch (JSONException | IOException e) {
                         e.printStackTrace();
                     }
 
@@ -119,7 +167,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void displayScroll(JSONArray mediaList, RecyclerView recyclerView) throws JSONException {
+    public void displayScroll(JSONArray mediaList, RecyclerView recyclerView) throws JSONException, IOException {
 
         ArrayList<MediaItem> scrollDataArrayList = new ArrayList<>();
 
@@ -137,7 +185,7 @@ public class HomeFragment extends Fragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), scrollDataArrayList);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), scrollDataArrayList, mediaList);
         recyclerView.setAdapter(adapter);
 
     }

@@ -15,122 +15,268 @@
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="USC Films"
         app:titleTextAppearance="@style/ToolbarText"
-        tools:ignore="MissingConstraints,UnknownId" />
+        tools:ignore="MissingConstraints,UnknownId">
 
-    <ScrollView
-        android:layout_width="401dp"
-        android:layout_height="619dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/slider"
-                android:layout_width="386dp"
-                android:layout_height="398dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:sliderAnimationDuration="600"
-                app:sliderAutoCycleDirection="back_and_forth"
-                app:sliderIndicatorAnimationDuration="600"
-                app:sliderIndicatorEnabled="true"
-                app:sliderIndicatorGravity="center_horizontal|bottom"
-                app:sliderIndicatorMargin="10dp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="3dp"
-                app:sliderIndicatorRadius="1dp"
-                app:sliderIndicatorSelectedColor="#5A5A5A"
-                app:sliderIndicatorUnselectedColor="#FFF"
-                app:sliderScrollTimeInSec="1"
-                tools:ignore="MissingConstraints,NotSibling"
-                tools:layout_editor_absoluteY="29dp" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="Movies"
+            android:textAllCaps="false"
+            android:textColor="@color/icon_blue"
+            android:textSize="18dp"
+            android:layout_marginLeft="68dp"/>
 
 
-            <TextView
-                android:id="@+id/top_rated_movies"
-                android:layout_width="364dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="26dp"
-                android:layout_marginEnd="20dp"
-                android:text="Top-Rated"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.666"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/slider"
-                tools:ignore="MissingConstraints" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_tvshows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="TV Shows"
+            android:textAllCaps="false"
+            android:textColor="@color/icon_blue"
+            android:textSize="18dp" />
+    </androidx.appcompat.widget.Toolbar>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewTopRatedMovie"
-                android:layout_width="380dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_rated_movies"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/scroll_view_movies"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar">
+        <ScrollView
+            android:layout_width="401dp"
+            android:layout_height="619dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:id="@+id/popular_movies"
-                android:layout_width="364dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="26dp"
-                android:layout_marginEnd="20dp"
-                android:text="Popular"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.666"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerViewTopRatedMovie"
-                tools:ignore="MissingConstraints" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewPopularMovie"
-                android:layout_width="380dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/popular_movies"/>
-
-            <TextView
-                android:id="@+id/footerTMDB"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="900dp"
-                android:gravity="center"
-                android:text="Powered By TMDB"
-                android:textColor="@color/icon_blue"
-                app:layout_constraintBottom_toTopOf="@+id/textView"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="-7dp" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textView"
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/slider_movies"
+                    android:layout_width="386dp"
+                    android:layout_height="398dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorEnabled="true"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="10dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="1dp"
+                    app:sliderIndicatorSelectedColor="#5A5A5A"
+                    app:sliderIndicatorUnselectedColor="#FFF"
+                    app:sliderScrollTimeInSec="1"
+                    tools:ignore="MissingConstraints,NotSibling"
+                    tools:layout_editor_absoluteY="29dp" />
+
+
+                <TextView
+                    android:id="@+id/top_rated_movies"
+                    android:layout_width="364dp"
+                    android:layout_height="49dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="Top-Rated"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.666"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/slider_movies"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewTopRatedMovie"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/top_rated_movies"/>
+
+                <TextView
+                    android:id="@+id/popular_movies"
+                    android:layout_width="364dp"
+                    android:layout_height="49dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="Popular"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.666"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewTopRatedMovie"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewPopularMovie"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/popular_movies"/>
+
+                <TextView
+                    android:id="@+id/footerTMDB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="900dp"
+                    android:gravity="center"
+                    android:text="Powered By TMDB"
+                    android:textColor="@color/icon_blue"
+                    app:layout_constraintBottom_toTopOf="@+id/textView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="-7dp" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Developed by Simran Thomas"
+                    android:textColor="@color/icon_blue"
+                    app:layout_constraintTop_toBottomOf="@id/footerTMDB"
+                    tools:ignore="MissingConstraints" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/scroll_view_tvshows"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar">
+        <ScrollView
+            android:layout_width="401dp"
+            android:layout_height="619dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Developed by Simran Thomas"
-                android:textColor="@color/icon_blue"
-                app:layout_constraintTop_toBottomOf="@id/footerTMDB"
-                tools:ignore="MissingConstraints" />
+                android:layout_height="wrap_content">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/slider_tvshows"
+                    android:layout_width="386dp"
+                    android:layout_height="398dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorEnabled="true"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="10dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="1dp"
+                    app:sliderIndicatorSelectedColor="#5A5A5A"
+                    app:sliderIndicatorUnselectedColor="#FFF"
+                    app:sliderScrollTimeInSec="1"
+                    tools:ignore="MissingConstraints,NotSibling"
+                    tools:layout_editor_absoluteY="29dp" />
+
+
+                <TextView
+                    android:id="@+id/top_rated_tvshows"
+                    android:layout_width="364dp"
+                    android:layout_height="49dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="Top-Rated"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.666"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/slider_tvshows"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewTopRatedTVShows"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/top_rated_tvshows"/>
+
+                <TextView
+                    android:id="@+id/popular_tvshows"
+                    android:layout_width="364dp"
+                    android:layout_height="49dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="Popular"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.666"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewTopRatedTVShows"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewPopularTVShows"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/popular_tvshows"/>
+
+                <TextView
+                    android:id="@+id/footerTMDBTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="900dp"
+                    android:gravity="center"
+                    android:text="Powered By TMDB"
+                    android:textColor="@color/icon_blue"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewTV"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="-7dp" />
+
+                <TextView
+                    android:id="@+id/textViewTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Developed by Simran Thomas"
+                    android:textColor="@color/icon_blue"
+                    app:layout_constraintTop_toBottomOf="@id/footerTMDBTV"
+                    tools:ignore="MissingConstraints" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
