@@ -2,17 +2,24 @@ package com.example.uscfilms;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,6 +40,14 @@ import java.util.Date;
 
 public class DetailsActivity extends AppCompatActivity {
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor myEdit;
+    private Boolean present = false;
+    public MutableLiveData<Boolean> dataLoaded = new MutableLiveData<>();
+    private LinearLayout progressView;
+    private ConstraintLayout mainContent;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,6 +55,30 @@ public class DetailsActivity extends AppCompatActivity {
         setTheme(R.style.Theme_USCFilms);
         setContentView(R.layout.activity_details);
 
+        progressView = findViewById(R.id.progressbar_view_details);
+        mainContent = findViewById(R.id.detailsContent);
+        progressView.setVisibility(View.VISIBLE);
+        mainContent.setVisibility(View.GONE);
+
+        dataLoaded.setValue(false);
+
+        dataLoaded.observe(this, aBoolean -> {
+            if (aBoolean == true){
+                progressView.setVisibility(View.GONE);
+                mainContent.setVisibility(View.VISIBLE);
+            }
+            else{
+                progressView.setVisibility(View.VISIBLE);
+                mainContent.setVisibility(View.GONE);
+            }
+        });
+
+        sharedPreferences = getApplicationContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        myEdit = sharedPreferences.edit();
+        if (!sharedPreferences.contains("watchlist")) {
+            myEdit.putString("watchlist","[]");
+            myEdit.commit();
+        }
 
         Intent prevIntent = getIntent();
         String mediaType = prevIntent.getStringExtra("mediaType");
@@ -113,6 +152,69 @@ public class DetailsActivity extends AppCompatActivity {
                         int year = date.getYear();
                         yearText.setText(String.valueOf(year));
 
+                        // watchlist adding and removing button
+                        JSONObject watchlist_object = new JSONObject();
+                        watchlist_object.put("id", mediaId);
+                        watchlist_object.put("title", mediaDetails.getString("title"));
+                        watchlist_object.put("poster_path", mediaDetails.getString("poster_path"));
+                        watchlist_object.put("media_type", mediaType);
+
+                        //Add to watchlist/ remove from watchlist stuff
+                        ImageButton addButton = findViewById(R.id.addButton);
+                        ImageButton removeButton = findViewById(R.id.removeButton);
+                        //Check if movie/tv already in watchlist
+                        // decide which button to show add/remove
+                        present = false;
+                        JSONArray itemInWatchlist_JSON = new JSONArray(sharedPreferences.getString("watchlist", ""));
+                        for (int i=0;i<itemInWatchlist_JSON.length();i++) {
+                            if(watchlist_object.getString("id").equals(itemInWatchlist_JSON.getJSONObject(i).getString("id"))) {
+                                present = true;
+                                addButton.setVisibility(addButton.INVISIBLE);
+                                removeButton.setVisibility(removeButton.VISIBLE);
+                                break;
+                            }
+                        }
+                        if(!present) {
+                            addButton.setVisibility(addButton.VISIBLE);
+                            removeButton.setVisibility(removeButton.INVISIBLE);
+                        }
+                        //on button click
+                        addButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                try {
+                                    addButton.setVisibility(addButton.INVISIBLE);
+                                    removeButton.setVisibility(removeButton.VISIBLE);
+                                    itemInWatchlist_JSON.put(watchlist_object);
+                                    myEdit.putString("watchlist", itemInWatchlist_JSON.toString());
+                                    myEdit.commit();
+                                    Toast.makeText(getApplicationContext(), watchlist_object.getString("title") + "was added to Watchlist", Toast.LENGTH_SHORT).show();
+                                } catch(Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                        removeButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                try {
+                                    addButton.setVisibility(addButton.VISIBLE);
+                                    removeButton.setVisibility(removeButton.INVISIBLE);
+                                    for (int i = 0; i < itemInWatchlist_JSON.length(); i++) {
+                                        if (watchlist_object.getString("id").equals(itemInWatchlist_JSON.getJSONObject(i).getString("id"))) {
+                                            itemInWatchlist_JSON.remove(i);
+                                            break;
+                                        }
+                                    }
+                                    myEdit.putString("watchlist", itemInWatchlist_JSON.toString());
+                                    myEdit.commit();
+                                    Toast.makeText(getApplicationContext(), watchlist_object.getString("title") + "was removed from Watchlist", Toast.LENGTH_SHORT).show();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
                         // facebook share
                         ImageButton facebookButton = findViewById(R.id.facebookButton);
                         facebookButton.setOnClickListener(v -> {
@@ -158,6 +260,8 @@ public class DetailsActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+                    dataLoaded.setValue(true);
 
                 }, error -> Log.d("error","That didn't work!"));
 

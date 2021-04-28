@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="watchlist"
-        android:textSize="30sp"
-        tools:layout_editor_absoluteX="126dp"
-        tools:layout_editor_absoluteY="391dp" />
+        android:id="@+id/grid_watchlist">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/empty_watchlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nothing saved to Watchlist"
+            android:textSize="15sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_grid"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

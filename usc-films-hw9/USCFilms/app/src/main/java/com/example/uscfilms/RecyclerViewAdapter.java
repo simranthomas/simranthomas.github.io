@@ -76,8 +76,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
 
-                Log.d("mylog", "onclick callled?");
-
                 try {
 
                     Context wrapper = new ContextThemeWrapper(holder.popupButton.getContext(), R.style.popupMenuStyle);
@@ -130,6 +128,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                         itemInWatchlist_JSON.put(mediaList_JSON.getJSONObject(position));
                                         myEdit.putString("watchlist", itemInWatchlist_JSON.toString());
                                         myEdit.commit();
+                                        Toast.makeText(context,  mediaList.get(position).getTitle() + " was added to Watchlist", Toast.LENGTH_SHORT).show();
                                     } else {
                                         for (int i = 0; i < itemInWatchlist_JSON.length(); i++) {
                                             if (mediaList_JSON.getJSONObject(position).getString("id").equals(itemInWatchlist_JSON.getJSONObject(i).getString("id"))) {
@@ -139,6 +138,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                         }
                                         myEdit.putString("watchlist", itemInWatchlist_JSON.toString());
                                         myEdit.commit();
+                                        Toast.makeText(context,  mediaList.get(position).getTitle() + " was removed from Watchlist", Toast.LENGTH_SHORT).show();
                                     }
                                     //Toast.makeText(holder.popup_menu_button.getContext(), "You Clicked " + itemInWatchlist_JSON.toString(), Toast.LENGTH_SHORT).show();
                                 }

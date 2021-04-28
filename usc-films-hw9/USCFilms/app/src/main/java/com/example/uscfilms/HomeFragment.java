@@ -6,21 +6,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-
-import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +40,10 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
 
+    private LinearLayout progressView;
+    private ConstraintLayout mainContent;
+    public MutableLiveData<Boolean> dataLoaded = new MutableLiveData<>();
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Toolbar myToolbar = getView().findViewById(R.id.my_toolbar);
@@ -55,6 +58,25 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View home = inflater.inflate(R.layout.fragment_home, container, false);
+
+        progressView = home.findViewById(R.id.progressbar_view);
+        mainContent = home.findViewById(R.id.mainContent);
+        progressView.setVisibility(View.VISIBLE);
+        mainContent.setVisibility(View.GONE);
+
+        dataLoaded.setValue(false);
+
+        dataLoaded.observe(this, aBoolean -> {
+            if (aBoolean == true){
+                progressView.setVisibility(View.GONE);
+                mainContent.setVisibility(View.VISIBLE);
+            }
+            else{
+                progressView.setVisibility(View.VISIBLE);
+                mainContent.setVisibility(View.GONE);
+            }
+        });
+
 
         View movieTab = home.findViewById(R.id.scroll_view_movies);
         View tvTab = home.findViewById(R.id.scroll_view_tvshows);
@@ -118,6 +140,8 @@ public class HomeFragment extends Fragment {
                         displaySlider(trendingTv, home.findViewById(R.id.slider_tvshows));
                         displayScroll(topRatedTv, home.findViewById(R.id.recyclerViewTopRatedTVShows) );
                         displayScroll(popularTv, home.findViewById(R.id.recyclerViewPopularTVShows));
+
+                        dataLoaded.setValue(true);
 
                     } catch (JSONException | IOException e) {
                         e.printStackTrace();

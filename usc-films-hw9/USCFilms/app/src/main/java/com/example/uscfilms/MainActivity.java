@@ -19,14 +19,11 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.Theme_USCFilms);
         setContentView(R.layout.activity_main);
 
-
-
         BottomNavigationView bottomNavBar = findViewById(R.id.bottom_navigation);
         bottomNavBar.setOnNavigationItemSelectedListener(navListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
     }
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
