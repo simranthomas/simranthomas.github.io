@@ -109,18 +109,12 @@ public class WatchlistFragment extends Fragment {
             int fromPosition = viewHolder.getAdapterPosition();
             int toPosition = target.getAdapterPosition();
 
-            //Collections.swap(posterPathArray, fromPosition, toPosition);
-
             adapter.swapItems(fromPosition, toPosition);
-//            adapter.notifyItemRangeChanged(Math.min(fromPosition, toPosition), Math.abs(fromPosition - toPosition) + 1);
-//            adapter.notifyItemMoved(fromPosition, toPosition);
-
-            adapter.swapItems(fromPosition, toPosition);
-//            if (fromPosition > toPosition) {
-//                adapter.notifyItemRangeChanged(toPosition, adapter.getItemCount()-toPosition);
-//            } else {
-//                adapter.notifyItemRangeChanged(fromPosition, adapter.getItemCount()-fromPosition);
-//            }
+            if (fromPosition > toPosition) {
+                adapter.notifyItemRangeChanged(toPosition, fromPosition-toPosition+1);
+            } else {
+                adapter.notifyItemRangeChanged(fromPosition, toPosition-fromPosition+1);
+            }
             recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
 
             return false;

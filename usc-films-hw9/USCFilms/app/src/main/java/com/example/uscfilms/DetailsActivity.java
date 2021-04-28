@@ -134,7 +134,12 @@ public class DetailsActivity extends AppCompatActivity {
 
                         // overview
                         TextView overview = findViewById(R.id.overview);
-                        overview.setText(mediaDetails.getString("overview"));
+                        if(mediaDetails.getString("overview") != null && mediaDetails.getString("overview").length()!= 0)
+                            overview.setText(mediaDetails.getString("overview"));
+                        else {
+                            TextView overviewTitle = findViewById(R.id.overviewTitle);
+                            overviewTitle.setVisibility(overviewTitle.GONE);
+                        }
 
                         // genres
                         TextView genres = findViewById(R.id.genres);

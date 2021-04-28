@@ -40,46 +40,58 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/mainContent">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="404dp"
-        android:layout_height="77dp"
-        android:background="@color/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="USC Films"
-        app:titleTextAppearance="@style/ToolbarText"
-        tools:ignore="MissingConstraints,UnknownId">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_movies"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="Movies"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:layout_marginLeft="68dp"
-            style="?android:attr/borderlessButtonStyle"/>
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_tvshows"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="TV Shows"
-            android:textAllCaps="false"
-            android:layout_marginRight="20dp"
-            android:textColor="@color/icon_blue"
-            style="?android:attr/borderlessButtonStyle"
-            android:textSize="16dp" />
-    </androidx.appcompat.widget.Toolbar>
+            android:paddingStart="18dp"
+            android:paddingTop="18dp"
+            android:id="@+id/my_toolbar"
+            tools:ignore="MissingConstraints">
+            <ImageView
+                android:id="@+id/ic_theaters_white_18dp"
+                android:layout_width="33dp"
+                android:layout_height="35dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_theaters_white_18dp" />
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="2dp"
+                android:layout_toEndOf="@+id/ic_theaters_white_18dp"
+                android:text="USC Films"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_movies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/button_tvshows"
+                android:background="@color/colorPrimary"
+                android:text="Movies"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                style="?android:attr/borderlessButtonStyle"
+                android:textSize="16sp"
+                />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_tvshows"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@color/colorPrimary"
+                android:paddingEnd="18dp"
+                android:text="TV Shows"
+                style="?android:attr/borderlessButtonStyle"
+                android:textAllCaps="false"
+                android:textColor="@color/icon_blue"
+                android:textSize="16sp" />
+        </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="wrap_content"

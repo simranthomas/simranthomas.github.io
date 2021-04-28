@@ -10,4 +10,5 @@
     <color name="icon_blue">#287BC1</color>
     <color name="colorPrimary">#202C36</color>
     <color name="grey">	#B5BBC1</color>
+    <color name="text_shadow">#7F000000</color>
 </resources>

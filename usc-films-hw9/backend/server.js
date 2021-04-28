@@ -338,10 +338,12 @@ app.get('/api/autocomplete', async (req, res) => {
         response = response.data.results;
         var search_list = [];
         // retrieve only first 7 results
-        for(var i = 0; i < response.length && search_list.length < 7; i++)
+        for(var i = 0; i < response.length && search_list.length < 20; i++)
         {
             var media_type = response[i]['media_type'];
             var title_key = (media_type == 'movie') ? 'title' : 'name';
+            var date_key = (media_type == 'movie') ? 'release_date' : 'first_air_date';
+            var rating = response[i]['vote_average'] / 2;
 
             if(media_type == 'movie' || media_type == 'tv')
             {
@@ -349,8 +351,10 @@ app.get('/api/autocomplete', async (req, res) => {
                     var media = {
                         'id' : response[i]['id'],
                         'title' : response[i][title_key],
-                        'backdrop_path' : response[i]['backdrop_path'],
-                        'media_type' : response[i]['media_type']
+                        'backdrop_path' : 'https://image.tmdb.org/t/p/original' + response[i]['backdrop_path'],
+                        'media_type' : response[i]['media_type'],
+                        'release_air_date' : response[i][date_key],
+                        'rating': rating.toFixed(1)
                     }
                     search_list.push(media);
                 }
