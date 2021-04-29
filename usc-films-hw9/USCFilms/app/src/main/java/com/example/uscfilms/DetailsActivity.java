@@ -37,7 +37,6 @@ import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -48,6 +47,16 @@ public class DetailsActivity extends AppCompatActivity {
     private LinearLayout progressView;
     private ConstraintLayout mainContent;
 
+
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        TextView title = findViewById(R.id.mediaTitle);
+
+        int lineCount = title.getLineCount();
+        if(lineCount > 1)
+            title.setGravity(Gravity.CENTER);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +102,12 @@ public class DetailsActivity extends AppCompatActivity {
         YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
 
+        Log.d("fata", apiURLDetails);
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, apiURLDetails,
                 response -> {
+
+
 
                     try {
                         JSONObject responseObject = new JSONObject(response);
@@ -110,17 +123,12 @@ public class DetailsActivity extends AppCompatActivity {
                         String titleText = mediaDetails.getString("title");
                         TextView title = findViewById(R.id.mediaTitle);
                         title.setText(titleText);
-                        title.post(() -> {
-                            Log.d("tit",String.valueOf(title.getLineCount()));
-                            int lineCount = title.getLineCount();
-                            if(lineCount > 1) {
-                                title.setGravity(Gravity.CENTER);
-                            }
-                        });
+
 
 
                         // youtube video
                         if(videoDetails.length() != 0) {
+                            Log.d("fata", videoDetails.toString());
                             youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                                 @Override
                                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
@@ -140,6 +148,7 @@ public class DetailsActivity extends AppCompatActivity {
                                     .asBitmap()
                                     .load(mediaDetails.getString("backdrop_path"))
                                     .into(backdrop);
+                            Log.d("fata", mediaDetails.getString("backdrop_path"));
                         }
 
                         // overview
@@ -153,16 +162,23 @@ public class DetailsActivity extends AppCompatActivity {
 
                         // genres
                         TextView genres = findViewById(R.id.genres);
-                        String genreString = "";
-                        JSONArray genreList = new JSONArray(mediaDetails.getString("genres"));
-                        for(int i = 0; i < genreList.length(); i++) {
-                            JSONObject genre = genreList.getJSONObject(i);
-                            genreString += genre.getString("name") + ", ";
+                        if(mediaDetails.getString("genres") != null && mediaDetails.getJSONArray("genres").length() !=0) {
+                            String genreString = "";
+                            JSONArray genreList = new JSONArray(mediaDetails.getString("genres"));
+                            for (int i = 0; i < genreList.length(); i++) {
+                                JSONObject genre = genreList.getJSONObject(i);
+                                genreString += genre.getString("name") + ", ";
+                            }
+                            genres.setText(genreString.substring(0, genreString.length() - 2));
                         }
-                        genres.setText(genreString.substring(0, genreString.length() - 2));
+                        else {
+                            TextView overviewTitle = findViewById(R.id.genresTitle);
+                            overviewTitle.setVisibility(overviewTitle.GONE);
+                        }
 
                         // year
                         TextView yearText = findViewById(R.id.year);
+//                        check back end for release air date
                         LocalDate date = LocalDate.parse(mediaDetails.getString("release_air_date"));
                         int year = date.getYear();
                         yearText.setText(String.valueOf(year));

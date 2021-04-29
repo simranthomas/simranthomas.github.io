@@ -41,7 +41,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                         x.put(medialist_JSON.getJSONObject(to));
 
                     } else if (i == from) {
-                        //skip from we have already added it
                     } else {
                         x.put(medialist_JSON.getJSONObject(i));
                     }
@@ -51,7 +50,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 for(int i=0;i<medialist_JSON.length();i++)
                 {
                     if(i == from) {
-                        //skip
+
                     } else if(i == to) {
                         x.put(medialist_JSON.getJSONObject(to));
                         x.put(medialist_JSON.getJSONObject(from));
@@ -64,8 +63,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
 
             medialist_JSON = x;
-            Log.d("mylog", "shared pref updated");
-            Log.d("mylog", x.toString());
             myEdit.putString("watchlist", x.toString());
             myEdit.commit();
             myEdit.apply();
@@ -79,19 +76,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private Context context;
-    //private ArrayList<String> posterPaths = new ArrayList<String>();
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor myEdit;
     private TextView emptyWatchlist;
 
-    // data is passed into the constructor
     MyRecyclerViewAdapter(Context context, JSONArray mediaList_JSON, TextView emptyWatchlist) {
 
         this.emptyWatchlist = emptyWatchlist;
         this.mInflater = LayoutInflater.from(context);
         this.medialist_JSON = mediaList_JSON;
         this.context = context;
-        //this.posterPaths = posterPaths;
 
         sharedPreferences = context.getSharedPreferences("MySharedPref",Context.MODE_PRIVATE);
         myEdit = sharedPreferences.edit();
@@ -101,7 +95,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
     }
 
-    // inflates the cell layout from xml when needed
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -145,16 +138,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 public void onClick(View v) {
                     try {
 
-                        //get from sp
                         JSONArray watchlist_JSON = new JSONArray(sharedPreferences.getString("watchlist", ""));
 
-                        //now i have to delete this movie/tv
                         for (int i=0;i<watchlist_JSON.length();i++) {
                             if(getMedialist_JSON().getJSONObject(position).getString("id").equals(watchlist_JSON.getJSONObject(i).getString("id"))) {
                                 String title_for_toast = getMedialist_JSON().getJSONObject(position).getString("title");
                                 watchlist_JSON.remove(i);
                                 medialist_JSON.remove(i);
-                                //posterPaths.remove(i);
+
                                 myEdit.putString("watchlist", watchlist_JSON.toString());
                                 myEdit.commit();
                                 notifyItemRemoved(i);
@@ -179,15 +170,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
     }
 
-    // total number of cells
     @Override
     public int getItemCount() {
         return medialist_JSON.length();
     }
 
-    // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//        TextView myTextView;
+
         ImageView image;
         ImageButton remove_button;
         TextView mediaType;
@@ -207,12 +196,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
     }
 
-     //allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }

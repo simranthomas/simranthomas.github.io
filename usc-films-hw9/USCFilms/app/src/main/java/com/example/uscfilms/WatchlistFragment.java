@@ -46,6 +46,10 @@ public class WatchlistFragment extends Fragment {
             adapter = new MyRecyclerViewAdapter(getContext(), Watchlist_JSON, empty_watchlist);
             watchlist_recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+
+            if(Watchlist_JSON.length() == 0)
+                empty_watchlist.setVisibility(empty_watchlist.VISIBLE);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +68,6 @@ public class WatchlistFragment extends Fragment {
 
         try {
 
-            Log.d("mylog", "fetching new watchlist");
             Watchlist_JSON = new JSONArray(sharedPreferences.getString("watchlist", ""));
             if(Watchlist_JSON.length() == 0) {
                 empty_watchlist.setVisibility(empty_watchlist.VISIBLE);
