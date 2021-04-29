@@ -62,7 +62,7 @@ public class SearchFragment extends Fragment {
 
     public void getVolleyData(String newText, TextView searchText) {
 
-        String url = "http://10.0.2.2:8080/api/autocomplete?searchQuery=";
+        String url = "https://the-movie-db-android-hw9.wl.r.appspot.com/api/autocomplete?searchQuery=";
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url+newText,

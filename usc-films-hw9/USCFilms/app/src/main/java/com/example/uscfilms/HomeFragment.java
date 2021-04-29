@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment {
 
         setHasOptionsMenu(true);
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        String apiURLHome = "http://10.0.2.2:8080/api/homepage";
+        String apiURLHome = "https://the-movie-db-android-hw9.wl.r.appspot.com/api/homepage";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, apiURLHome,
                 response -> {

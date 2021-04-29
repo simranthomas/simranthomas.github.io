@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -87,7 +88,7 @@ public class DetailsActivity extends AppCompatActivity {
         Log.d("mediaId", mediaId);
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String apiURLDetails = "http://10.0.2.2:8080/api/media_details?mediaType=" + mediaType+ "&id=" + mediaId;
+        String apiURLDetails = "https://the-movie-db-android-hw9.wl.r.appspot.com/api/media_details?mediaType=" + mediaType+ "&id=" + mediaId;
 
         YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
@@ -106,8 +107,17 @@ public class DetailsActivity extends AppCompatActivity {
                         JSONArray recommendations = new JSONArray(responseObject.getString("recommendations"));
 
                         // media title
+                        String titleText = mediaDetails.getString("title");
                         TextView title = findViewById(R.id.mediaTitle);
-                        title.setText(mediaDetails.getString("title"));
+                        title.setText(titleText);
+                        title.post(() -> {
+                            Log.d("tit",String.valueOf(title.getLineCount()));
+                            int lineCount = title.getLineCount();
+                            if(lineCount > 1) {
+                                title.setGravity(Gravity.CENTER);
+                            }
+                        });
+
 
                         // youtube video
                         if(videoDetails.length() != 0) {
