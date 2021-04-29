@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'dist/frontend')));
 
 var tmdb_api_key = '38bbe79ff3d3e4cc74577eb730d7626f';
-var tmdb_base_url = 'https://api.themoviedb.org/3/'; 
+var tmdb_base_url = 'https://api.themoviedb.org/3/';
 var image_base_url = 'https://image.tmdb.org/t/p/w500';
 
 var result_homepage = {}
@@ -22,8 +22,7 @@ var result_homepage = {}
 // API Route for homepage
 app.get('/api/homepage', async (req, res) => {
 
-    async function get_endpoint_data(media_type, mid_url, end_url, result_dict_key)
-    {
+    async function get_endpoint_data(media_type, mid_url, end_url, result_dict_key) {
         // Construct endpoint URL
         var endpoint_url = `${tmdb_base_url + mid_url}?api_key=${tmdb_api_key}${end_url}`;
 
@@ -33,51 +32,51 @@ app.get('/api/homepage', async (req, res) => {
         // var img_base_url = (result_dict_key == 'carousel_movies') ?  carousel_image_base_url : image_base_url; 
 
         await axios.get(endpoint_url)
-        .then((response) => {
-            response = response.data.results;
-            var media_list = [];
-            for(var i = 0; i < response.length; i++)
-            {
-                if(response[i]['poster_path'] != null) {
-                    var media = {
-                        'id' : response[i]['id'],
-                        'title' : response[i][title_key],
-                        'poster_path' : image_base_url + response[i]['poster_path'],
-                        'media_type' : media_type
+            .then((response) => {
+                response = response.data.results;
+                var media_list = [];
+                for (var i = 0; i < response.length; i++) {
+                    if (response[i]['poster_path'] != null) {
+                        var media = {
+                            'id': response[i]['id'],
+                            'title': response[i][title_key],
+                            'poster_path': image_base_url + response[i]['poster_path'],
+                            'media_type': media_type
+                        }
+                        media_list.push(media);
                     }
-                    media_list.push(media);
                 }
-            }
-            result_homepage[result_dict_key] = media_list;
-        },
-        (error) => {
-            result_homepage['error'] = "Error";
-        });
-        
-        
+                result_homepage[result_dict_key] = media_list;
+            },
+                (error) => {
+                    result_homepage['error'] = "Error";
+                });
     }
-    // Currently Playing Movies Carousel Endpoint
-    get_endpoint_data('movie', 'movie/now_playing', '&language=en-US&page=1', 'now_playing_movies');
     
+    // Currently Playing Movies Carousel Endpoint
+    await get_endpoint_data('movie', 'movie/now_playing', '&language=en-US&page=1', 'now_playing_movies');
+
     // Popular Movies Endpoint
-    get_endpoint_data('movie', 'movie/popular', '&language=en-US&page=1', 'popular_movies');
+    await get_endpoint_data('movie', 'movie/popular', '&language=en-US&page=1', 'popular_movies');
 
     // Top Rated Movies Endpoint
-    get_endpoint_data('movie', 'movie/top_rated', '&language=en-US&page=1', 'top_rated_movies');
+    await get_endpoint_data('movie', 'movie/top_rated', '&language=en-US&page=1', 'top_rated_movies');
 
     // // Trending Movies Endpoint
-    // get_endpoint_data('movie', 'trending/movie/day', '', 'trending_movies');
-    
+    await get_endpoint_data('movie', 'trending/movie/day', '', 'trending_movies');
+
     // Popular TV Shows Endpoint
-    get_endpoint_data('tv', 'tv/popular', '&language=en-US&page=1', 'popular_tv');
+    await get_endpoint_data('tv', 'tv/popular', '&language=en-US&page=1', 'popular_tv');
 
     // Top Rated TV Shows Endpoint
-    get_endpoint_data('tv', 'tv/top_rated', '&language=en-US&page=1', 'top_rated_tv');
-    
+    await get_endpoint_data('tv', 'tv/top_rated', '&language=en-US&page=1', 'top_rated_tv');
+
     // Trending TV Shows Endpoint
-    get_endpoint_data('tv', 'trending/tv/day', '', 'trending_tv');
+    await get_endpoint_data('tv', 'trending/tv/day', '', 'trending_tv');
 
     res.status(200).send(result_homepage);
+
+
 });
 
 
@@ -96,34 +95,32 @@ app.get('/api/media_details', async (req, res) => {
     var endpoint_url = `${tmdb_base_url + media_type}/${media_id}/videos?api_key=${tmdb_api_key}&language=en-US&page=1`;
 
     await axios.get(endpoint_url)
-    .then((response) => {
-        response = response.data.results;
-        // if no trailer or teaser present play default video
-        var video_details = {};
-        for(var i = 0; i < response.length; i++)
-        {
-            // Play teaser if there is no trailer
-            type = response[i]['type']
-            if(type == 'Trailer')
-            {
-                // if(type == 'Teaser' && video_details['key'] != 'tzkWB85ULJY')
-                //     continue;
+        .then((response) => {
+            response = response.data.results;
+            // if no trailer or teaser present play default video
+            var video_details = {};
+            for (var i = 0; i < response.length; i++) {
+                // Play teaser if there is no trailer
+                type = response[i]['type']
+                if (type == 'Trailer') {
+                    // if(type == 'Teaser' && video_details['key'] != 'tzkWB85ULJY')
+                    //     continue;
 
-                video_details = {
-                    'site' : response[i]['site'],
-                    'type' : response[i]['type'],
-                    'name' : response[i]['name'],
-                    'key' : response[i]['key']
+                    video_details = {
+                        'site': response[i]['site'],
+                        'type': response[i]['type'],
+                        'name': response[i]['name'],
+                        'key': response[i]['key']
+                    }
+                    if (type == 'Trailer')
+                        break;
                 }
-                if(type == 'Trailer')
-                    break;
             }
-        }
-        result['media_video_details'] = video_details;
-    },
-    (error) => {
-        result['error'] = "Error";
-    });
+            result['media_video_details'] = video_details;
+        },
+            (error) => {
+                result['error'] = "Error";
+            });
 
     // Details Endpoint
     var endpoint_url = `${tmdb_base_url + media_type}/${media_id}?api_key=${tmdb_api_key}&language=en-US&page=1`;
@@ -133,142 +130,138 @@ app.get('/api/media_details', async (req, res) => {
     var runtime_key = (media_type == 'movie') ? 'runtime' : 'episode_run_time';
 
     await axios.get(endpoint_url)
-    .then((response) => {
-        response = response.data;
-        result['media_details'] = {}
-        result['media_details']['title'] = response[title_key];
-        result['media_details']['genres'] = response['genres'];
-        result['media_details']['spoken_languages'] = response['spoken_languages'];
-        result['media_details']['release_air_date'] = response[date_key];
-        result['media_details']['runtime'] = response[runtime_key];
-        result['media_details']['overview'] = response['overview'];
-        result['media_details']['vote_average'] = response['vote_average'];
-        result['media_details']['tagline'] = response['tagline'];
-        result['media_details']['poster_path'] = image_base_url + response['poster_path'];
-        result['media_details']['backdrop_path'] = 'https://image.tmdb.org/t/p/original' + response['backdrop_path'];
+        .then((response) => {
+            response = response.data;
+            result['media_details'] = {}
+            result['media_details']['title'] = response[title_key];
+            result['media_details']['genres'] = response['genres'];
+            result['media_details']['spoken_languages'] = response['spoken_languages'];
+            result['media_details']['release_air_date'] = response[date_key];
+            result['media_details']['runtime'] = response[runtime_key];
+            result['media_details']['overview'] = response['overview'];
+            result['media_details']['vote_average'] = response['vote_average'];
+            result['media_details']['tagline'] = response['tagline'];
+            result['media_details']['poster_path'] = image_base_url + response['poster_path'];
+            result['media_details']['backdrop_path'] = 'https://image.tmdb.org/t/p/original' + response['backdrop_path'];
 
-    },
-    (error) => {
-        result['error'] = "Error";
-    });
+        },
+            (error) => {
+                result['error'] = "Error";
+            });
 
     // Cast and Crew Endpoint
     var endpoint_url = `${tmdb_base_url + media_type}/${media_id}/credits?api_key=${tmdb_api_key}&language=en-US&page=1`;
 
     await axios.get(endpoint_url)
-    .then((response) => {
-        response = response.data.cast;
-        var cast_list = [];
-        for(var i = 0; i < response.length; i++)
-        {
-            if(response[i]['profile_path'] != null) {
-                var cast = {
-                    'id' : response[i]['id'],
-                    'name' : response[i]['name'],
-                    'character' : response[i]['character'],
-                    'profile_path' : image_base_url + response[i]['profile_path']
+        .then((response) => {
+            response = response.data.cast;
+            var cast_list = [];
+            for (var i = 0; i < response.length; i++) {
+                if (response[i]['profile_path'] != null) {
+                    var cast = {
+                        'id': response[i]['id'],
+                        'name': response[i]['name'],
+                        'character': response[i]['character'],
+                        'profile_path': image_base_url + response[i]['profile_path']
+                    }
+                    cast_list.push(cast);
                 }
-                cast_list.push(cast);
             }
-        }
-        result['cast_details'] = cast_list;
-    },
-    (error) => {
-        result['error'] = "Error";
-    });
+            result['cast_details'] = cast_list;
+        },
+            (error) => {
+                result['error'] = "Error";
+            });
 
     // Reviews Endpoint
     var endpoint_url = `${tmdb_base_url + media_type}/${media_id}/reviews?api_key=${tmdb_api_key}&language=en-US&page=1`;
 
     await axios.get(endpoint_url)
-    .then((response) => {
-        response = response.data.results;
-        var review_list = [];
-        for(var i = 0; i < Math.min(response.length, 10); i++)
-        {
-            // if no avatar_path use default image
-            // else check if full link
-            var avatar_path = response[i]['author_details']['avatar_path'];
-            if(avatar_path != null) {
-                
-                if(!avatar_path.includes("https://"))
-                    avatar_path = "https://image.tmdb.org/t/p/original" + avatar_path
-                
-                else if(avatar_path.charAt(0) == '/')
-                    avatar_path = avatar_path.slice(1);
-            }
-            // default image
-            else
-                avatar_path = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnPmUvFLjjmoYWAbLTEmLLIRCPpV_OgxCVA&usqp=CAU";
+        .then((response) => {
+            response = response.data.results;
+            var review_list = [];
+            for (var i = 0; i < Math.min(response.length, 10); i++) {
+                // if no avatar_path use default image
+                // else check if full link
+                var avatar_path = response[i]['author_details']['avatar_path'];
+                if (avatar_path != null) {
 
-            var rating = response[i]['author_details']['rating'] == null ? 0 : response[i]['author_details']['rating'];
-            var review = {
-                'author' : response[i]['author'],
-                'content' : response[i]['content'],
-                'created_at' : response[i]['created_at'],
-                'url' : response[i]['url'],
-                'rating' : rating,
-                'avatar_path' : avatar_path
+                    if (!avatar_path.includes("https://"))
+                        avatar_path = "https://image.tmdb.org/t/p/original" + avatar_path
+
+                    else if (avatar_path.charAt(0) == '/')
+                        avatar_path = avatar_path.slice(1);
+                }
+                // default image
+                else
+                    avatar_path = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnPmUvFLjjmoYWAbLTEmLLIRCPpV_OgxCVA&usqp=CAU";
+
+                var rating = response[i]['author_details']['rating'] == null ? 0 : response[i]['author_details']['rating'];
+                var review = {
+                    'author': response[i]['author'],
+                    'content': response[i]['content'],
+                    'created_at': response[i]['created_at'],
+                    'url': response[i]['url'],
+                    'rating': rating,
+                    'avatar_path': avatar_path
+                }
+                review_list.push(review);
             }
-            review_list.push(review);
-        }
-        result['review_details'] = review_list;
-    },
-    (error) => {
-        result['error'] = "Error";
-    });
+            result['review_details'] = review_list;
+        },
+            (error) => {
+                result['error'] = "Error";
+            });
 
     // Recommended Movies/TV Endpoint
     var endpoint_url = `${tmdb_base_url + media_type}/${media_id}/recommendations?api_key=${tmdb_api_key}&language=en-US&page=1`;
     var title_key = (media_type == 'movie') ? 'title' : 'name';
 
     await axios.get(endpoint_url)
-    .then((response) => {
-        response = response.data.results;
-        var recommendations_list = [];
-        for(var i = 0; i < response.length; i++)
-        {
-            if(response[i]['poster_path'] != null) {
-                var media = {
-                    'id' : response[i]['id'],
-                    'title' : response[i][title_key],
-                    'image_path' : image_base_url + response[i]['poster_path'],
-                    'media_type' : media_type
+        .then((response) => {
+            response = response.data.results;
+            var recommendations_list = [];
+            for (var i = 0; i < response.length; i++) {
+                if (response[i]['poster_path'] != null) {
+                    var media = {
+                        'id': response[i]['id'],
+                        'title': response[i][title_key],
+                        'image_path': image_base_url + response[i]['poster_path'],
+                        'media_type': media_type
+                    }
+                    recommendations_list.push(media);
                 }
-                recommendations_list.push(media);
             }
-        }
-        result['recommendations'] = recommendations_list;
-    },
-    (error) => {
-        result['error'] = "Error";
-    });
+            result['recommendations'] = recommendations_list;
+        },
+            (error) => {
+                result['error'] = "Error";
+            });
 
     // Similar Movies/TV Endpoint
     var endpoint_url = `${tmdb_base_url + media_type}/${media_id}/similar?api_key=${tmdb_api_key}&language=en-US&page=1`;
     var title_key = (media_type == 'movie') ? 'title' : 'name';
 
     await axios.get(endpoint_url)
-    .then((response) => {
-        response = response.data.results;
-        var similar_list = [];
-        for(var i = 0; i < response.length; i++)
-        {
-            if(response[i]['poster_path'] != null) {
-                var media = {
-                    'id' : response[i]['id'],
-                    'title' : response[i][title_key],
-                    'image_path' : image_base_url + response[i]['poster_path'],
-                    'media_type' : media_type
+        .then((response) => {
+            response = response.data.results;
+            var similar_list = [];
+            for (var i = 0; i < response.length; i++) {
+                if (response[i]['poster_path'] != null) {
+                    var media = {
+                        'id': response[i]['id'],
+                        'title': response[i][title_key],
+                        'image_path': image_base_url + response[i]['poster_path'],
+                        'media_type': media_type
+                    }
+                    similar_list.push(media);
                 }
-                similar_list.push(media);
             }
-        }
-        result['similar'] = similar_list;
-    },
-    (error) => {
-        result['error'] = "Error";
-    });
+            result['similar'] = similar_list;
+        },
+            (error) => {
+                result['error'] = "Error";
+            });
 
     res.status(200).send(result);
 
@@ -285,39 +278,39 @@ app.get('/api/cast_details', async (req, res) => {
     var endpoint_url = `${tmdb_base_url}person/${person_id}?api_key=${tmdb_api_key}&language=en-US&page=1`;
 
     await axios.get(endpoint_url)
-    .then((response) => {
-        response = response.data;
-        // result = {}
-        result['birthday'] = response['birthday'];
-        result['gender'] = response['gender'];
-        result['name'] = response['name'];
-        result['homepage'] = response['homepage'];
-        result['also_known_as'] = response['also_known_as'];
-        result['known_for_department'] = response['known_for_department'];
-        result['biography'] = response['biography'];
-        result['place_of_birth'] = response['place_of_birth'];
-        result['profile_path'] = response['profile_path'];
-    },
-    (error) => {
-        result['error'] = "Error";
-    });
+        .then((response) => {
+            response = response.data;
+            // result = {}
+            result['birthday'] = response['birthday'];
+            result['gender'] = response['gender'];
+            result['name'] = response['name'];
+            result['homepage'] = response['homepage'];
+            result['also_known_as'] = response['also_known_as'];
+            result['known_for_department'] = response['known_for_department'];
+            result['biography'] = response['biography'];
+            result['place_of_birth'] = response['place_of_birth'];
+            result['profile_path'] = response['profile_path'];
+        },
+            (error) => {
+                result['error'] = "Error";
+            });
 
 
     // Cast External IDs Endpoint
     var endpoint_url = `${tmdb_base_url}person/${person_id}/external_ids?api_key=${tmdb_api_key}&language=en-US&page=1`;
 
     await axios.get(endpoint_url)
-    .then((response) => {
-        response = response.data;
-        // result = {}
-        result['imdb_id'] = response['imdb_id'];
-        result['facebook_id'] = response['facebook_id'];
-        result['instagram_id'] = response['instagram_id'];
-        result['twitter_id'] = response['twitter_id'];
-    },
-    (error) => {
-        result['error'] = "Error";
-    });
+        .then((response) => {
+            response = response.data;
+            // result = {}
+            result['imdb_id'] = response['imdb_id'];
+            result['facebook_id'] = response['facebook_id'];
+            result['instagram_id'] = response['instagram_id'];
+            result['twitter_id'] = response['twitter_id'];
+        },
+            (error) => {
+                result['error'] = "Error";
+            });
 
     res.status(200).send(result);
 
@@ -332,41 +325,39 @@ app.get('/api/autocomplete', async (req, res) => {
     var query = req.query.searchQuery;
 
     let result = {}
-    
+
     var endpoint_url = `${tmdb_base_url}search/multi?api_key=${tmdb_api_key}&language=en-US&page=1&query=${query}`;
 
     await axios.get(endpoint_url)
-    .then((response) => {
-        response = response.data.results;
-        var search_list = [];
-        // retrieve only first 7 results
-        for(var i = 0; i < response.length && search_list.length < 20; i++)
-        {
-            var media_type = response[i]['media_type'];
-            var title_key = (media_type == 'movie') ? 'title' : 'name';
-            var date_key = (media_type == 'movie') ? 'release_date' : 'first_air_date';
-            var rating = response[i]['vote_average'] / 2;
+        .then((response) => {
+            response = response.data.results;
+            var search_list = [];
+            // retrieve only first 7 results
+            for (var i = 0; i < response.length && search_list.length < 20; i++) {
+                var media_type = response[i]['media_type'];
+                var title_key = (media_type == 'movie') ? 'title' : 'name';
+                var date_key = (media_type == 'movie') ? 'release_date' : 'first_air_date';
+                var rating = response[i]['vote_average'] / 2;
 
-            if(media_type == 'movie' || media_type == 'tv')
-            {
-                if(response[i]['backdrop_path'] != null) {
-                    var media = {
-                        'id' : response[i]['id'],
-                        'title' : response[i][title_key],
-                        'backdrop_path' : 'https://image.tmdb.org/t/p/original' + response[i]['backdrop_path'],
-                        'media_type' : response[i]['media_type'],
-                        'release_air_date' : response[i][date_key],
-                        'rating': rating.toFixed(1)
+                if (media_type == 'movie' || media_type == 'tv') {
+                    if (response[i]['backdrop_path'] != null) {
+                        var media = {
+                            'id': response[i]['id'],
+                            'title': response[i][title_key],
+                            'backdrop_path': 'https://image.tmdb.org/t/p/original' + response[i]['backdrop_path'],
+                            'media_type': response[i]['media_type'],
+                            'release_air_date': response[i][date_key],
+                            'rating': rating.toFixed(1)
+                        }
+                        search_list.push(media);
                     }
-                    search_list.push(media);
                 }
             }
-        }
-        result['search_results'] = search_list;
-    },
-    (error) => {
-        result['error'] = "Error";
-    });
+            result['search_results'] = search_list;
+        },
+            (error) => {
+                result['error'] = "Error";
+            });
 
     res.status(200).send(result['search_results']);
 
