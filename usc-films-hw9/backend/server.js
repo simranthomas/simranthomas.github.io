@@ -53,6 +53,8 @@ app.get('/api/homepage', async (req, res) => {
         (error) => {
             result_homepage['error'] = "Error";
         });
+        
+        
     }
     // Currently Playing Movies Carousel Endpoint
     get_endpoint_data('movie', 'movie/now_playing', '&language=en-US&page=1', 'now_playing_movies');
@@ -370,9 +372,10 @@ app.get('/api/autocomplete', async (req, res) => {
 
 });
 
-app.use('/*', function(req, res) {
-    res.sendFile(path.join(__dirname + '/dist/frontend/index.html'));
-})
+
+// app.use('/*', function(req, res) {
+//     res.sendFile(path.join(__dirname + '/dist/frontend/index.html'));
+// })
 
 var server = app.listen(8080, () => {
     console.log("Backend Application listening at http://localhost:8080")
