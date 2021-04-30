@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,6 +56,19 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 getVolleyData(newText,home.findViewById(R.id.empty_search));
                 return false;
+            }
+        });
+
+        ImageView closeButton = (ImageView)searchView.findViewById(R.id.search_close_btn);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView empty = home.findViewById(R.id.empty_search);
+                empty.setVisibility(empty.GONE);
+
+                EditText et = (EditText) home.findViewById(R.id.search_src_text);
+                et.setText("");
+                searchView.setQuery("", false);
             }
         });
 

@@ -32,7 +32,6 @@ public class WatchlistFragment extends Fragment {
     MyRecyclerViewAdapter adapter;
     JSONArray Watchlist_JSON;
     View watchlist_view;
-    ArrayList<String> posterPathArray;
     TextView empty_watchlist;
     RecyclerView watchlist_recyclerView;
 
@@ -74,22 +73,7 @@ public class WatchlistFragment extends Fragment {
                 return watchlist_view;
             }
 
-
-
-            //Toast.makeText(getContext(), Watchlist_JSON.toString(), Toast.LENGTH_SHORT).show();
-
             watchlist_recyclerView = watchlist_view.findViewById(R.id.recyclerView_grid);
-
-            posterPathArray = new ArrayList<>();
-            for(int i=0; i<Watchlist_JSON.length(); i++) {
-
-                JSONObject jsonObject = Watchlist_JSON.getJSONObject(i);
-                String id = jsonObject.getString("id");
-                String title = jsonObject.getString("title");
-                String posterPath = "https://image.tmdb.org/t/p/w500" + jsonObject.getString("poster_path");
-                String mediaType = jsonObject.getString("media_type");
-                posterPathArray.add(posterPath);
-            }
 
             watchlist_recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
             adapter = new MyRecyclerViewAdapter(getContext(), Watchlist_JSON, empty_watchlist);

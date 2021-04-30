@@ -151,7 +151,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                                 notifyItemRemoved(i);
                                 notifyItemRangeChanged(i,getItemCount());
 
-                                Toast.makeText(context, "\"" + title_for_toast + "\"" + " was removed from favourites", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "\"" + title_for_toast + "\"" + " was removed from watchlist", Toast.LENGTH_SHORT).show();
                                if(getItemCount() == 0) {
                                    emptyWatchlist.setVisibility(emptyWatchlist.VISIBLE);
                                }

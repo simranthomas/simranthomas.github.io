@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,16 +48,6 @@ public class DetailsActivity extends AppCompatActivity {
     private LinearLayout progressView;
     private ConstraintLayout mainContent;
 
-
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        TextView title = findViewById(R.id.mediaTitle);
-
-        int lineCount = title.getLineCount();
-        if(lineCount > 1)
-            title.setGravity(Gravity.CENTER);
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +93,6 @@ public class DetailsActivity extends AppCompatActivity {
         YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
 
-        Log.d("fata", apiURLDetails);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, apiURLDetails,
                 response -> {
@@ -124,11 +114,25 @@ public class DetailsActivity extends AppCompatActivity {
                         TextView title = findViewById(R.id.mediaTitle);
                         title.setText(titleText);
 
+                        // if more than 2 lines then center it
+                        ViewTreeObserver vto = title.getViewTreeObserver();
+                        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+                            @Override
+                            public void onGlobalLayout() {
+                                ViewTreeObserver obs = title.getViewTreeObserver();
+                                obs.removeGlobalOnLayoutListener(this);
+                                if(title.getLineCount() > 1)
+                                    title.setGravity(Gravity.CENTER);
+
+                            }
+                        });
+
 
 
                         // youtube video
                         if(videoDetails.length() != 0) {
-                            Log.d("fata", videoDetails.toString());
+
                             youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                                 @Override
                                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
@@ -144,11 +148,18 @@ public class DetailsActivity extends AppCompatActivity {
                         }
                         else {
                             ImageView backdrop = findViewById(R.id.backdropImage);
-                            Glide.with(this)
-                                    .asBitmap()
-                                    .load(mediaDetails.getString("backdrop_path"))
-                                    .into(backdrop);
-                            Log.d("fata", mediaDetails.getString("backdrop_path"));
+                            String backdrop_path = mediaDetails.getString("backdrop_path");
+                            if(backdrop_path != null && backdrop_path.length() != 0)
+                                Glide.with(this)
+                                        .asBitmap()
+                                        .load(mediaDetails.getString("backdrop_path"))
+                                        .into(backdrop);
+
+                            else
+                                Glide.with(this)
+                                        .asBitmap()
+                                        .load(R.drawable.backdrop_path_placeholder)
+                                        .into(backdrop);
                         }
 
                         // overview
@@ -172,16 +183,22 @@ public class DetailsActivity extends AppCompatActivity {
                             genres.setText(genreString.substring(0, genreString.length() - 2));
                         }
                         else {
-                            TextView overviewTitle = findViewById(R.id.genresTitle);
-                            overviewTitle.setVisibility(overviewTitle.GONE);
+                            TextView genresTitle = findViewById(R.id.genresTitle);
+                            genresTitle.setVisibility(genresTitle.GONE);
                         }
 
                         // year
                         TextView yearText = findViewById(R.id.year);
-//                        check back end for release air date
-                        LocalDate date = LocalDate.parse(mediaDetails.getString("release_air_date"));
-                        int year = date.getYear();
-                        yearText.setText(String.valueOf(year));
+                        String dateStr = mediaDetails.getString("release_air_date");
+                        if(dateStr != null && dateStr.length() != 0) {
+                            LocalDate date = LocalDate.parse(dateStr);
+                            int year = date.getYear();
+                            yearText.setText(String.valueOf(year));
+                        }
+                        else {
+                            TextView yearTitle = findViewById(R.id.yearTitle);
+                            yearTitle.setVisibility(yearTitle.GONE);
+                        }
 
                         // watchlist adding and removing button
                         JSONObject watchlist_object = new JSONObject();
@@ -210,39 +227,33 @@ public class DetailsActivity extends AppCompatActivity {
                             removeButton.setVisibility(removeButton.INVISIBLE);
                         }
                         //on button click
-                        addButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                try {
-                                    addButton.setVisibility(addButton.INVISIBLE);
-                                    removeButton.setVisibility(removeButton.VISIBLE);
-                                    itemInWatchlist_JSON.put(watchlist_object);
-                                    myEdit.putString("watchlist", itemInWatchlist_JSON.toString());
-                                    myEdit.commit();
-                                    Toast.makeText(getApplicationContext(), watchlist_object.getString("title") + "was added to Watchlist", Toast.LENGTH_SHORT).show();
-                                } catch(Exception e) {
-                                    e.printStackTrace();
-                                }
+                        addButton.setOnClickListener(v -> {
+                            try {
+                                addButton.setVisibility(addButton.INVISIBLE);
+                                removeButton.setVisibility(removeButton.VISIBLE);
+                                itemInWatchlist_JSON.put(watchlist_object);
+                                myEdit.putString("watchlist", itemInWatchlist_JSON.toString());
+                                myEdit.commit();
+                                Toast.makeText(getApplicationContext(), watchlist_object.getString("title") + "was added to Watchlist", Toast.LENGTH_SHORT).show();
+                            } catch(Exception e) {
+                                e.printStackTrace();
                             }
                         });
-                        removeButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                try {
-                                    addButton.setVisibility(addButton.VISIBLE);
-                                    removeButton.setVisibility(removeButton.INVISIBLE);
-                                    for (int i = 0; i < itemInWatchlist_JSON.length(); i++) {
-                                        if (watchlist_object.getString("id").equals(itemInWatchlist_JSON.getJSONObject(i).getString("id"))) {
-                                            itemInWatchlist_JSON.remove(i);
-                                            break;
-                                        }
+                        removeButton.setOnClickListener(v -> {
+                            try {
+                                addButton.setVisibility(addButton.VISIBLE);
+                                removeButton.setVisibility(removeButton.INVISIBLE);
+                                for (int i = 0; i < itemInWatchlist_JSON.length(); i++) {
+                                    if (watchlist_object.getString("id").equals(itemInWatchlist_JSON.getJSONObject(i).getString("id"))) {
+                                        itemInWatchlist_JSON.remove(i);
+                                        break;
                                     }
-                                    myEdit.putString("watchlist", itemInWatchlist_JSON.toString());
-                                    myEdit.commit();
-                                    Toast.makeText(getApplicationContext(), watchlist_object.getString("title") + "was removed from Watchlist", Toast.LENGTH_SHORT).show();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
                                 }
+                                myEdit.putString("watchlist", itemInWatchlist_JSON.toString());
+                                myEdit.commit();
+                                Toast.makeText(getApplicationContext(), watchlist_object.getString("title") + "was removed from Watchlist", Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         });
 
